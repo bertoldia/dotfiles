@@ -1,0 +1,60 @@
+#!/bin/bash
+
+isValidCLIRunDir() {
+  if [ ! -e cli ]; then
+     echo "Missing cli directory."
+     exit -1
+  fi
+
+  if [ ! -e cli/VPlexcli-init ]; then
+     echo "Missing cli/VPlexcli-init."
+     exit -1
+  fi
+
+  if [ -e 'cli/.VPlexcli-lock' ]; then
+    echo "A regression test is already running asshole."
+    exit -1
+  fi
+}
+
+isValidCLIRunDir
+
+TARBALL_PATH="${UI_DEV_DIR}/com-yottayotta-smsv2"
+USE_NEW_RELEASE=true
+
+while getopts "e" flag
+do
+  case $flag in
+    e) USE_NEW_RELEASE=false;;
+  esac
+done
+
+rm -fr 2siteSystem/capture
+
+if [ $USE_NEW_RELEASE == true ]; then
+  WD=$(pwd)
+
+  cd ${TARBALL_PATH}
+  TARBALL=$(ls *.tgz)
+  end=${#TARBALL}-4
+  CURRENT_SMS=${TARBALL:0:${end}}
+
+  cd ${WD}
+
+  rm -fr 2siteSystem
+  cp -R ${TARBALL_PATH}/regression-tests/2siteSystem .
+  find 2siteSystem -name '*.swp' -exec rm {} \;
+
+  rm -fr ${CURRENT_SMS}
+  tar -zxf ${TARBALL_PATH}/${CURRENT_SMS}.tgz
+
+else
+  CURRENT_SMS=$(ls -d smsv2-D*)
+fi
+
+cleanup
+
+export EXTRA_JVM_OPTS="-DlinuxTowerSetupArgsFile=linuxTowerSetupArgs.py"
+${CURRENT_SMS}/VPlexcli --cli-directory cli -s 51112
+
+#zcli.sh

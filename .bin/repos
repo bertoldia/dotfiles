@@ -1,0 +1,28 @@
+#!/bin/bash
+
+################################################################################
+usage() {
+  echo "Usage: repos <ls|any git command>"
+  echo "  ls: list git repos only."
+  exit
+}
+################################################################################
+
+if [ $# == 0 ]; then
+  usage
+fi
+
+action=$1
+
+for dir in `ls`; do
+  if [ -e ${dir}/.git ]; then
+    if [[ $action == 'ls' ]]; then
+      echo $dir
+    else
+      cd $dir
+      echo "executing 'git $action' in $dir"
+      git $action
+      cd ../
+    fi
+  fi
+done

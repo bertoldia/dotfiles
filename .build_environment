@@ -1,0 +1,12 @@
+# The build environment for the ui repo.
+# Source this in your .bashrc
+
+export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=1024m"
+export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=1024m"
+
+export SPGEAR_PERL=/usr/bin/perl
+SPGEAR=/home/axel/workspace/spgear/bin
+export PATH="${HOME}/.bin:${SPGEAR}:${PATH}"
+export UI_DEV_DIR="${HOME}/workspace/cli-dev"
+
+return 0

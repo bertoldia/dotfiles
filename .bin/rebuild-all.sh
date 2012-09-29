@@ -1,0 +1,1 @@
+/home/axel/workspace/tools/ui_build_tools/rebuild-all.sh

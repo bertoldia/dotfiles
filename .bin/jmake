@@ -1,0 +1,77 @@
+#!/bin/bash
+
+make_tarball=false
+sp_sync=false
+clean=false
+default_action="mvn install -Dmaven.test.skip" #don't run the regression tests
+action=$default_action
+
+usage() {
+  echo "Usage: jmake [-t -u -s -c]"
+  echo "  -t: make a release tarball"
+  echo "  -u: execute unit tests"
+  echo "  -s: sp-sync the resulting tarball. requires -t"
+  echo "  -c: clean. Ignores all other options"
+  exit 0
+}
+
+while getopts "ctush" flag
+do
+  case $flag in
+    s) sp_sync=true;;
+    t) make_tarball=true;;
+    u) action="mvn install";;
+    c) action="mvn clean";;
+    h) usage;;
+    *) usage;;
+  esac
+done
+
+rm `git rev-parse --show-toplevel`/com-yottayotta-smsv2/*.tgz
+
+if [[ $make_tarball == true || $sp_sync == true || $action != $default_action ]]; then
+  args=$1
+  shift
+fi
+
+if [[ $make_tarball == false ]]; then
+  sp_sync=false
+fi
+
+if [[ $action == "mvn clean" ]]; then
+  make_tarball=false
+  sp_sync=false
+fi
+
+WD=`pwd`
+
+if [ $# -ge 1 ];then
+  cd $1
+  jmake $args
+fi
+
+if [ $? != 0  ]; then
+  exit $?
+fi
+
+cd $WD
+
+echo $action
+$action
+
+if [[ $? == 0 && $make_tarball == true ]]; then
+  if [ basename != "com-yottayotta-smsv2" ]; then
+    cd `git rev-parse --show-toplevel`
+    cd com-yottayotta-smsv2
+  fi
+  echo "ant make-docless-tarball"
+  ant make-docless-tarball
+fi
+
+if [ $? == 0 -a $sp_sync == true ]; then
+  sptool -c
+  sptool -p smsv2-D*0*.tgz
+fi
+
+date
+exit 0

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]
+then
+    tmp=`pwd`
+    album=`basename $tmp`
+else
+    album=`basename $1`
+    cd $1
+fi
+
+mkdir /tmp/$album
+cp * /tmp/$album
+cd /tmp/$album
+rm *.MOV
+
+mogrify -resize 1280x1024 *
+#mogrify -resize 800x600 *;
+#mogrify -resize 1600x1200 *;
+cd ../
+mv $album ~/Dropbox/Photos/
+#mv $album ~/Dropbox/Shared/Mom/
+echo "Done."

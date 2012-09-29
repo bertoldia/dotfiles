@@ -1,0 +1,18 @@
+#!/bin/bash
+
+ if [ ! -e cli ]; then
+    echo "No cli directory."
+    exit -1
+ fi
+
+#files=`ls | grep -v "cli\|smsv2\|linuxTowerSetupArgs.py\|progress"`
+#echo $files
+#rm -fr $files
+rm -fr core* vaultDisk
+
+cd cli
+files=`ls | grep -v "connections\|nsfw\|VPlexcli-init\|shell-history\|VPlexconfig.xml"`
+echo $files
+rm -fr $files
+
+cd ../

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+isValidCLIRunDir() {
+  if [ ! -e cli ]; then
+    echo "Missing cli directory."
+    exit -1
+  fi
+
+  if [ ! -e cli/VPlexcli-init ]; then
+    echo "Missing cli/VPlexcli-init."
+    exit -1
+  fi
+
+  if [ -e 'cli/.VPlexcli-lock' ]; then
+    echo "A cli is already running asshole."
+    exit -1
+  fi
+}
+
+isValidCLIRunDir
+
+use_new_tarball=true
+
+while getopts "e" flag
+do
+  case $flag in
+    e) use_new_tarball=false;;
+  esac
+done
+
+if [ $use_new_tarball == true ]; then
+  WD=${PWD}
+  cd ${UI_DEV_DIR}/com-yottayotta-smsv2
+  TARBALL=`ls *.tgz`
+  end=${#TARBALL}-4
+  CURRENT_SMS=${TARBALL:0:${end}}
+
+  cd ${WD}
+  rm -fr ${CURRENT_SMS}
+  tar -zxf ${UI_DEV_DIR}/com-yottayotta-smsv2/${TARBALL}
+else
+  CURRENT_SMS=`ls | grep smsv2-`
+fi
+
+cleanup
+${CURRENT_SMS}/VPlexcli --cli-directory cli -s 51111
