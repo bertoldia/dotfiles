@@ -21,8 +21,8 @@ alias momify='_momify'
 alias dropboxify='_dropboxify'
 alias maketex='rubber --force --inplace --pdf *.tex'
 alias cleantex='rm *.aux *.dvi *.out *.ps *.log *.pdf'
-alias vim='vim -p'
-alias gvim='gvim -p'
+#alias vim='vim -p'
+#alias gvim='gvim -p'
 alias rgvim='gvim --remote-tab-silent'
 alias rvim='vim --remote-tab-silent'
 alias ffind='find . -name'
@@ -30,6 +30,7 @@ alias archive='file-roller -d'
 alias extract='file-roller -h'
 alias bin='ll ~/.bin'
 alias gti='git'
+alias gg='git grep'
 alias trash='_trash'
 alias dotfiles='git --git-dir=$HOME/.dotfiles.git'
 
@@ -42,8 +43,10 @@ alias sshconfig='gvim ~/.ssh/config'
 
 
 alias work='cd ${UI_DEV_DIR/com-yottayotta-smsv2}'
-alias review='cd ~/workspace/cli-review'
+alias do-review='cd ~/workspace/cli-review'
 alias regression-test='cd ~/workspace/cli-regression-test'
+
+alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
 
 if [ -f /usr/bin/colordiff ]
 then

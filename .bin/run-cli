@@ -1,13 +1,27 @@
 #!/bin/bash
 
+BUILD_ENVIRONMENT="build_environment"
+
+loadBuildEnvironment() {
+  if [ -z "$MAVEN_HOME" ]; then
+    if [ -f $UI_DEV_DIR/$BUILD_ENVIRONMENT ]; then
+      . $UI_DEV_DIR/$BUILD_ENVIRONMENT
+      echo "Using JAVA_HOME=$JAVA_HOME"
+    else
+      echo "Could not find $BUILD_ENVIRONMENT. Bailing!!!"
+      exit 1
+    fi
+  fi
+}
+
 isValidCLIRunDir() {
   if [ ! -e cli ]; then
     echo "Missing cli directory."
     exit -1
   fi
 
-  if [ ! -e cli/VPlexcli-init ]; then
-    echo "Missing cli/VPlexcli-init."
+  if [[ ! -e cli/VPlexcli-init && ! -e VPlexcli-init ]]; then
+    echo "Missing VPlexcli-init."
     exit -1
   fi
 
@@ -18,6 +32,7 @@ isValidCLIRunDir() {
 }
 
 isValidCLIRunDir
+loadBuildEnvironment 
 
 use_new_tarball=true
 

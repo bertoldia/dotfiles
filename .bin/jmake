@@ -1,10 +1,13 @@
 #!/bin/bash
 
+BUILD_ENVIRONMENT="build_environment"
+
 make_tarball=false
 sp_sync=false
 clean=false
-default_action="mvn install -Dmaven.test.skip" #don't run the regression tests
+default_action="mvn install -Dmaven.test.skip" #don't run the unit tests
 action=$default_action
+repo_toplevel="/dev/null"
 
 usage() {
   echo "Usage: jmake [-t -u -s -c]"
@@ -14,6 +17,33 @@ usage() {
   echo "  -c: clean. Ignores all other options"
   exit 0
 }
+
+isGitRepo() {
+  repo_toplevel=`git rev-parse --show-toplevel`
+
+  if [ $? != 0  ]; then
+    echo "Error: not a git repository!"
+    exit $?
+  fi
+}
+
+loadBuildEnvironment() {
+  if [ -z $MAVEN_HOME ]; then
+    if [ -f $repo_toplevel/$BUILD_ENVIRONMENT ]; then
+      . $repo_toplevel/$BUILD_ENVIRONMENT
+    else
+      echo "Could not find $BUILD_ENVIRONMENT. Bailing!!!"
+      exit 1
+    fi
+  fi
+}
+
+
+#START
+isGitRepo
+loadBuildEnvironment
+
+echo $PATH
 
 while getopts "ctush" flag
 do
@@ -27,7 +57,7 @@ do
   esac
 done
 
-rm `git rev-parse --show-toplevel`/com-yottayotta-smsv2/*.tgz
+rm $repo_toplevel/com-yottayotta-smsv2/*.tgz
 
 if [[ $make_tarball == true || $sp_sync == true || $action != $default_action ]]; then
   args=$1
@@ -73,5 +103,5 @@ if [ $? == 0 -a $sp_sync == true ]; then
   sptool -p smsv2-D*0*.tgz
 fi
 
-date
+echo "Last build at `date`"
 exit 0

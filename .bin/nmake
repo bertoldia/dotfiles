@@ -1,0 +1,50 @@
+#!/bin/bash
+
+sp_sync=false
+action="./make.py -j4"
+
+usage() {
+  echo "Usage: nmake [-s]"
+  echo "  -c: make clean."
+  echo "  -s: sp-sync the resulting binary."
+  exit 0
+}
+
+isNsfwRepo() {
+  repo_toplevel=`git rev-parse --show-toplevel`
+
+  if [ $? != 0  ]; then
+    echo "Error: not a git repository!"
+    exit $?
+  fi
+
+  if [ -f $repo_toplevel/snac ]; then
+    echo "Error: not an nsfw repository!"
+    exit $?
+  fi
+}
+
+#START
+isNsfwRepo
+
+while getopts "sc" flag
+do
+  case $flag in
+    s) sp_sync=true;;
+    c) action="./make.py clean";;
+    *) usage;;
+  esac
+done
+
+cd `git rev-parse --show-toplevel`/work
+echo "Building in `pwd`"
+echo $acion
+$action
+
+if [ $? == 0 -a $sp_sync == true ]; then
+  cd ../
+  sptool -p build/bin/nsfw
+fi
+
+echo "Last build at `date`"
+exit 0

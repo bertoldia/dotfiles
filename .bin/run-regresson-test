@@ -1,5 +1,7 @@
 #!/bin/bash
 
+BUILD_ENVIRONMENT=$UI_DEV_DIR/build_environment
+
 isValidCLIRunDir() {
   if [ ! -e cli ]; then
      echo "Missing cli directory."
@@ -17,7 +19,25 @@ isValidCLIRunDir() {
   fi
 }
 
+loadBuildEnvironment() {
+  if [ -z "$MAVEN_HOME" ]; then
+    if [ -f $BUILD_ENVIRONMENT ]; then
+      . $BUILD_ENVIRONMENT
+      echo "Using JAVA_HOME=$JAVA_HOME"
+    else
+      echo "Could not find $BUILD_ENVIRONMENT. Bailing!!!"
+      exit 1
+    fi
+  fi
+}
+
+if [ -z "$UI_DEV_DIR" ]; then
+  echo "$UI_DEV_DIR not defined. Bailing."
+  exit -1
+fi
+
 isValidCLIRunDir
+loadBuildEnvironment
 
 TARBALL_PATH="${UI_DEV_DIR}/com-yottayotta-smsv2"
 USE_NEW_RELEASE=true
