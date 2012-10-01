@@ -1,1 +1,1 @@
-/home/axel/workspace/tools/ui_build_tools/rebuild-all.sh
+/home/bertoa/workspace/tools/ui_build_tools/rebuild-all.sh

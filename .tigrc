@@ -1,4 +1,4 @@
 set show-date = relative
-set show-line-numbers = yes
-set line-graphics = UTF8
+set show-line-numbers = no
+set line-graphics = utf-8
 set ignore-space = all

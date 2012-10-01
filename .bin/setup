@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ -z "$MY_HOME" ]; then
+  MY_HOME="/spgear/home/bertoa"
+fi
+
+mkdir cli
+cp ${MY_HOME}/.bin/run-remote run
+ln -s ${MY_HOME}/.bin/cleanup
+cp /var/log/VPlex/cli/connections cli/
+cp /var/log/VPlex/cli/VPlexconfig.xml cli/
+cp /var/log/VPlex/cli/VPlexcli-init .

@@ -110,10 +110,6 @@ if has("autocmd")
 
   " use python syntax highlighting for regression test files
   autocmd BufRead,BufNewFile *.yy set filetype=python
-
-  " vala syntax highlighting
-  autocmd BufRead *.vala,*.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
-  autocmd BufRead,BufNewFile *.vala,*.vapi setfiletype vala
 endif
 
 " Automatically reload .vimrc when it changes.

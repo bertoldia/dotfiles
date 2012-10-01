@@ -17,10 +17,6 @@ if [ -f /usr/bin/htop ]; then
 fi
 alias locate='locate -e'
 alias car='cat'
-alias momify='_momify'
-alias dropboxify='_dropboxify'
-alias maketex='rubber --force --inplace --pdf *.tex'
-alias cleantex='rm *.aux *.dvi *.out *.ps *.log *.pdf'
 #alias vim='vim -p'
 #alias gvim='gvim -p'
 alias rgvim='gvim --remote-tab-silent'
@@ -41,6 +37,18 @@ alias aliasedit='gvim ~/.bash_aliases'
 alias gitconfig='gvim ~/.gitconfig'
 alias sshconfig='gvim ~/.ssh/config'
 
+#runner
+alias ctest='/home/runner/bin/ctest'
+alias rtest='/home/runner/bin/rtest'
+alias runner='echo "Usage: runner-SYSTEM <D10|D20> [extra args]"'
+alias runner-argonaut-disruptor-h='runner-bin argonaut-disruptor-h'
+alias runner-argo-large-geo-nst-e='runner-bin argo-large-geo-nst-e'
+alias runner-argo-small-geo-nst-e='runner-bin argo-small-geo-nst-e'
+alias runner-wild-small-geo-nst-e='runner-bin wild-small-geo-nst-e'
+alias runner-wild-small-metro-nst-e='runner-bin wild-small-metro-nst-e'
+alias runner-wildcatve-disruptor-e='runner-bin wildcatve-disruptor-e'
+alias runner-sms-mario-1='runner-bin sms-mario-1'
+alias runner-sms-dev-6='runner-bin sms-dev-6'
 
 alias work='cd ${UI_DEV_DIR}/com-yottayotta-smsv2'
 alias ui-review='_ui_review'
@@ -94,19 +102,3 @@ function lcd() {
 function _trash() {
   mv "$@" ~/.local/share/Trash/files/;
 }
-
-function _momify() {
-    mogrify -resize 800x600 "$@";
-    imrename $@; 
-}
-
-function _dropboxify() {
-    mogrify -resize 1024x768 "$@";
-    imrename $@; 
-}
-
-# Old
-#alias miro='cd $MIRO_ROOT'
-#alias drdc='cd $DRDC_ROOT'
-#alias webmiro='cd $WEBMIRO_ROOT'
-#source $HOME/.miroProfile

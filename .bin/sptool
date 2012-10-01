@@ -1,0 +1,54 @@
+#!/bin/bash
+sync=false
+push=false
+clean=false
+list=false
+file=""
+
+usage() {
+  echo "Usage: sptool [-s -p -c -l]"
+  echo "  -s: sync."
+  echo "  -p: push/publish."
+  echo "  -c: clean."
+  echo "  -l: list."
+  exit
+}
+
+if [ $# == 0 ]; then
+  usage
+fi
+
+while getopts "s:p:clh" flag
+do
+  case $flag in
+    h) usage;;
+    s) sync=true
+      file=$OPTARG;;
+    p) push=true
+      file=$OPTARG;;
+    c) clean=true;;
+    l) list=true;;
+  esac
+done
+
+if [ $sync == true ]; then
+  mv $file ~/sp-sync
+  ln -s ~/sp-sync/$file
+fi
+
+if [ $clean == true ]; then
+  rm ~/public_html/*.tgz
+  rm ~/public_html/*.tar.gz
+fi
+
+if [ $push == true ]; then
+  cp -f $file ~/public_html
+  echo http://webed.spgear.lab.emc.com/~bertoa/$file
+fi
+
+if [ $list == true ]; then
+  echo ~/public_html
+  LC_COLLATE=C ls -lha --color=auto --group-directories-first ~/public_html
+fi
+
+exit

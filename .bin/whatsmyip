@@ -1,0 +1,10 @@
+#!/bin/bash
+
+address=`ifconfig eth0 | grep 'inet addr' | awk '{print $2}' | sed 's/addr://'`
+
+cd ~/.bin
+echo "#!/bin/bash" > bertoa
+echo "" >> bertoa
+echo "ssh -X bertoa@$address" >> bertoa
+chmod +x bertoa
+echo ${address}

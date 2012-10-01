@@ -1,0 +1,66 @@
+#!/bin/bash
+
+rid=-1
+qid=-1
+################################################################################
+usage() {
+  echo "Usage: zr <link <-r> [-q]|update|commit> [-g]>"
+  echo "  -r: review number."
+  echo "  -q: ticket number."
+  echo "  -g: do a git rebase first."
+  exit
+}
+################################################################################
+commit() {
+  commits_to_squash=`git changes | grep -i squash | wc -l`
+  if [ $commits_to_squash != 0 ]; then
+    echo "You have $commits_to_squash changes to squash before committing asshole:"
+    git changes | grep -i squash
+  else
+    zreview commit --branch `git current-branch` -y 1
+  fi
+}
+################################################################################
+update() {
+  zreview addEvidence --branch `git current-branch` -y 1
+}
+################################################################################
+link() {
+  if [ $rid == -1 ]; then
+    usage
+  fi
+
+  if [ $qid == -1 ]; then
+    zreview link --branch `git current-branch` --upstream `git upstream | sed 's/origin\///'` -r zeph-r$rid -q [NONE]
+  else
+    zreview link --branch `git current-branch` --upstream `git upstream | sed 's/origin\///'` -r zeph-r$rid -q zeph-q$qid -e FINL
+  fi
+}
+################################################################################
+git_rebase() {
+  git fetch && git rebase `git upstream`
+  if [ $? != 0  ]; then
+    exit
+  fi
+}
+################################################################################
+case $1 in
+  "link") ;;
+  "update") ;;
+  "commit") ;;
+  *) usage;;
+esac
+
+function=$1
+shift
+
+while getopts "gr:q:" flag
+do
+  case $flag in
+    g) git_rebase ;;
+    r) rid=$OPTARG;;
+    q) qid=$OPTARG;;
+  esac
+done
+
+$function

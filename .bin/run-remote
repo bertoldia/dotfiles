@@ -1,0 +1,38 @@
+#!/bin/bash
+
+
+isValidCLIRunDir() {
+  if [ ! -e cli ]; then
+    echo "Missing cli directory."
+    exit -1
+  fi
+
+  if [[ ! -e cli/VPlexcli-init && ! -e VPlexcli-init ]]; then
+    echo "Missing cli/VPlexcli-init."
+    exit -1
+  fi
+
+  if [ -e 'cli/.VPlexcli-lock' ]; then
+    echo "A cli is already running asshole."
+    exit -1
+  fi
+}
+
+isValidCLIRunDir
+
+if [ -z "$MY_HOME" ]; then
+  MY_HOME="/spgear/home/bertoa"
+fi
+
+WD=`pwd`
+cd ${MY_HOME}/public_html/
+
+TARBALL=`ls *.tgz`
+end=${#TARBALL}-4
+SMS=${TARBALL:0:${end}}
+
+cd ${WD}
+
+tar -zxf ${MY_HOME}/public_html/${TARBALL}
+./cleanup
+${SMS}/VPlexcli --cli-directory cli/ -s 51111

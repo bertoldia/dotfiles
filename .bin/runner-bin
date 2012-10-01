@@ -1,0 +1,76 @@
+#!/bin/bash
+
+RUNNER_HOME="/home/runner"
+CTEST_BIN="${RUNNER_HOME}/bin/ctest"
+LOCAL_RUNNER="/home/bertoa/runner"
+
+usage() {
+  echo "Usage: runner-bin <system> [-s|-h|-n[-b, -e, -t]]"
+  echo "  -s: show (default)."
+  echo "  -n: submit new job."
+  echo "  -b: VPlex version branch. One of D10, D20 (default is D10)."
+  echo "  -e: use existing CLI tarball in ${LOCAL_RUNNER} instead of grabbing new one from workspace."
+  echo "  -c: with custom cli dir."
+  echo "  -t: test only. Don't actually submit new job request."
+  echo "  -p: copy existing system CLI configuration to ${LOCAL_RUNNER}."
+  echo "  -h: help."
+  exit
+}
+
+if [ $# == 0 ]; then
+  echo "Error: missing system."
+  usage
+fi
+
+SYSTEM=$1
+shift
+
+ACTION="show"
+BRANCH="D10"
+USE_EXISTING_CLI=false
+TEST=false
+CUSTOM_CLI_CONFIG=false
+
+while getopts "b:snectph" flag
+do
+  case $flag in
+    b) BRANCH=$OPTARG;;
+    s) ACTION="show";;
+    n) ACTION="submit";;
+    e) USE_EXISTING_CLI=true;;
+    c) CUSTOM_CLI_CONFIG=true;;
+    t) TEST=true;;
+    p) ACTION="prep";;
+    h) usage;;
+  esac
+done
+
+case $ACTION in
+  show)
+    ${CTEST_BIN} ${SYSTEM} show
+    exit
+    ;;
+  prep)
+    rm -fr ${LOCAL_RUNNER}/cli
+    cp -rL ${RUNNER_HOME}/testing/${SYSTEM}/latest_conf/cli ${LOCAL_RUNNER}
+    exit
+    ;;
+  submit)
+    if [ $USE_EXISTING_CLI == false ]; then
+      rm ${LOCAL_RUNNER}/smsv2*
+      cp ~/workspace/cli-dev/com-yottayotta-smsv2/smsv2-${BRANCH}.0.0.0.tgz ${LOCAL_RUNNER}
+    fi
+
+    COMMAND="${CTEST_BIN} ${SYSTEM} submit ${RUNNER_HOME}/firmware/nsfw-${BRANCH} --cli=${LOCAL_RUNNER}/smsv2-${BRANCH}.0.0.0.tgz"
+    if [ ${CUSTOM_CLI_CONFIG} == true ]; then
+      COMMAND="${COMMAND} -c ${LOCAL_RUNNER}/cli"
+    fi
+    echo ${COMMAND}
+
+    if [ $TEST == false ]; then
+      exec ${COMMAND}
+    fi
+    ;;
+esac
+
+#rm -r ${LOCAL_RUNNER}/*

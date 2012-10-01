@@ -1,0 +1,7 @@
+#!/bin/bash
+
+powermt config
+powermt check force
+powermt save
+powermt display dev=all | grep emc | sed 's/Pseudo name=/DEVICE: -R-N \/dev\/'/g > devices.txt
+cat devices.txt
