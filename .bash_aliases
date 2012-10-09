@@ -43,7 +43,7 @@ alias sshconfig='gvim ~/.ssh/config'
 
 
 alias work='cd ${UI_DEV_DIR/com-yottayotta-smsv2}'
-alias do-review='cd ~/workspace/cli-review'
+alias do-review='_do_review'
 alias regression-test='cd ~/workspace/cli-regression-test'
 
 alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
@@ -59,6 +59,19 @@ alias reload='source ~/.bashrc'
 alias debinstall='sudo dpkg -i'
 alias install='sudo apt-get install'
 alias uninstall='sudo apt-get remove'
+
+function _do_review() {
+  cd ~/workspace/cli-review
+  branch_exists=`git br | grep ${1} | wc -l`
+  if [ $branch_exists == 1  ]; then
+    git co $1
+    git pull
+  else
+    git pull
+    git co -b $1 origin/$1
+  fi
+  gitg&
+}
 
 function lcd() {
     builtin cd "$@";
