@@ -170,7 +170,7 @@ let g:tagbar_left = 0
 let g:tagbar_sort = 0
 
 "NERDTree
-"noremap <F2> :Explore<CR>
+noremap <S-F2> :Explore<CR>
 noremap <F2> :NERDTreeToggle<CR>
 
 "Buffer switching
