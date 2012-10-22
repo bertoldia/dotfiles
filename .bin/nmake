@@ -38,6 +38,7 @@ done
 
 cd `git rev-parse --show-toplevel`/work
 echo "Building in `pwd`"
+find . -name '*.gcda' -exec rm {} \;
 echo $acion
 $action
 
