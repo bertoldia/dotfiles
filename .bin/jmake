@@ -98,10 +98,13 @@ if [[ $? == 0 && $make_tarball == true ]]; then
   ant make-docless-tarball
 fi
 
-if [ $? == 0 -a $sp_sync == true ]; then
+if [ $? == 0 ]; then
+  echo "Last build at `date`"
+fi
+
+  if [ $? == 0 -a $sp_sync == true ]; then
   sptool -c
   sptool -p smsv2-D*0*.tgz
 fi
 
-echo "Last build at `date`"
 exit 0
