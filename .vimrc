@@ -93,7 +93,7 @@ if has("autocmd")
   " For all text files set 'textwidth' to 80 characters.
   autocmd FileType text setlocal textwidth=80
   autocmd Filetype markdown setlocal textwidth=80
-  autocmd Filetype python setlocal shiftwidth=4 tabstop=4
+  autocmd Filetype cpp setlocal shiftwidth=4 tabstop=4
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
