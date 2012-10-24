@@ -46,7 +46,7 @@ set tags=./tags;/               " search for a tags file staring at current file
 set cst                          "to select tag when there are multiple matches
 " highlight current line and column, and set the red line over there ->
 set cursorline
-set colorcolumn=89
+set colorcolumn=80
 set showmode
 "set textwidth=80
 set wrap linebreak
@@ -96,6 +96,7 @@ if has("autocmd")
   " For all text files set 'textwidth' to 80 characters.
   autocmd FileType text setlocal textwidth=80
   autocmd Filetype markdown setlocal textwidth=80
+  autocmd Filetype python setlocal shiftwidth=4 tabstop=4
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
