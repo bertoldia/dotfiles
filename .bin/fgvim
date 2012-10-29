@@ -1,45 +1,14 @@
 #!/bin/bash
 
-remote=false
-force=false
-
-usage(){
-  echo ""
-  echo "fgvim: search for and open files matching the supplied search strings."
-  echo ""
-  echo "Usage: fgvim [-f -r] search string [additional search strings]"
-  echo "  -f: force. Skip confirmation before opening the files found."
-  echo "  -r: remote. Open the file in an already running instance of gvim (i.e. use the --remote-tab-silent option in gvim)."
-  exit
-}
-
-while getopts "rf" flag
-do
-  case $flag in
-    r) remote=true;;
-    f) force=true;;
-    [?]) usage;;
-  esac
-done
-
-if [[ $remote == true || $force == true ]]; then
-  shift
-fi
-
 if [ $# -lt 1 ];then
   echo "Error: missing search string."
-  usage
 fi
 
 files=""
 
 for file in $@
 do
-  if [ $force == true ]; then
-    tmp=`find . -iname "*$file*" -exec echo {} \;`
-  else
-    tmp=`find . -iname "*$file*" -ok echo {} \;`
-  fi
+  tmp=`find . -iname "$file"`
 
   if [ "$tmp" != "" ]; then
     files="$files $tmp"
@@ -50,8 +19,4 @@ if [ "$files" == "" ]; then
   exit
 fi
 
-if [ $remote == true ]; then
-  gvim --remote-tab-silent $files
-else
-  gvim -p $files
-fi
+gvim $files
