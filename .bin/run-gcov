@@ -1,0 +1,30 @@
+#!/bin/bash
+
+isNsfwRepo() {
+  repo_toplevel=`git rev-parse --show-toplevel`
+
+  if [ $? != 0  ]; then
+    echo "Error: not a git repository!"
+    exit $?
+  fi
+
+  if [ -f $repo_toplevel/snac ]; then
+    echo "Error: not an nsfw repository!"
+    exit $?
+  fi
+}
+
+#START
+isNsfwRepo
+
+cd `git rev-parse --show-toplevel`/work
+cd work
+lcov -c -d . > gcov_result.info
+if [ $? != 0 ]; then
+  echo "Shit! lcov failed."
+  exit -1
+fi
+rm -fr ~/public_html/gcov/*
+genhtml -o ~/public_html/gcov gcov_result.info
+rm gcov_result.info
+
