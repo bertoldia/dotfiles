@@ -40,7 +40,7 @@ set switchbuf=usetab,newtab     " Buffer control options
 set wildmenu
 set wildmode=list:full
 set mouse=a                     " Enable mouse support in console
-set ignorecase                  " Ignoring case is a fun trick
+"set ignorecase                  " Ignoring case is a fun trick
 set smartcase                   " And so is Artificial Intelligence!
 set tags=./tags;/               " search for a tags file staring at current file's wd and going up until one is fond
 set cst                          "to select tag when there are multiple matches
