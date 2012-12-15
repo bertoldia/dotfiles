@@ -41,7 +41,8 @@ purple='\[\e[1;35m\]'
 cyan='\[\e[1;36m\]'
 white='\[\e[1;37m\]'
 default='\[\e[0m\]'
-PS1="$blue[$white\u$blue@$yellow\h:$blue\W$purple\$(__git_ps1 "{%s}")$blue]$default "
+PS1="$green\w $purple\$(__git_ps1 "{%s}")\n$blue\@ $white\u$blue@$yellow\h$blue:$default "
+#PS1="$blue[$white\u$blue@$yellow\h:$blue\W$purple\$(__git_ps1 "{%s}")$blue]$default "
 #PS1="$blue[$purple\d \T:$white\u$blue@$yellow\h:$blue\W$purple\$(__git_ps1 "{%s}")$blue]$default\n"
 
 # If this is an xterm set the title to user@host:dir
