@@ -71,12 +71,10 @@ if has("gui_running")
   "colorscheme earendel
   "colorscheme jellybeans
   "colorscheme rdark
-  "colorscheme molokai
-  colorscheme two2tango
+  colorscheme molokai
+  "colorscheme two2tango
 
   set guioptions-=T " hide toolbar
-  set guioptions+=l " always show scrollbar
-  set guioptions+=r " always show scrollbar
 
   set cursorcolumn
 else
@@ -139,10 +137,10 @@ nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
+nmap <silent> <C-S-t> :tab sball<CR>
 
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-map <C-t> <C-w>T
 
 " misspellings
 :iabbrev teh the
