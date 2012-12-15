@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BUILD_ENVIRONMENT=$UI_DEV_DIR/build_environment
+BUILD_ENVIRONMENT="build_environment"
 
 isValidCLIRunDir() {
   if [ ! -e cli ]; then
@@ -9,7 +9,7 @@ isValidCLIRunDir() {
   fi
 
   if [[ ! -e VPlexcli-init && ! -e cli/VPlexcli-init ]]; then
-     echo "Missing cli/VPlexcli-init."
+     echo "Missing VPlexcli-init."
      exit -1
   fi
 
@@ -21,8 +21,11 @@ isValidCLIRunDir() {
 
 loadBuildEnvironment() {
   if [ -z "$MAVEN_HOME" ]; then
-    if [ -f $BUILD_ENVIRONMENT ]; then
-      . $BUILD_ENVIRONMENT
+    if [ -f $UI_DEV_DIR/$BUILD_ENVIRONMENT ]; then
+      . $UI_DEV_DIR/$BUILD_ENVIRONMENT
+      echo "Using JAVA_HOME=$JAVA_HOME"
+    elif [ -f $UI_DEV_DIR/../$BUILD_ENVIRONMENT ]; then
+      . $UI_DEV_DIR/../$BUILD_ENVIRONMENT
       echo "Using JAVA_HOME=$JAVA_HOME"
     else
       echo "Could not find $BUILD_ENVIRONMENT. Bailing!!!"

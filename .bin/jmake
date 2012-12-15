@@ -31,6 +31,8 @@ loadBuildEnvironment() {
   if [ -z $MAVEN_HOME ]; then
     if [ -f $repo_toplevel/$BUILD_ENVIRONMENT ]; then
       . $repo_toplevel/$BUILD_ENVIRONMENT
+    elif [ -f $repo_toplevel/../$BUILD_ENVIRONMENT ]; then
+      . $repo_toplevel/../$BUILD_ENVIRONMENT
     else
       echo "Could not find $BUILD_ENVIRONMENT. Bailing!!!"
       exit 1
