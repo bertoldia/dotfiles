@@ -7,6 +7,9 @@ loadBuildEnvironment() {
     if [ -f $UI_DEV_DIR/$BUILD_ENVIRONMENT ]; then
       . $UI_DEV_DIR/$BUILD_ENVIRONMENT
       echo "Using JAVA_HOME=$JAVA_HOME"
+    elif [ -f $UI_DEV_DIR/../$BUILD_ENVIRONMENT ]; then
+      . $UI_DEV_DIR/../$BUILD_ENVIRONMENT
+      echo "Using JAVA_HOME=$JAVA_HOME"
     else
       echo "Could not find $BUILD_ENVIRONMENT. Bailing!!!"
       exit 1
@@ -54,6 +57,12 @@ if [ $use_new_tarball == true ]; then
   rm -fr ${CURRENT_SMS}
   tar -zxf ${UI_DEV_DIR}/com-yottayotta-smsv2/${TARBALL}
 else
+  if [ $(ls smsv2-D* | wc -l) -gt 1 ]; then
+    echo "Which one?"
+    ls -hl smsv2-D*
+    exit 1
+  fi
+
   CURRENT_SMS=`ls | grep smsv2-`
 fi
 
