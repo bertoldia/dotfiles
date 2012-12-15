@@ -35,6 +35,8 @@
   fixup = !sh -c 'git commit -a -m \"fixup! $@\" && git rebase-changeset' -
   squash = !sh -c 'git commit -a -m \"squash! $@\" && git rebase-changeset' -
   maint = !git fetch && git remote prune origin && git prune && git gc && git fsck
+  change-upstream = !sh -c 'git branch --set-upstream `git current-branch` \"$@\"' -
+  my-commits = log --oneline --author='Axel von Bertoldi'
 [core]
   editor = vim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
