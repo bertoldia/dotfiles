@@ -58,7 +58,7 @@ case $ACTION in
   submit)
     if [ $USE_EXISTING_CLI == false ]; then
       rm ${LOCAL_RUNNER}/smsv2*
-      cp ~/workspace/cli-dev/com-yottayotta-smsv2/smsv2-${BRANCH}.0.0.0.tgz ${LOCAL_RUNNER}
+      cp ${UI_DEV_DIR}/com-yottayotta-smsv2/smsv2-${BRANCH}.0.0.0.tgz ${LOCAL_RUNNER}
     fi
 
     COMMAND="${CTEST_BIN} ${SYSTEM} submit ${RUNNER_HOME}/firmware/nsfw-${BRANCH} --cli=${LOCAL_RUNNER}/smsv2-${BRANCH}.0.0.0.tgz"
