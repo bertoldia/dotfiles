@@ -55,8 +55,6 @@ set wrap linebreak
 set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
 
-set showbreak=↪
-
 syntax enable
 filetype on
 filetype plugin on
@@ -70,8 +68,8 @@ set background=dark
 if has("gui_running")
   "colorscheme axel
   "colorscheme slate
-  "colorscheme molokai
-  colorscheme solarized
+  colorscheme molokai
+  "colorscheme two2tango
 
   set guioptions-=T " hide toolbar
 
@@ -81,8 +79,9 @@ else
    colorscheme solarized
 endif
 
-set guifont=DejaVu\ Sans\ Mono\ 10
-"set guifont=Source\ Code\ Pro\ 10
+"set guifont=DejaVu\ Sans\ Mono\ 9
+"set guifont=Source\ Code\ Pro\ 9
+set guifont=Ubuntu\ Mono\ 10
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
