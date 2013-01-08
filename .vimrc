@@ -51,6 +51,10 @@ set showmode
 "set textwidth=80
 set wrap linebreak
 
+"Change cursor shape and colour in insert mode
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkwait10
+
 syntax enable
 filetype on
 filetype plugin on
@@ -62,15 +66,7 @@ set statusline=%f%=%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{st
 " ---APPEARANCE---
 if has("gui_running")
   "colorscheme axel
-  "colorscheme rootwater
-  "colorscheme wombat
-  "colorscheme tango2
-  "colorscheme darkspectrum
-  "colorscheme molokai
-  "colorscheme two2tango
-  "colorscheme earendel
-  "colorscheme jellybeans
-  "colorscheme rdark
+  "colorscheme slate
   colorscheme molokai
   "colorscheme two2tango
 
@@ -81,8 +77,9 @@ else
    colorscheme evening
 endif
 
-set guifont=DejaVu\ Sans\ Mono\ 9
+"set guifont=DejaVu\ Sans\ Mono\ 9
 "set guifont=Source\ Code\ Pro\ 9
+set guifont=Ubuntu\ Mono\ 11
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
@@ -123,7 +120,7 @@ endif
 map Q gq
 map <C-n> :tabnew<CR>
 map <C-A-v> :vsplit<CR>
-map <C-l> :wa<CR> :!rubber --force --inplace -pdf %<CR>
+noremap <C-A-l> :wa<CR> :!rubber --force --inplace -pdf %<CR>
 noremap <C-A-h> :w<CR> :!$HOME/.bin/mkd2html "%"<CR>
 map <C-b> :w<CR> :!pdflatex %<CR>
 " copy/paste
