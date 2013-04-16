@@ -2,7 +2,9 @@
 // @name           CSE Review Link to Repo Branch
 // @version        0.1
 // @author         Axel von Bertoldi
-// @license GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
+// @license        GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
+// @include        https://cse.spgear.lab.emc.com/*
+// @grant          none
 // ==/UserScript==+
 
 nodes = document.getElementsByClassName("rec_kv1_val")
