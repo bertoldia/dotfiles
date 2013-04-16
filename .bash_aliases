@@ -43,24 +43,36 @@ alias sshconfig='gvim ~/.ssh/config'
 
 
 alias work='cd ${UI_DEV_DIR}/com-yottayotta-smsv2'
-alias do-review='_do_review'
+alias ui-review='_ui_review'
 alias regression-test='cd ${UI_REGRESSION_DIR}'
 
 alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
 
-if [ -f /usr/bin/colordiff ]
-then
+if [ -f /usr/bin/yaourt ]; then
+  alias query='yaourt -Ss'
+  alias install='yaourt -S'
+  alias update='yaourt -Syu'
+  alias uninstall='yaourt -Rsc'
+  alias orphaned='yaourt -Qdt'
+  alias not_installed='_search_not_installed'
+elif [ -f /usr/bin/apt-get ]; then
+  alias install='sudo apt-get install'
+  alias uninstall='sudo apt-get remove'
+fi
+
+if [ -f /usr/bin/pacman-color ]; then
+    alias pacman='pacman-color'
+fi
+
+if [ -f /usr/bin/colordiff ]; then
     alias diff='colordiff -cp'
 else
     alias diff='diff -cp'
 fi
 
 alias reload='source ~/.bashrc'
-alias debinstall='sudo dpkg -i'
-alias install='sudo apt-get install'
-alias uninstall='sudo apt-get remove'
 
-function _do_review() {
+function _ui_review() {
   cd $UI_REVIEW_DIR
   branch_exists=`git br | grep ${1} | wc -l`
   if [ $branch_exists == 1  ]; then
@@ -91,6 +103,10 @@ function _momify() {
 function _dropboxify() {
     mogrify -resize 1024x768 "$@";
     imrename $@; 
+}
+
+function _search_not_installed() {
+  pacman -Ss $1 | pcregrep -vM 'installed.*\n.*'
 }
 
 # Old
