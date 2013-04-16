@@ -32,10 +32,11 @@
   changes = !git log --oneline `git upstream`..HEAD
   my-branches = !git br -a | grep --color bertoa
   rebase-changeset = !git rebase --interactive HEAD~`git changes | wc -l`
+  rebase-branch = !git rebase --interactive `git upstream`
   fixup = !sh -c 'git commit -a -m \"fixup! $@\" && git rebase-changeset' -
   squash = !sh -c 'git commit -a -m \"squash! $@\" && git rebase-changeset' -
   maint = !git fetch && git remote prune origin && git prune && git gc && git fsck
-  change-upstream = !sh -c 'git branch --set-upstream `git current-branch` \"$@\"' -
+  change-upstream = !sh -c 'git branch --set-upstream-to \"$@\"' -
   my-commits = log --oneline --author='Axel von Bertoldi'
 [core]
   editor = vim
