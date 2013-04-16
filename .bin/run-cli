@@ -57,7 +57,7 @@ if [ $use_new_tarball == true ]; then
   rm -fr ${CURRENT_SMS}
   tar -zxf ${UI_DEV_DIR}/com-yottayotta-smsv2/${TARBALL}
 else
-  if [ $(ls smsv2-D* | wc -l) -gt 1 ]; then
+  if [ $(ls | grep smsv2-D | wc -l) -gt 1 ]; then
     echo "Which one?"
     ls -hl smsv2-D*
     exit 1
