@@ -12,4 +12,7 @@ export UI_REVIEW_DIR="${HOME}/workspace/review/cli"
 export UI_TEST_DIR="${HOME}/workspace/test/cli"
 export UI_REGRESSION_DIR="${HOME}/workspace/test/cli-regression"
 
+export NSFW_DEV_DIR="${HOME}/workspace/dev/nsfw"
+export NSFW_REVIEW_DIR="${HOME}/workspace/review/nsfw"
+
 return 0
