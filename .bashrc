@@ -2,6 +2,11 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+if [ -f /usr/share/git/completion/git-prompt.sh ]
+then
+  . /usr/share/git/completion/git-prompt.sh
+fi
+
 # If not running interactively AND a login shell don't do anything. We need
 # both conditions to be albe to work correctly with tmux (which is both
 # interactive and login) and also spgear scripts (which are login but not
