@@ -34,15 +34,15 @@ set foldlevel=1
 set foldnestmax=5
 set spl=en spell                " spell-checklanguage
 set spell                       " spell-check on
-"compiler ~/.bin/jmake           " Set compiler
+"compiler ~/.bin/jmake          " Set compiler
 set switchbuf=usetab,newtab     " Buffer control options
 " Cool tab completion stuff
 set wildmenu
 set wildmode=list:full
 set mouse=a                     " Enable mouse support in console
-"set ignorecase                  " Ignoring case is a fun trick
+"set ignorecase                 " Ignoring case is a fun trick
 set smartcase                   " And so is Artificial Intelligence!
-set tags=./tags;/               " search for a tags file staring at current file's wd and going up until one is fond
+set tags=./tags;/               " search for a tags file staring at current file's wd and going up until one is found
 set cst                          "to select tag when there are multiple matches
 " highlight current line and column, and set the red line over there ->
 set cursorline
@@ -55,6 +55,8 @@ set wrap linebreak
 set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
 
+set showbreak=↪
+
 syntax enable
 filetype on
 filetype plugin on
@@ -64,22 +66,23 @@ set laststatus=2                " Pretty status line
 set statusline=%f%=%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 
 " ---APPEARANCE---
+set background=dark
 if has("gui_running")
   "colorscheme axel
   "colorscheme slate
-  colorscheme molokai
-  "colorscheme two2tango
+  "colorscheme molokai
+  colorscheme solarized
 
   set guioptions-=T " hide toolbar
 
   set cursorcolumn
 else
-   colorscheme evening
+   "colorscheme evening
+   colorscheme solarized
 endif
 
-"set guifont=DejaVu\ Sans\ Mono\ 9
-"set guifont=Source\ Code\ Pro\ 9
-set guifont=Ubuntu\ Mono\ 11
+set guifont=DejaVu\ Sans\ Mono\ 10
+"set guifont=Source\ Code\ Pro\ 10
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
@@ -102,7 +105,7 @@ if has("autocmd")
         \ endif
 
   " highlighting trailing spaces
-  highlight ExtraWhitespace ctermbg=red guibg=red
+  highlight ExtraWhitespace ctermbg=red guibg=#F92672
   autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
   autocmd InsertLeave * match ExtraWhitespace /\s\+\%#\@<!$/
 
@@ -114,6 +117,11 @@ if has("autocmd")
   autocmd BufRead,BufNewFile *.vala,*.vapi setfiletype vala
 endif
 
+" Automatically reload .vimrc when it changes.
+augroup reload_vimrc " {
+  autocmd!
+  autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
 
 "re-mappings
 " Don't use Ex mode, use Q for formatting
@@ -121,6 +129,7 @@ map Q gq
 map <C-n> :tabnew<CR>
 map <C-A-v> :vsplit<CR>
 noremap <C-A-l> :wa<CR> :!rubber --force --inplace -pdf %<CR>
+noremap <C-A-b> :wa<CR> :!pdflatex %<CR>
 noremap <C-A-h> :w<CR> :!$HOME/.bin/mkd2html "%"<CR>
 map <C-b> :w<CR> :!pdflatex %<CR>
 " copy/paste
@@ -138,6 +147,8 @@ nmap <silent> <C-S-t> :tab sball<CR>
 
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+"map <C-S-t> :tag 
 
 " misspellings
 :iabbrev teh the
@@ -178,6 +189,7 @@ noremap <C-w> :BW<CR>
 
 "Fugitive
 map  <Leader>gd  :Gdiff<CR>
+map  <Leader>gb  :Gblame<CR>
 
 "LustyJuggler
 noremap <Leader>aa :LustyJuggler<CR>
