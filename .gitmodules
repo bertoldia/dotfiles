@@ -1,21 +1,24 @@
 [submodule ".vim/bundle/nerdtree"]
-	path = .vim/bundle/nerdtree
+  path = .vim/bundle/nerdtree
   url = git://github.com/scrooloose/nerdtree.git
 [submodule ".vim/bundle/supertab"]
-	path = .vim/bundle/supertab
-	url = git://github.com/ervandew/supertab.git
+  path = .vim/bundle/supertab
+  url = git://github.com/ervandew/supertab.git
 [submodule ".vim/bundle/bookmarking"]
-	path = .vim/bundle/bookmarking
-	url = git://github.com/dterei/VimBookmarking.git
+  path = .vim/bundle/bookmarking
+  url = git://github.com/dterei/VimBookmarking.git
 [submodule ".vim/bundle/fugitive"]
-	path = .vim/bundle/fugitive
-	url = git://github.com/tpope/vim-fugitive.git
+  path = .vim/bundle/fugitive
+  url = git://github.com/tpope/vim-fugitive.git
 [submodule ".vim/bundle/tagbar"]
-	path = .vim/bundle/tagbar
-	url = git://github.com/majutsushi/tagbar.git
+  path = .vim/bundle/tagbar
+  url = git://github.com/majutsushi/tagbar.git
 [submodule ".vim/bundle/nerdcommenter"]
-	path = .vim/bundle/nerdcommenter
-	url = git://github.com/scrooloose/nerdcommenter.git
+  path = .vim/bundle/nerdcommenter
+  url = git://github.com/scrooloose/nerdcommenter.git
 [submodule ".vim/bundle/vimoutliner"]
-	path = .vim/bundle/vimoutliner
+  path = .vim/bundle/vimoutliner
   url = git://github.com/vimoutliner/vimoutliner.git
+[submodule ".vim/bundle/vim-colors-solarized"]
+  path = .vim/bundle/vim-colors-solarized
+  url = git://github.com/altercation/vim-colors-solarized.git
