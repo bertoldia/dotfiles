@@ -63,7 +63,7 @@ filetype plugin on
 
 "Status line
 set laststatus=2                " Pretty status line
-set statusline=%f%=%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+set statusline=%{g:bufBStr}%#NowBuf#%{g:bufNStr}%#StatusLine#%{g:bufAStr}%<%=%{fugitive#statusline()}[%Y][%c,%l/%L(%P)]
 
 " ---APPEARANCE---
 set background=dark
