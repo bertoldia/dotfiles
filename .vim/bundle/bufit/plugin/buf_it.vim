@@ -27,8 +27,6 @@ hi NowBuf term=bold ctermfg=Cyan guifg=green guibg=blue gui=bold
 if exists("g:showInStatusbar")
     if !exists("g:statusbarUsrDef") || g:statusbarUsrDef == 0
         "set statusline=%m\{%{&ff}:%{&fenc}:%Y}\ %{g:bufBStr}%#NowBuf#%{g:bufNStr}%#StatusLine#%{g:bufAStr}%<%=%l,%c,%P,%L%<
-        set statusline=%{g:bufBStr}%#NowBuf#%{g:bufNStr}%#StatusLine#%{g:bufAStr}%<%=[%Y][%c,%l/%L(%P)]
-
     endif
 endif
 
