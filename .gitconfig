@@ -38,6 +38,7 @@
   maint = !git fetch && git remote prune origin && git prune && git gc && git fsck && git clean -fx -e tags
   change-upstream = !sh -c 'git branch --set-upstream-to \"$@\"' -
   my-commits = log --oneline --author='Axel von Bertoldi'
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 [core]
   editor = vim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
