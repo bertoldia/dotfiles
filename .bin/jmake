@@ -52,7 +52,11 @@ do
   case $flag in
     s) sp_sync=true;;
     t) make_tarball=true;;
-    u) action="mvn install";;
+    u) action="mvn install"
+      if [ $# -gt 1 ];then
+        test="-Dtest=$2"
+        action="$action $test"
+      fi;;
     c) action="mvn clean";;
     h) usage;;
     *) usage;;
@@ -77,7 +81,7 @@ fi
 
 WD=`pwd`
 
-if [ $# -ge 1 ];then
+if [[ $action == $default_action && $# -ge 1 ]];then
   cd $1
   jmake $args
 fi
