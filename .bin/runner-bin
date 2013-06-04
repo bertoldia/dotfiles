@@ -61,7 +61,7 @@ case $ACTION in
       cp ${UI_DEV_DIR}/com-yottayotta-smsv2/smsv2-${BRANCH}.0.0.0.tgz ${LOCAL_RUNNER}
     fi
 
-    COMMAND="${CTEST_BIN} ${SYSTEM} submit ${RUNNER_HOME}/firmware/nsfw-${BRANCH} --cli=${LOCAL_RUNNER}/smsv2-${BRANCH}.0.0.0.tgz"
+    COMMAND="${CTEST_BIN} ${SYSTEM} submit ${RUNNER_HOME}/firmware/nsfw-${BRANCH} --binary -b ${BRANCH} --cli=${LOCAL_RUNNER}/smsv2-${BRANCH}.0.0.0.tgz"
     if [ ${CUSTOM_CLI_CONFIG} == true ]; then
       COMMAND="${COMMAND} -c ${LOCAL_RUNNER}/cli"
     fi
