@@ -34,8 +34,15 @@ isValidCLIRunDir() {
   fi
 }
 
+setSmsv2Path() {
+    if [ -e $UI_DEV_DIR/'com-emc-vplex-smsv2' ]; then
+      SMSV2_PATH="com-emc-vplex-smsv2"
+    fi
+}
+
 isValidCLIRunDir
 loadBuildEnvironment 
+setSmsv2Path
 
 use_new_tarball=true
 
@@ -48,14 +55,14 @@ done
 
 if [ $use_new_tarball == true ]; then
   WD=${PWD}
-  cd ${UI_DEV_DIR}/com-yottayotta-smsv2
+  cd ${UI_DEV_DIR}/$SMSV2_PATH
   TARBALL=`ls *.tgz`
   end=${#TARBALL}-4
   CURRENT_SMS=${TARBALL:0:${end}}
 
   cd ${WD}
   rm -fr ${CURRENT_SMS}
-  tar -zxf ${UI_DEV_DIR}/com-yottayotta-smsv2/${TARBALL}
+  tar -zxf ${UI_DEV_DIR}/$SMSV2_PATH/${TARBALL}
 else
   if [ $(ls | grep smsv2-D | wc -l) -gt 1 ]; then
     echo "Which one?"
