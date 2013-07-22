@@ -22,3 +22,6 @@
 [submodule ".vim/bundle/ctrlp"]
 	path = .vim/bundle/ctrlp
 	url = git://github.com/kien/ctrlp.vim.git
+[submodule ".vim/bundle/pathogen"]
+  path = .vim/bundle/pathogen
+  url = git://github.com/tpope/pathogen.git

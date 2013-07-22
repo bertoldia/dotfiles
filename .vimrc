@@ -2,6 +2,7 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
+runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
 " ---OPTIONS---
