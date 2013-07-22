@@ -74,7 +74,7 @@ else
 endif
 
 "set guifont=DejaVu\ Sans\ Mono\ 10
-set guifont=Source\ Code\ Pro\ 10
+set guifont=Source\ Code\ Pro\ Medium\ 10
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
