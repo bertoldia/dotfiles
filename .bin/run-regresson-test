@@ -85,7 +85,9 @@ fi
 
 cleanup
 
-export EXTRA_JVM_OPTS="-DlinuxTowerSetupArgsFile=linuxTowerSetupArgs.py"
+export EXTRA_JVM_OPTS="-DlinuxTowerSetupArgsFile=linuxTowerSetupArgs.py \
+                       -Dtesttools.dir=../../chimera
+                       -Dtesttools.config=../SysConfigFile.xml"
 
 ${CURRENT_SMS}/VPlexcli --cli-directory cli -s 51112
 
