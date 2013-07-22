@@ -1,4 +1,6 @@
 *.swp
+.*.swp
+.nfs*
 .FreeCAD
 .Skype
 .SpiderOak
@@ -81,12 +83,10 @@ tmp
 workspace
 .ICEauthority
 .Xauthority
-.bash_aliases.swp
 .bash_history
 .bzr.log
 .dmrc
 .esd_auth
-.gitconfig.swp
 .gksu.lock
 .goutputstream-COBMEW
 .gtk-bookmarks
@@ -98,7 +98,6 @@ workspace
 .pulse-cookie
 .recently-used
 .screenrc
-.sps-conditioning-test-cases.mkd.swp
 .sudo_as_admin_successful
 .viminfo
 .winpdb_settings.cfg
