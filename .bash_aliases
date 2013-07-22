@@ -51,8 +51,9 @@ alias runner-wildcatve-disruptor-e='runner-bin wildcatve-disruptor-e'
 alias runner-sms-mario-1='runner-bin sms-mario-1'
 alias runner-sms-dev-6='runner-bin sms-dev-6'
 
-alias work='cd ${UI_DEV_DIR}/com-yottayotta-smsv2'
+alias work='cd ${UI_DEV_DIR}/com-emc-vplex-smsv2'
 alias ui-review='_ui_review'
+alias nsfw-review='_nsfw_review'
 alias regression-test='cd ${UI_REGRESSION_DIR}'
 
 alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
@@ -87,10 +88,24 @@ function _ui_review() {
     git co $1
     git pull
   else
-    git pull
+    git fetch
     git co -b $1 origin/$1
   fi
   gitg&
+
+}
+
+function _nsfw_review() {
+  cd $NSFW_REVIEW_DIR
+  branch_exists=`git br | grep ${1} | wc -l`
+  if [ $branch_exists == 1  ]; then
+    git co $1
+    git pull
+  else
+    git fetch
+    git co -b $1 origin/$1
+  fi
+  tig snac/doc/cic.txt
 
 }
 
