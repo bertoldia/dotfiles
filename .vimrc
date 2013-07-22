@@ -198,3 +198,6 @@ noremap <Leader>aa :LustyJuggler<CR>
 "vim-notes
 let g:notes_directories = ['~/notes']
 let g:notes_suffix = '.txt'
+
+"CtrlP
+noremap <C-b> :CtrlPBuffer<CR>
