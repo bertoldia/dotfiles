@@ -195,3 +195,6 @@ map  <Leader>gb  :Gblame<CR>
 "LustyJuggler
 noremap <Leader>aa :LustyJuggler<CR>
 
+"vim-notes
+let g:notes_directories = ['~/notes']
+let g:notes_suffix = '.txt'
