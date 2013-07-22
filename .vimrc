@@ -190,5 +190,3 @@ map  <Leader>gb  :Gblame<CR>
 "LustyJuggler
 noremap <Leader>aa :LustyJuggler<CR>
 
-"BufExplorer
-noremap <Leader>ss :BufExplorer<CR>
