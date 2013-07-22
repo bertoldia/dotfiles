@@ -1,15 +1,21 @@
 #!/bin/bash
 
- if [ ! -e cli ]; then
-    echo "No cli directory."
-    exit -1
- fi
+if [ ! -e cli ]; then
+  echo "No cli directory."
+  exit -1
+fi
 
 rm -fr core* vaultDisk fru.log
 
 cd cli
-files=`ls | grep -v "connections\|nsfw\|VPlexcli-init\|shell-history\|VPlexconfig.xml\|config"`
+files=`ls | grep -v "connections\|nsfw\|VPlexcli-init\|shell-history\|VPlexconfig.xml\|chimera"`
 echo $files
 rm -fr $files
 
-cd ../
+if [ -e chimera ]; then
+  cd chimera
+  files=`ls | grep -v "config"`
+  rm -fr $files
+fi
+
+cd ../../
