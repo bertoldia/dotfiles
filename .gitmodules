@@ -31,3 +31,6 @@
 [submodule ".vim/bundle/vim-notes"]
   path = .vim/bundle/vim-notes
   url = git://github.com/xolox/vim-notes.git
+[submodule ".vim/bundle/vim-sensible"]
+  path = .vim/bundle/vim-sensible
+  url = git://github.com/tpope/vim-sensible.git

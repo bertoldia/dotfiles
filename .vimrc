@@ -9,23 +9,17 @@ call pathogen#infect()
 
 " allow backspacing over everything in insert mode
 " backspace and cursor keys wrap to previous/next line
-set backspace=indent,eol,start whichwrap+=<,>,[,]
-set autoindent smartindent      " always set autoindenting on
+set whichwrap+=<,>,[,]
+set smartindent
 set history=100                 " keep 50 lines of command line history
-set ruler                       " show the cursor position all the time
-set showcmd                     " display incomplete commands
-set incsearch                   " do incremental searching
 set hlsearch
-set tabpagemax=30               " max number of tabs to use when using -p option
 set autochdir                   " make cwd the current buffer's home
-set autoread                    " auto-load files if they are changed outside of vim
 set hidden                      " When I close a tab don't remove the buffer
 let g:clipbrdDefaultReg = '+'
 set grepprg=grep\ -nH\ $*
 set expandtab                   " make tabs spaces
 set shiftwidth=2                " for auto and manual indent
 set tabstop=2                   " pressing tab inserts 2 spaces
-set smarttab                    " treat spaces as tabs
 set nu                          " line number
 "Folding
 set foldmethod=syntax
@@ -38,7 +32,6 @@ set spell                       " spell-check on
 "compiler ~/.bin/jmake          " Set compiler
 set switchbuf=usetab,newtab     " Buffer control options
 " Cool tab completion stuff
-set wildmenu
 set wildmode=list:full
 set mouse=a                     " Enable mouse support in console
 "set ignorecase                 " Ignoring case is a fun trick
@@ -63,7 +56,6 @@ filetype on
 filetype plugin on
 
 "Status line
-set laststatus=2                " Pretty status line
 set statusline=%{g:bufBStr}%#NowBuf#%{g:bufNStr}%#StatusLine#%{g:bufAStr}%<%=%{fugitive#statusline()}[%Y][%c,%l/%L(%P)]
 
 " ---APPEARANCE---
