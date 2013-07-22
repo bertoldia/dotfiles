@@ -18,11 +18,14 @@ for dir in `ls`; do
   if [ -e ${dir}/.git ]; then
     if [[ $action == 'ls' ]]; then
       echo $dir
-    else
+    elif [[ $action != 'not' ]]; then
       cd $dir
       echo "executing 'git $action' in $dir"
       git $action
       cd ../
     fi
+  elif [[ $action == 'not' ]]; then
+    echo $dir
   fi
 done
+
