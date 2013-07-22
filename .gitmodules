@@ -25,3 +25,9 @@
 [submodule ".vim/bundle/pathogen"]
   path = .vim/bundle/pathogen
   url = git://github.com/tpope/pathogen.git
+[submodule ".vim/bundle/vim-misc"]
+  path = .vim/bundle/vim-misc
+  url = git://github.com/xolox/vim-misc.git
+[submodule ".vim/bundle/vim-notes"]
+  path = .vim/bundle/vim-notes
+  url = git://github.com/xolox/vim-notes.git
