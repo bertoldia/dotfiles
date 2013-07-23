@@ -6,5 +6,5 @@ git remote prune origin
 git prune
 git gc
 git fsck
-git clean -fx -e tags
+git clean -fx -e tags .metadata
 ctags -R .
