@@ -32,7 +32,7 @@ alias bin='ll ~/.bin'
 alias gti='git'
 alias gg='git grep'
 alias trash='_trash'
-alias dotfiles='git --git-dir=$HOME/.dotfiles.git'
+alias dof='git --git-dir=$HOME/.dotfiles.git'
 
 #rc edit shortcuts
 alias bashrc='vim ~/.bashrc'
