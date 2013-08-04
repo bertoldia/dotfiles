@@ -193,3 +193,9 @@ let g:notes_suffix = '.txt'
 
 "CtrlP
 noremap <C-b> :CtrlPBuffer<CR>
+
+"Syntastic
+let g:syntastic_java_maven_executable='/spgear/zeph_comp_tools/apache-maven-2.2.1/bin/mvn'
+let g:syntastic_java_checkers=['javac', 'checkstyle']
+let g:syntastic_warning_symbol = '❗❗'
+let g:syntastic_error_symbol = '✘✘'
