@@ -1,10 +1,40 @@
 #!/bin/bash
 
+regen_ctags=false
+regen_eclipse=false
+
+usage() {
+  echo "Tidy your git repo:"
+  echo "Usage: tidy [-c -a]"
+  echo "  -a: have ant regenerate eclipse project files."
+  echo "  -c: regenerate your ctags."
+  exit 0
+}
+
+while getopts "cha" flag
+do
+  case $flag in
+    c) regen_ctags=true;;
+    a) regen_eclipse=true;;
+    h) usage;;
+    *) usage;;
+  esac
+done
+
 cd `git rev-parse --show-toplevel`
 git fetch
 git remote prune origin
 git prune
 git gc
 git fsck
-git clean -fx -e tags .metadata
-ctags -R .
+git clean -fx -e .metadata -e tags -e .project -e .classpath
+
+if [[ $regen_eclipse == true ]]; then
+  . build_environment
+  ant
+fi
+
+if [[ $regen_ctags == true ]]; then
+  ctags -R . &
+fi
+
