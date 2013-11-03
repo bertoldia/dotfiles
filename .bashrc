@@ -94,3 +94,11 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+POWERLINE_SH="/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
+
+if [ -f $POWERLINE_SH ]; then
+  source $POWERLINE_SH
+fi
+
+ll
