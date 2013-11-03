@@ -49,6 +49,9 @@ alias regression-test='cd ${UI_REGRESSION_DIR}'
 
 alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
 
+alias pull-notes='rsync -avz -e ssh bertoa@bertoa:/home/bertoa/notes/ ~/notes/'
+alias push-notes='rsync -avz -e ssh ~/notes/ bertoa@bertoa:/home/bertoa/notes/'
+
 if [ -f /usr/bin/yaourt ]; then
   alias query='yaourt -Ss'
   alias install='yaourt -S'
