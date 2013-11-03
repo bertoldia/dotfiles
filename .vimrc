@@ -1,9 +1,32 @@
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+filetype off
 
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()
+" Vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Bundles
+Bundle 'gmarik/vundle'
+Bundle 'belike81/vim-bufkill'
+Bundle 'tpope/vim-fugitive'
+Bundle 'wincent/Command-T'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/syntastic'
+Bundle 'majutsushi/tagbar'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-notes'
+Bundle 'tpope/vim-sensible'
+Bundle 'vim-scripts/molokai'
+Bundle 'dterei/VimBookmarking'
+Bundle 'Ubloh-Color-Scheme'
+Bundle 'vim-scripts/Indent-Guides'
 
 " ---OPTIONS---
 
@@ -12,7 +35,7 @@ call pathogen#infect()
 set smartindent
 set history=100                 " keep 50 lines of command line history
 set hlsearch
-set autochdir                   " make cwd the current buffer's home
+"set autochdir                   " make cwd the current buffer's home
 set hidden                      " When I close a tab don't remove the buffer
 let g:clipbrdDefaultReg = '+'
 set grepprg=grep\ -nH\ $*
@@ -36,7 +59,7 @@ set mouse=a                     " Enable mouse support in console
 "set ignorecase                 " Ignoring case is a fun trick
 set smartcase                   " And so is Artificial Intelligence!
 set tags=./tags;/               " search for a tags file staring at current file's wd and going up until one is found
-set cst                          "to select tag when there are multiple matches
+set cst                         "to select tag when there are multiple matches
 " highlight current line and column, and set the red line over there ->
 set cursorline
 set colorcolumn=80
@@ -51,8 +74,7 @@ set guicursor+=i:blinkwait10
 set showbreak=↪
 
 syntax enable
-filetype on
-filetype plugin on
+filetype plugin indent on
 
 "Status line
 "set statusline=%{g:bufBStr}%#NowBuf#%{g:bufNStr}%#StatusLine#%{g:bufAStr}%<%=%{fugitive#statusline()}[%Y][%c,%l/%L(%P)]
@@ -69,7 +91,6 @@ if has("gui_running")
 
   set cursorcolumn
 else
-   "colorscheme evening
    colorscheme solarized
 endif
 
@@ -81,8 +102,6 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-  filetype plugin indent on
-
   " For all text files set 'textwidth' to 80 characters.
   autocmd FileType text setlocal textwidth=80
   autocmd Filetype markdown setlocal textwidth=80
@@ -136,7 +155,7 @@ nmap <silent> <C-S-t> :tab sball<CR>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-"map <C-S-t> :tag 
+"map <C-S-t> :tag
 
 " misspellings
 :iabbrev teh the
@@ -150,7 +169,6 @@ noremap <C-a> ggVG
 " insert date time when I type "dts"
 iab <expr> dts strftime("%c")
 
-
 " >>>>>>>>>>>>>>>>>>>> Plugins Behaviour Modifications <<<<<<<<<<<<<<<<<<<<<<<
 
 "Bookmarking. These colors work best with molokai theme
@@ -158,6 +176,7 @@ hi default BookmarkHighlightLine ctermbg=lightblue guibg=#ce5c00 cterm=bold gui=
 hi default BookmarkHighlightText ctermbg=lightblue guibg=#ce5c00 cterm=bold gui=bold
 "sign define bookmark text=• linehl=BookmarkHighlightLine texthl=BookmarkHighlightText
 map <silent> <S-F3> :ClearBookmark<CR>
+map <silent> <F3> :ToggleBookmark<CR>
 
 "Tagbar
 map <F8> :TagbarToggle<CR>
@@ -176,21 +195,15 @@ noremap <C-S-PageDown> :bnext<CR>
 noremap <C-w> :BW<CR>
 
 "Fugitive
-map  <Leader>gd  :Gdiff<CR>
-map  <Leader>gb  :Gblame<CR>
-
-"LustyJuggler
-noremap <Leader>aa :LustyJuggler<CR>
+map <Leader>gd :Gdiff<CR>
+map <Leader>gb :Gblame<CR>
 
 "vim-notes
 let g:notes_directories = ['~/notes']
 let g:notes_suffix = '.txt'
 
-"CtrlP
-noremap <C-b> :CtrlPBuffer<CR>
-
 "Syntastic
 let g:syntastic_java_maven_executable='/spgear/zeph_comp_tools/apache-maven-2.2.1/bin/mvn'
 let g:syntastic_java_checkers=['javac', 'checkstyle']
-let g:syntastic_warning_symbol = '❗❗'
+let g:syntastic_warning_symbol = '!!'
 let g:syntastic_error_symbol = '✘✘'
