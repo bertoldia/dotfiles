@@ -8,7 +8,7 @@ fi
 rm -fr core* vaultDisk fru.log
 
 cd cli
-files=`ls | grep -v "connections\|nsfw\|VPlexcli-init\|shell-history\|VPlexconfig.xml\|chimera"`
+files=`ls | grep -v "instance.properties\|connections\|nsfw\|VPlexcli-init\|shell-history\|VPlexconfig.xml\|chimera"`
 echo $files
 rm -fr $files
 
