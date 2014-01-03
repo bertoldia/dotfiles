@@ -1,0 +1,8 @@
+#!/bin/bash
+
+VIM_CMD='gvim -p'
+CWD=`pwd`
+cd `git rev-parse --show-toplevel`
+FILES=`git files`
+${VIM_CMD} ${FILES} -c "cd ${CWD}"
+exit 0
