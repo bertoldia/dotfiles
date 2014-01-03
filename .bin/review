@@ -12,7 +12,7 @@ usage() {
 }
 ################################################################################
 commit() {
-  commits_to_squash=`git changes | grep -i 'squash\|issue\|address' | wc -l`
+  commits_to_squash=`git changes | grep -i 'squash\|issue\|^address' | wc -l`
   if [ $commits_to_squash != 0 ]; then
     echo "You have $commits_to_squash changes to squash before committing asshole:"
     git changes | grep -i 'squash\|issue\|address'
