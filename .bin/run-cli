@@ -1,59 +1,22 @@
 #!/bin/bash
 
-BUILD_ENVIRONMENT="build_environment"
-
-loadBuildEnvironment() {
-  if [ -z "$MAVEN_HOME" ]; then
-    if [ -f $UI_DEV_DIR/$BUILD_ENVIRONMENT ]; then
-      . $UI_DEV_DIR/$BUILD_ENVIRONMENT
-      echo "Using JAVA_HOME=$JAVA_HOME"
-    elif [ -f $UI_DEV_DIR/../$BUILD_ENVIRONMENT ]; then
-      . $UI_DEV_DIR/../$BUILD_ENVIRONMENT
-      echo "Using JAVA_HOME=$JAVA_HOME"
-    else
-      echo "Could not find $BUILD_ENVIRONMENT. Bailing!!!"
-      exit 1
-    fi
-  fi
-}
-
-isValidCLIRunDir() {
-  if [ ! -e cli ]; then
-    echo "Missing cli directory."
-    exit -1
-  fi
-
-  if [[ ! -e cli/VPlexcli-init && ! -e VPlexcli-init ]]; then
-    echo "Missing VPlexcli-init."
-    exit -1
-  fi
-
-  if [ -e 'cli/.VPlexcli-lock' ]; then
-    echo "A cli is already running asshole."
-    exit -1
-  fi
-}
-
-setSmsv2Path() {
-    if [ -e $UI_DEV_DIR/'com-emc-vplex-smsv2' ]; then
-      SMSV2_PATH="com-emc-vplex-smsv2"
-    fi
-}
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
 
 isValidCLIRunDir
-loadBuildEnvironment 
-setSmsv2Path
+loadBuildEnvironment $UI_DEV_DIR
+setSmsv2Path $UI_DEV_DIR
 
-use_new_tarball=true
+USE_NEW_TARBALL=true
 
 while getopts "e" flag
 do
   case $flag in
-    e) use_new_tarball=false;;
+    e) USE_NEW_TARBALL=false;;
   esac
 done
 
-if [ $use_new_tarball == true ]; then
+if [ $USE_NEW_TARBALL == true ]; then
   WD=${PWD}
   cd ${UI_DEV_DIR}/$SMSV2_PATH
   TARBALL=`ls *.tgz`
