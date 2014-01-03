@@ -8,11 +8,15 @@ loadBuildEnvironment $UI_DEV_DIR
 setSmsv2Path $UI_DEV_DIR
 
 USE_NEW_TARBALL=true
+DEBUG=false
+BASE_SPAWN_CMD="VPlexcli --cli-directory cli -s 51111"
+DEBUG_SPAWN_CMD="jdb.sh --dbgport=4000"
 
-while getopts "e" flag
+while getopts "ed" flag
 do
   case $flag in
     e) USE_NEW_TARBALL=false;;
+    d) DEBUG=true;;
   esac
 done
 
@@ -36,5 +40,11 @@ else
   CURRENT_SMS=`ls | grep smsv2-`
 fi
 
+if [ $DEBUG  == true ]; then
+  SPAWN_CMD="${CURRENT_SMS}/${DEBUG_SPAWN_CMD} ${CURRENT_SMS}/${BASE_SPAWN_CMD}"
+else
+  SPAWN_CMD="${CURRENT_SMS}/${BASE_SPAWN_CMD}"
+fi
+
 cleanup
-${CURRENT_SMS}/VPlexcli --cli-directory cli -s 51111
+${SPAWN_CMD}
