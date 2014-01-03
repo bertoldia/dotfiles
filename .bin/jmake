@@ -1,14 +1,14 @@
 #!/bin/bash
 
-BUILD_ENVIRONMENT="build_environment"
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
 
-make_tarball=false
-sp_sync=false
-clean=false
-default_action="mvn install -Dmaven.test.skip" #don't run the unit tests
-action=$default_action
-repo_toplevel="/dev/null"
-smsv2_path="com-yottayotta-smsv2"
+MAKE_TARBALL=false
+SP_SYNC=false
+CLEAN=false
+DEFAULT_ACTION="mvn install -Dmaven.test.skip" #don't run the unit tests
+ACTION=$DEFAULT_ACTION
+GIT_REPO_ROOT="/dev/null"
 
 usage() {
   echo "Usage: jmake [-t -u -s -c]"
@@ -19,36 +19,7 @@ usage() {
   exit 0
 }
 
-isGitRepo() {
-  repo_toplevel=`git rev-parse --show-toplevel`
-
-  if [ $? != 0  ]; then
-    echo "Error: not a git repository!"
-    exit $?
-  fi
-}
-
-loadBuildEnvironment() {
-  if [ -z $MAVEN_HOME ]; then
-    if [ -f $repo_toplevel/$BUILD_ENVIRONMENT ]; then
-      . $repo_toplevel/$BUILD_ENVIRONMENT
-    elif [ -f $repo_toplevel/../$BUILD_ENVIRONMENT ]; then
-      . $repo_toplevel/../$BUILD_ENVIRONMENT
-    else
-      echo "Could not find $BUILD_ENVIRONMENT. Bailing!!!"
-      exit 1
-    fi
-  fi
-}
-
-setSmsv2Path() {
-    if [ -e $repo_toplevel/'com-emc-vplex-smsv2' ]; then
-      smsv2_path="com-emc-vplex-smsv2"
-    fi
-}
-
 #START
-isGitRepo
 loadBuildEnvironment
 setSmsv2Path
 
@@ -57,38 +28,38 @@ echo $PATH
 while getopts "ctush" flag
 do
   case $flag in
-    s) sp_sync=true;;
-    t) make_tarball=true;;
-    u) action="mvn install"
+    s) SP_SYNC=true;;
+    t) MAKE_TARBALL=true;;
+    u) ACTION="mvn install"
       if [ $# -gt 1 ];then
         test="-Dtest=$2"
-        action="$action $test"
+        ACTION="$ACTION $test"
       fi;;
-    c) action="mvn clean";;
+    c) ACTION="mvn clean";;
     h) usage;;
     *) usage;;
   esac
 done
 
-rm $repo_toplevel/$smsv2_path/*.tgz
+rm $GIT_REPO_ROOT/$SMSV2_PATH/*.tgz
 
-if [[ $make_tarball == true || $sp_sync == true || $action != $default_action ]]; then
+if [[ $MAKE_TARBALL == true || $SP_SYNC == true || $ACTION != $DEFAULT_ACTION ]]; then
   args=$1
   shift
 fi
 
-if [[ $make_tarball == false ]]; then
-  sp_sync=false
+if [[ $MAKE_TARBALL == false ]]; then
+  SP_SYNC=false
 fi
 
-if [[ $action == "mvn clean" ]]; then
-  make_tarball=false
-  sp_sync=false
+if [[ $ACTION == "mvn clean" ]]; then
+  MAKE_TARBALL=false
+  SP_SYNC=false
 fi
 
 WD=`pwd`
 
-if [[ $action == $default_action && $# -ge 1 ]];then
+if [[ $ACTION == $DEFAULT_ACTION && $# -ge 1 ]];then
   cd $1
   jmake $args
 fi
@@ -99,18 +70,18 @@ fi
 
 cd $WD
 
-echo $action
-$action
+echo $ACTION
+$ACTION
 
-if [[ $? == 0 && $make_tarball == true ]]; then
+if [[ $? == 0 && $MAKE_TARBALL == true ]]; then
 
-  if [ ! -e $repo_toplevel/$smsv2_path/target/test-classes ]; then
-    mkdir -p $repo_toplevel/$smsv2_path/target/test-classes
+  if [ ! -e $repo_toplevel/$SMSV2_PATH/target/test-classes ]; then
+    mkdir -p $repo_toplevel/$SMSV2_PATH/target/test-classes
   fi
 
-  if [ basename != $smsv2_path ]; then
+  if [ basename != $SMSV2_PATH ]; then
     cd `git rev-parse --show-toplevel`
-    cd $smsv2_path
+    cd $SMSV2_PATH
   fi
   echo "ant make-docless-tarball"
   ant make-docless-tarball
@@ -120,7 +91,7 @@ if [ $? == 0 ]; then
   echo "Last build at `date`"
 fi
 
-  if [ $? == 0 -a $sp_sync == true ]; then
+  if [ $? == 0 -a $SP_SYNC == true ]; then
   sptool -c
   sptool -p smsv2-D*0*.tgz
 fi
