@@ -1,0 +1,70 @@
+#!/bin/bash
+
+GIT_REPO_ROOT="/dev/null"
+
+setGitRepoRoot() {
+  GIT_REPO_ROOT=`git rev-parse --show-toplevel`
+}
+
+isGitRepo() {
+  setGitRepoRoot
+
+  if [ $? != 0  ]; then
+    echo "Error: not a git repository!"
+    exit $?
+  fi
+}
+
+SMSV2_PATH="com-yottayotta-smsv2"
+
+setSmsv2Path() {
+  if [ $# == 0 ]; then
+    isGitRepo
+    SEARCH=$GIT_REPO_ROOT
+  else
+    SEARCH=$1
+  fi
+
+  if [ -e $SEARCH/'com-emc-vplex-smsv2' ]; then
+    SMSV2_PATH="com-emc-vplex-smsv2"
+  fi
+}
+
+BUILD_ENVIRONMENT="build_environment"
+
+loadBuildEnvironment() {
+  if [ $# == 0 ]; then
+    isGitRepo
+    SEARCH=$GIT_REPO_ROOT
+  else
+    SEARCH=$1
+  fi
+
+  if [ -z $MAVEN_HOME ]; then
+    if [ -f $SEARCH/$BUILD_ENVIRONMENT ]; then
+      . $SEARCH/$BUILD_ENVIRONMENT
+    elif [ -f $SEARCH/../$BUILD_ENVIRONMENT ]; then
+      . $SEARCH/../$BUILD_ENVIRONMENT
+    else
+      echo "Could not find $BUILD_ENVIRONMENT. Bailing!!!"
+      exit 1
+    fi
+  fi
+}
+
+isValidCLIRunDir() {
+  if [ ! -e cli ]; then
+    echo "Missing cli directory."
+    exit -1
+  fi
+
+  if [[ ! -e cli/VPlexcli-init && ! -e VPlexcli-init ]]; then
+    echo "Missing VPlexcli-init."
+    exit -1
+  fi
+
+  if [ -e 'cli/.VPlexcli-lock' ]; then
+    echo "A cli is already running asshole."
+    exit -1
+  fi
+}
