@@ -11,22 +11,24 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'belike81/vim-bufkill'
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-sensible'
 Bundle 'wincent/Command-T'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'majutsushi/tagbar'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-notes'
-Bundle 'tpope/vim-sensible'
-Bundle 'vim-scripts/molokai'
 Bundle 'dterei/VimBookmarking'
-Bundle 'Ubloh-Color-Scheme'
-Bundle 'vim-scripts/Indent-Guides'
+Bundle 'Indent-Guides'
+Bundle 'molokai'
+Bundle 'monokai'
+Bundle 'badwolf'
+Bundle 'obvious-resize'
+Bundle 'TagHighlight'
 
 " ---OPTIONS---
 
@@ -67,6 +69,8 @@ set colorcolumn=80
 set showmode
 "set textwidth=80
 set wrap linebreak
+let &listchars = "tab:\u00b7 ,trail:\u00b7"
+set list
 
 "Change cursor shape and colour in insert mode
 set guicursor+=n-v-c:blinkon0
@@ -80,15 +84,21 @@ filetype plugin indent on
 "Status line
 "set statusline=%{g:bufBStr}%#NowBuf#%{g:bufNStr}%#StatusLine#%{g:bufAStr}%<%=%{fugitive#statusline()}[%Y][%c,%l/%L(%P)]
 
+let g:solarized_hitrail=1
+let molokai_original=1
+
 " ---APPEARANCE---
 set background=dark
 if has("gui_running")
-  "colorscheme axel
-  "colorscheme slate
-  "colorscheme molokai
-  colorscheme solarized
+  colorscheme badwolf
+  "colorscheme solarized
 
   set guioptions-=T " hide toolbar
+  set guioptions-=m " hide menubar
+  set guioptions-=r " hide scrollbar
+  set guioptions-=R " hide scrollbar
+  set guioptions-=l " hide scrollbar
+  set guioptions-=L " hide scrollbar
 
   set cursorcolumn
 else
@@ -119,8 +129,7 @@ if has("autocmd")
 
   " highlighting trailing spaces
   highlight ExtraWhitespace ctermbg=red guibg=#F92672
-  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-  autocmd InsertLeave * match ExtraWhitespace /\s\+\%#\@<!$/
+  autocmd VimEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
   " use python syntax highlighting for regression test files
   autocmd BufRead,BufNewFile *.yy set filetype=python
@@ -198,7 +207,7 @@ noremap <C-S-PageUp> :bprev<CR>
 noremap <C-S-PageDown> :bnext<CR>
 
 "Bufkill
-noremap <C-w> :BW<CR>
+noremap <C-k> :BW<CR>
 
 "Fugitive
 map <Leader>gd :Gdiff<CR>
@@ -213,3 +222,30 @@ let g:syntastic_java_maven_executable='/spgear/zeph_comp_tools/apache-maven-2.2.
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_warning_symbol = '!!'
 let g:syntastic_error_symbol = '✘✘'
+
+"obvious-resize
+nmap <silent> <C-S-Up> :ObviousResizeUp<CR>
+nmap <silent> <C-S-Down> :ObviousResizeDown<CR>
+nmap <silent> <C-S-Left> :ObviousResizeLeft<CR>
+nmap <silent> <C-S-Right> :ObviousResizeRight<CR>
+
+"YCM
+let g:ycm_min_num_of_chars_for_completion = 4
+let g:ycm_min_num_identifier_candidate_chars = 4
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+"let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+
+"easytags
+let g:easytags_dynamic_files = 1
+"let g:easytags_on_cursorhold = 0
+let g:easytags_auto_update = 0
+let g:easytags_python_enabled = 1
+
+"eclim
+let g:EclimCompletionMethod = 'omnifunc'
+
+"command-t
+let g:CommandTMatchWindowReverse = 1
