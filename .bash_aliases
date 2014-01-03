@@ -55,7 +55,7 @@ alias push-notes='rsync -avz -e ssh ~/notes/ bertoa@bertoa:/home/bertoa/notes/'
 if [ -f /usr/bin/yaourt ]; then
   alias query='yaourt -Ss'
   alias install='yaourt -S'
-  alias update='yaourt -Syu'
+  alias update='yaourt -Syua'
   alias uninstall='yaourt -Rsc'
   alias orphaned='yaourt -Qdt'
   alias not_installed='_search_not_installed'
