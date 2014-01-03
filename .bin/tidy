@@ -35,6 +35,6 @@ if [[ $regen_eclipse == true ]]; then
 fi
 
 if [[ $regen_ctags == true ]]; then
-  ctags -R . &
+  ctags -R --fields=+l --extra=+q . >/dev/null 2>&1 &
 fi
 
