@@ -1,0 +1,30 @@
+#!/bin/bash
+
+ZEPH_COMP_TOOLS_PREFIX="/spgear/zeph_comp_tools"
+HOST="bertoa@bertoa"
+RSYNC_CMD="rsync -avz -e ssh"
+PATHS_TO_SYNC=(
+apache-ant-1.6.5
+apache-ant-1.9.2
+apache-maven-2.0.9
+apache-maven-2.2.1
+apache-tomcat
+gmock
+jdk1.6.0_03
+jdk1.6.0_31
+jdk1.6.0_39
+jdk1.6.0_45
+jython-2.2.1
+ofed
+pep8
+python-2.6.1
+saxonb8-8j
+sles11-sp2
+sysroot
+)
+
+for P in ${PATHS_TO_SYNC[@]};
+do
+  echo "$RSYNC_CMD $HOST:$ZEPH_COMP_TOOLS_PREFIX/$P/ $ZEPH_COMP_TOOLS_PREFIX/$P/"
+  $RSYNC_CMD $HOST:$ZEPH_COMP_TOOLS_PREFIX/$P/ $ZEPH_COMP_TOOLS_PREFIX/$P/ &
+done
