@@ -1,5 +1,8 @@
 #!/bin/bash
 
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+
 RUNNER_HOME="/home/runner"
 CTEST_BIN="${RUNNER_HOME}/bin/ctest"
 LOCAL_RUNNER="/home/bertoa/runner"
@@ -21,6 +24,8 @@ if [ $# == 0 ]; then
   echo "Error: missing system."
   usage
 fi
+
+setSmsv2Path
 
 SYSTEM=$1
 shift
@@ -58,7 +63,7 @@ case $ACTION in
   submit)
     if [ $USE_EXISTING_CLI == false ]; then
       rm ${LOCAL_RUNNER}/smsv2*
-      cp ${UI_DEV_DIR}/com-yottayotta-smsv2/smsv2-${BRANCH}.0.0.0.tgz ${LOCAL_RUNNER}
+      cp ${GIT_REPO_ROOT}/${SMSV2_PATH}/smsv2-${BRANCH}.0.0.0.tgz ${LOCAL_RUNNER}
     fi
 
     COMMAND="${CTEST_BIN} ${SYSTEM} submit ${RUNNER_HOME}/firmware/nsfw-${BRANCH} --binary -b ${BRANCH} --cli=${LOCAL_RUNNER}/smsv2-${BRANCH}.0.0.0.tgz"
