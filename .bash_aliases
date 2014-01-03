@@ -61,7 +61,7 @@ alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
 if [ -f /usr/bin/yaourt ]; then
   alias query='yaourt -Ss'
   alias install='yaourt -S'
-  alias update='yaourt -Syu'
+  alias update='yaourt -Syua'
   alias uninstall='yaourt -Rsc'
   alias orphaned='yaourt -Qdt'
 elif [ -f /usr/bin/apt-get ]; then
