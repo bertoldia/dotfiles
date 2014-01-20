@@ -230,13 +230,14 @@ nmap <silent> <C-S-Left> :ObviousResizeLeft<CR>
 nmap <silent> <C-S-Right> :ObviousResizeRight<CR>
 
 "YCM
-let g:ycm_min_num_of_chars_for_completion = 4
+let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 "let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+let g:ycm_register_as_syntastic_checker = 0
 
 "easytags
 let g:easytags_dynamic_files = 1
