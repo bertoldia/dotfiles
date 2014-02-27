@@ -29,11 +29,13 @@ Bundle 'monokai'
 Bundle 'badwolf'
 Bundle 'obvious-resize'
 Bundle 'TagHighlight'
+Bundle 'darkspectrum'
 
 " ---OPTIONS---
 
 " allow backspacing over everything in insert mode
 " backspace and cursor keys wrap to previous/next line
+set whichwrap+=<,>,[,]
 set smartindent
 set history=100                 " keep 50 lines of command line history
 set hlsearch
@@ -83,6 +85,9 @@ filetype plugin indent on
 "Status line
 "set statusline=%{g:bufBStr}%#NowBuf#%{g:bufNStr}%#StatusLine#%{g:bufAStr}%<%=%{fugitive#statusline()}[%Y][%c,%l/%L(%P)]
 
+" highlighting trailing spaces
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=#F92672
+
 let g:solarized_hitrail=1
 let molokai_original=1
 
@@ -90,15 +95,18 @@ let molokai_original=1
 set background=dark
 if has("gui_running")
   "colorscheme molokai
-  colorscheme monokai
+  colorscheme darkspectrum
+  "colorscheme badwolf
   "colorscheme solarized
+  "colorscheme monokai
 
   set guioptions-=T " hide toolbar
   set guioptions-=m " hide menubar
-  set guioptions-=r " hide scrollbar
-  set guioptions-=R " hide scrollbar
-  set guioptions-=l " hide scrollbar
-  set guioptions-=L " hide scrollbar
+  "set guioptions-=r " hide scrollbar
+  "set guioptions-=R " hide scrollbar
+  "set guioptions-=l " hide scrollbar
+  "set guioptions-=L " hide scrollbar
+  set guitablabel=%!expand(\"\%:t\")
 
   set cursorcolumn
 else
@@ -116,7 +124,13 @@ if has("autocmd")
   " For all text files set 'textwidth' to 80 characters.
   autocmd FileType text setlocal textwidth=80
   autocmd Filetype markdown setlocal textwidth=80
+  autocmd Filetype python setlocal shiftwidth=4 tabstop=4
   autocmd Filetype cpp setlocal shiftwidth=4 tabstop=4
+  " use python syntax highlighting for regression test files
+  autocmd BufRead,BufNewFile *.yy set filetype=python
+
+  " highlighting trailing spaces
+  autocmd VimEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -125,13 +139,6 @@ if has("autocmd")
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
         \ endif
-
-  " highlighting trailing spaces
-  highlight ExtraWhitespace ctermbg=red guibg=#F92672
-  autocmd VimEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-
-  " use python syntax highlighting for regression test files
-  autocmd BufRead,BufNewFile *.yy set filetype=python
 endif
 
 " Automatically reload .vimrc when it changes.
@@ -206,6 +213,8 @@ noremap <C-k> :BW<CR>
 
 "Fugitive
 map <Leader>gd :Gdiff<CR>
+map <Leader>gs :Gstatus<CR>
+map <Leader>gc :Gcommit<CR>
 map <Leader>gb :Gblame<CR>
 
 "vim-notes
@@ -232,6 +241,7 @@ let g:ycm_complete_in_strings = 1
 "let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+"let g:ycm_register_as_syntastic_checker = 0
 
 "easytags
 let g:easytags_dynamic_files = 1
