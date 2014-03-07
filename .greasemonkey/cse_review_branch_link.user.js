@@ -10,4 +10,4 @@
 nodes = document.getElementsByClassName("rec_kv1_val")
 repo = nodes[1].innerHTML
 branch = nodes[2].innerHTML
-nodes[2].innerHTML='<a href="http://webed.spgear.lab.emc.com/cgi-bin/login/cgit/cgit.cgi/' + repo + '/log/?h=' + branch + '"  target="_blank">' + branch + '</a>'
+nodes[2].innerHTML='<a href="http://webed.spgear.lab.emc.com/cgi-bin/login/cgit/cgit.cgi/' + repo + '/log/?h=' + branch + '&context=6&ignorews=1"  target="_blank">' + branch + '</a>'
