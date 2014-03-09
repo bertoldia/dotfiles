@@ -9,27 +9,33 @@ call vundle#rc()
 
 " Bundles
 Bundle 'gmarik/vundle'
-Bundle 'belike81/vim-bufkill'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-sensible'
-Bundle 'wincent/Command-T'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'majutsushi/tagbar'
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-notes'
 Bundle 'dterei/VimBookmarking'
 Bundle 'Indent-Guides'
+Bundle 'altercation/vim-colors-solarized'
 Bundle 'molokai'
 Bundle 'monokai'
 Bundle 'badwolf'
+Bundle 'darkspectrum'
 Bundle 'obvious-resize'
 Bundle 'TagHighlight'
-Bundle 'darkspectrum'
+Bundle 'Raimondi/delimitMate'
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/vimproc.vim'
+" JavaScript
+"Bundle 'jelera/vim-javascript-syntax'
+"Bundle 'pangloss/vim-javascript'
+"Bundle 'marijnh/tern_for_vim'
+
 
 " ---OPTIONS---
 
@@ -139,6 +145,10 @@ if has("autocmd")
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
         \ endif
+
+  " vala syntax highlighting
+  autocmd BufRead *.vala,*.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
+  autocmd BufRead,BufNewFile *.vala,*.vapi setfiletype vala
 endif
 
 " Automatically reload .vimrc when it changes.
@@ -208,9 +218,6 @@ noremap <F2> :NERDTreeToggle<CR>
 noremap <C-S-PageUp> :bprev<CR>
 noremap <C-S-PageDown> :bnext<CR>
 
-"Bufkill
-noremap <C-k> :BW<CR>
-
 "Fugitive
 map <Leader>gd :Gdiff<CR>
 map <Leader>gs :Gstatus<CR>
@@ -224,6 +231,7 @@ let g:notes_suffix = '.txt'
 "Syntastic
 let g:syntastic_java_maven_executable='/spgear/zeph_comp_tools/apache-maven-2.2.1/bin/mvn'
 let g:syntastic_java_checkers=['javac', 'checkstyle']
+let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
 let g:syntastic_warning_symbol = '!!'
 let g:syntastic_error_symbol = '✘✘'
 
@@ -241,7 +249,10 @@ let g:ycm_complete_in_strings = 1
 "let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
-"let g:ycm_register_as_syntastic_checker = 0
+let g:ycm_register_as_syntastic_checker = 0
+let g:ycm_add_preview_to_completeopt=0
+let g:ycm_confirm_extra_conf=0
+set completeopt-=preview
 
 "easytags
 let g:easytags_dynamic_files = 1
@@ -252,5 +263,15 @@ let g:easytags_python_enabled = 1
 "eclim
 let g:EclimCompletionMethod = 'omnifunc'
 
-"command-t
-let g:CommandTMatchWindowReverse = 1
+"Unite
+let g:unite_source_history_yank_enable = 1
+let g:unite_enable_start_insert = 1
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+nnoremap <leader>f :Unite -no-split -buffer-name=files file_rec/async<cr>
+nnoremap <leader>y :Unite -no-split -buffer-name=yank history/yank<cr>
+nnoremap <leader>b :Unite -no-split -buffer-name=buffer buffer<cr>
+nnoremap <leader>g :Unite -no-split -buffer-name=grep grep:.<cr>
