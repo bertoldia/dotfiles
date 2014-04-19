@@ -26,11 +26,14 @@ Bundle 'molokai'
 Bundle 'monokai'
 Bundle 'badwolf'
 Bundle 'darkspectrum'
+Bundle 'desert-warm-256'
 Bundle 'obvious-resize'
 Bundle 'TagHighlight'
 Bundle 'Raimondi/delimitMate'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimproc.vim'
+
+
 " JavaScript
 "Bundle 'jelera/vim-javascript-syntax'
 "Bundle 'pangloss/vim-javascript'
@@ -274,4 +277,4 @@ endif
 nnoremap <leader>f :Unite -no-split -buffer-name=files file_rec/async<cr>
 nnoremap <leader>y :Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <leader>b :Unite -no-split -buffer-name=buffer buffer<cr>
-nnoremap <leader>g :Unite -no-split -buffer-name=grep grep:.<cr>
+nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
