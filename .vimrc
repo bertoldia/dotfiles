@@ -32,6 +32,7 @@ Bundle 'TagHighlight'
 Bundle 'Raimondi/delimitMate'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimproc.vim'
+Bundle 'airblade/vim-gitgutter'
 
 
 " JavaScript
@@ -103,8 +104,8 @@ let molokai_original=1
 " ---APPEARANCE---
 set background=dark
 if has("gui_running")
-  "colorscheme molokai
-  colorscheme darkspectrum
+  colorscheme molokai
+  "colorscheme darkspectrum
   "colorscheme badwolf
   "colorscheme solarized
   "colorscheme monokai
@@ -278,3 +279,6 @@ nnoremap <leader>f :Unite -no-split -buffer-name=files file_rec/async<cr>
 nnoremap <leader>y :Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <leader>b :Unite -no-split -buffer-name=buffer buffer<cr>
 nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
+
+"Git Gutter
+let g:gitgutter_highlight_lines = 1
