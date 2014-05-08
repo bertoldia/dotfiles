@@ -86,7 +86,7 @@ function _ui_review() {
     git fetch
     git co -b $1 origin/$1
   fi
-  gitg&
+  tig
 }
 
 function _nsfw_review() {
