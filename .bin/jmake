@@ -6,7 +6,6 @@ source $BIN_PATH/utils
 MAKE_TARBALL=false
 SP_SYNC=false
 CLEAN=false
-DEFAULT_ACTION="mvn install -Dmaven.test.skip" #don't run the unit tests
 GIT_REPO_ROOT="/dev/null"
 
 
@@ -68,7 +67,7 @@ fi
 ACTION="$ACTION install"
 
 if [[ $DO_TESTS == false ]]; then
-  ACTION="$ACTION -Dmaven.test.skip"
+  ACTION="$ACTION -e -Dmaven.test.skip"
 elif [[ $TEST ]]; then
   ACTION="$ACTION -Dtest=$TEST"
 fi
