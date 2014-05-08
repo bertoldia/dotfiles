@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export DIST_PYTHON="/usr/bin/python2"
+
 RUNNER_BIN="/home/runner/bin"
 TMP_FILE="/tmp/queue-ls"
 QUEUES="ctest rtest"

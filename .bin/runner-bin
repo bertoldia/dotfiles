@@ -3,6 +3,8 @@
 BIN_PATH=$(dirname $(readlink -fn $0))
 source $BIN_PATH/utils
 
+export DIST_PYTHON="/usr/bin/python2"
+
 RUNNER_HOME="/home/runner"
 CTEST_BIN="${RUNNER_HOME}/bin/ctest"
 LOCAL_RUNNER="/home/bertoa/runner"
@@ -31,7 +33,7 @@ SYSTEM=$1
 shift
 
 ACTION="show"
-BRANCH="D10"
+BRANCH="D40"
 USE_EXISTING_CLI=false
 TEST=false
 CUSTOM_CLI_CONFIG=false
@@ -66,7 +68,7 @@ case $ACTION in
       cp ${GIT_REPO_ROOT}/${SMSV2_PATH}/smsv2-${BRANCH}.0.0.0.tgz ${LOCAL_RUNNER}
     fi
 
-    COMMAND="${CTEST_BIN} ${SYSTEM} submit ${RUNNER_HOME}/firmware/nsfw-${BRANCH} --binary -b ${BRANCH} --cli=${LOCAL_RUNNER}/smsv2-${BRANCH}.0.0.0.tgz"
+    COMMAND="${CTEST_BIN} ${SYSTEM} submit ${RUNNER_HOME}/firmware/nsfw-${BRANCH} --binary --cli=${LOCAL_RUNNER}/smsv2-${BRANCH}.0.0.0.tgz"
     if [ ${CUSTOM_CLI_CONFIG} == true ]; then
       COMMAND="${COMMAND} -c ${LOCAL_RUNNER}/cli"
     fi
