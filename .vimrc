@@ -33,7 +33,7 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimproc.vim'
 Bundle 'airblade/vim-gitgutter'
-
+Bundle 'derekwyatt/vim-scala'
 
 " JavaScript
 "Bundle 'jelera/vim-javascript-syntax'
@@ -213,6 +213,21 @@ map <silent> <F3> :ToggleBookmark<CR>
 map <F8> :TagbarToggle<CR>
 let g:tagbar_left = 0
 let g:tagbar_sort = 0
+let g:tagbar_type_scala = {
+    \ 'ctagstype' : 'Scala',
+    \ 'kinds'     : [
+        \ 'p:packages:1',
+        \ 'V:values',
+        \ 'v:variables',
+        \ 'T:types',
+        \ 't:traits',
+        \ 'o:objects',
+        \ 'a:aclasses',
+        \ 'c:classes',
+        \ 'r:cclasses',
+        \ 'm:methods'
+    \ ]
+\ }
 
 "NERDTree
 noremap <S-F2> :Explore<CR>
