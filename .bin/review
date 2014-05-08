@@ -34,6 +34,7 @@ link() {
     zreview link --branch `git current-branch` --upstream `git upstream | sed 's/origin\///'` -r zeph-r$rid -q [NONE]
   else
     zreview link --branch `git current-branch` --upstream `git upstream | sed 's/origin\///'` -r zeph-r$rid -q zeph-q$qid -e FINL
+    #zreview link --branch `git current-branch` --upstream `git upstream | sed 's/origin\///'` -r zeph-r$rid -q zeph-q$qid -e PRLM
   fi
 }
 ################################################################################
