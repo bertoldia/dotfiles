@@ -227,6 +227,8 @@ map <Leader>gd :Gdiff<CR>
 map <Leader>gs :Gstatus<CR>
 map <Leader>gc :Gcommit<CR>
 map <Leader>gb :Gblame<CR>
+map <Leader>dp :diffput<CR>
+map <Leader>dg :diffget<CR>
 
 "vim-notes
 let g:notes_directories = ['~/notes']
