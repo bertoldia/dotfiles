@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ssh-copy-id -i ~/.ssh/id_rsa.pub service@$1
+scp ~/.bin/resources/env.tgz $1://home/service
+ssh service@$1 'tar -zxvf env.tgz ; rm env.tgz ; cp /var/log/VPlex/cli/connections bertoa/cli'
