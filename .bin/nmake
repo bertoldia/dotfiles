@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sp_sync=false
-action="./make.py -j4"
+action="python2 make.py -j4"
 
 usage() {
   echo "Usage: nmake [-s]"
