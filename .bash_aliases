@@ -27,6 +27,7 @@ alias extract='file-roller -h'
 alias bin='ll ~/.bin'
 alias gti='git'
 alias gg='git grep'
+alias gitd='git-dag'
 alias trash='_trash'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
 
@@ -105,7 +106,6 @@ function _nsfw_review() {
     git co -b $1 origin/$1
   fi
   tig snac/doc/cic.txt
-
 }
 
 function lcd() {
