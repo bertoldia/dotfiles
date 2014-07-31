@@ -12,6 +12,7 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-sensible'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
@@ -28,12 +29,11 @@ Bundle 'badwolf'
 Bundle 'darkspectrum'
 Bundle 'desert-warm-256'
 Bundle 'obvious-resize'
-Bundle 'TagHighlight'
 Bundle 'Raimondi/delimitMate'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimproc.vim'
 Bundle 'airblade/vim-gitgutter'
-
+Bundle 'ntpeters/vim-better-whitespace'
 
 " JavaScript
 "Bundle 'jelera/vim-javascript-syntax'
@@ -95,9 +95,6 @@ filetype plugin indent on
 "Status line
 "set statusline=%{g:bufBStr}%#NowBuf#%{g:bufNStr}%#StatusLine#%{g:bufAStr}%<%=%{fugitive#statusline()}[%Y][%c,%l/%L(%P)]
 
-" highlighting trailing spaces
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=#F92672
-
 let g:solarized_hitrail=1
 let molokai_original=1
 
@@ -138,9 +135,6 @@ if has("autocmd")
   autocmd Filetype cpp setlocal shiftwidth=4 tabstop=4
   " use python syntax highlighting for regression test files
   autocmd BufRead,BufNewFile *.yy set filetype=python
-
-  " highlighting trailing spaces
-  autocmd VimEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -213,6 +207,21 @@ map <silent> <F3> :ToggleBookmark<CR>
 map <F8> :TagbarToggle<CR>
 let g:tagbar_left = 0
 let g:tagbar_sort = 0
+let g:tagbar_type_scala = {
+    \ 'ctagstype' : 'Scala',
+    \ 'kinds'     : [
+        \ 'p:packages:1',
+        \ 'V:values',
+        \ 'v:variables',
+        \ 'T:types',
+        \ 't:traits',
+        \ 'o:objects',
+        \ 'a:aclasses',
+        \ 'c:classes',
+        \ 'r:cclasses',
+        \ 'm:methods'
+    \ ]
+    \ }
 
 "NERDTree
 noremap <S-F2> :Explore<CR>
@@ -281,6 +290,3 @@ nnoremap <leader>f :Unite -no-split -buffer-name=files file_rec/async<cr>
 nnoremap <leader>y :Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <leader>b :Unite -no-split -buffer-name=buffer buffer<cr>
 nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
-
-"Git Gutter
-let g:gitgutter_highlight_lines = 1
