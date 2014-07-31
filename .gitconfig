@@ -37,8 +37,8 @@
   rebase-branch-to-upstream = !git rebase --interactive `git upstream`
   change-upstream = !sh -c 'git branch --set-upstream-to \"$@\"' -
   ; goodies
-  current-branch = !git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/'
-  upstream = !git branch --no-color -vv 2> /dev/null | sed -e '/^[^*]/d' -e 's/.*[0-9a-z]\\{7,7\\} \\[//' -e 's/:.*//' -e 's/\\].*//'
+  current-branch = rev-parse --abbrev-ref HEAD
+  upstream = !git rev-parse --abbrev-ref `git current-branch`@{upstream}
   changes = !git log --oneline `git upstream`..HEAD
   files = !git diff --name-only `git upstream`
   my-branches = !git br -a | grep --color bertoa
