@@ -8,19 +8,25 @@ apache-ant-1.6.5
 apache-ant-1.9.2
 apache-maven-2.0.9
 apache-maven-2.2.1
+apache-maven-3.2.2
 apache-tomcat
 gmock
 jdk1.6.0_03
 jdk1.6.0_31
 jdk1.6.0_39
 jdk1.6.0_45
+jdk1.8.0_05
 jython-2.2.1
+linux-gcc433-x86_64
+linux-v1
+linux-v1r1
 ofed
 pep8
 python-2.6.1
 saxonb8-8j
 sles11-sp2
 sysroot
+sysroot-utils
 )
 
 for P in ${PATHS_TO_SYNC[@]};
