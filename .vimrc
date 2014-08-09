@@ -28,11 +28,11 @@ Bundle 'badwolf'
 Bundle 'darkspectrum'
 Bundle 'desert-warm-256'
 Bundle 'obvious-resize'
-Bundle 'TagHighlight'
 Bundle 'Raimondi/delimitMate'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimproc.vim'
 Bundle 'airblade/vim-gitgutter'
+Bundle 'ntpeters/vim-better-whitespace'
 Bundle 'derekwyatt/vim-scala'
 
 " JavaScript
@@ -95,9 +95,6 @@ filetype plugin indent on
 "Status line
 "set statusline=%{g:bufBStr}%#NowBuf#%{g:bufNStr}%#StatusLine#%{g:bufAStr}%<%=%{fugitive#statusline()}[%Y][%c,%l/%L(%P)]
 
-" highlighting trailing spaces
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=#F92672
-
 let g:solarized_hitrail=1
 let molokai_original=1
 
@@ -138,9 +135,6 @@ if has("autocmd")
   autocmd Filetype python setlocal shiftwidth=4 tabstop=4
   " use python syntax highlighting for regression test files
   autocmd BufRead,BufNewFile *.yy set filetype=python
-
-  " highlighting trailing spaces
-  autocmd VimEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -255,6 +249,9 @@ let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
 let g:syntastic_warning_symbol = '!!'
 let g:syntastic_error_symbol = '✘✘'
+let g:syntastic_aggregate_errors = 1
+nmap <silent> [l :lprev<CR>
+nmap <silent> ]l :lnext<CR>
 
 "obvious-resize
 nmap <silent> <C-S-Up> :ObviousResizeUp<CR>
@@ -265,15 +262,13 @@ nmap <silent> <C-S-Right> :ObviousResizeRight<CR>
 "YCM
 let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_min_num_identifier_candidate_chars = 4
+let g:ycm_warning_symbol = '!!'
+let g:ycm_error_symbol = '✘✘'
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 "let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
-let g:ycm_register_as_syntastic_checker = 0
-let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
-set completeopt-=preview
 
 "easytags
 let g:easytags_dynamic_files = 1
@@ -296,6 +291,3 @@ nnoremap <leader>f :Unite -no-split -buffer-name=files file_rec/async<cr>
 nnoremap <leader>y :Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <leader>b :Unite -no-split -buffer-name=buffer buffer<cr>
 nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
-
-"Git Gutter
-let g:gitgutter_highlight_lines = 1
