@@ -1,1 +1,0 @@
-/home/axel/workspace/tools/ui_build_tools/clean-all.sh
