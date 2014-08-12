@@ -2,20 +2,23 @@
 
 regen_ctags=false
 regen_eclipse=false
+do_clean=false
 
 usage() {
   echo "Tidy your git repo:"
   echo "Usage: tidy [-c -a]"
   echo "  -a: have ant regenerate eclipse project files."
-  echo "  -c: regenerate your ctags."
+  echo "  -t: regenerate your ctags."
+  echo "  -c: git clean the repo."
   exit 0
 }
 
-while getopts "cha" flag
+while getopts "thac" flag
 do
   case $flag in
-    c) regen_ctags=true;;
+    t) regen_ctags=true;;
     a) regen_eclipse=true;;
+    c) do_clean=true;;
     h) usage;;
     *) usage;;
   esac
@@ -27,7 +30,10 @@ git remote prune origin
 git prune
 git gc
 git fsck
-git clean -fx -e .metadata -e tags -e .project -e .classpath
+
+if [[ $do_clean == true ]]; then
+  git clean -fx -e .metadata -e tags -e .project -e .classpath
+fi
 
 if [[ $regen_eclipse == true ]]; then
   . build_environment
