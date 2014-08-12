@@ -5,9 +5,9 @@ SPGEAR_TOOLS_EXTRA=/spgear/tools/bin:/spgear/spgear/bin
 RUNNER_PATH=/home/runner/bin
 
 export PATH="${HOME}/.bin:${PATH}:${RUNNER_PATH}:${SPGEAR_TOOLS_EXTRA}"
-export UI_DEV_DIR="${HOME}/workspace/dev/cli"
-export UI_REVIEW_DIR="${HOME}/workspace/review/cli"
-export UI_TEST_DIR="${HOME}/workspace/test/cli"
+export UI_DEV_DIR="${HOME}/workspace/dev/ui"
+export UI_REVIEW_DIR="${HOME}/workspace/review/ui"
+export UI_TEST_DIR="${HOME}/workspace/test/ui"
 export UI_REGRESSION_DIR="${HOME}/workspace/test/cli-regression"
 
 export NSFW_DEV_DIR="${HOME}/workspace/dev/nsfw"
