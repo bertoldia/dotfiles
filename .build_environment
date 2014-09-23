@@ -8,13 +8,9 @@ export PATH="${HOME}/.bin:${PATH}:${RUNNER_PATH}:${SPGEAR_TOOLS_EXTRA}"
 export UI_DEV_DIR="${HOME}/workspace/dev/ui"
 export UI_REVIEW_DIR="${HOME}/workspace/review/ui"
 export UI_TEST_DIR="${HOME}/workspace/test/ui"
-export UI_REGRESSION_DIR="${HOME}/workspace/test/cli-regression"
+export UI_REGRESSION_DIR="${HOME}/workspace/test/ui-regression"
 
 export NSFW_DEV_DIR="${HOME}/workspace/dev/nsfw"
 export NSFW_REVIEW_DIR="${HOME}/workspace/review/nsfw"
-
-#if [ -f $UI_DEV_DIR/build_environment ]; then
-  #. $UI_DEV_DIR/build_environment
-#fi
 
 return 0
