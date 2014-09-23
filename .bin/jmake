@@ -22,8 +22,8 @@ usage() {
   echo "  -s: sp-sync the resulting tarball. Implies -t."
   echo "  -c: clean before building."
   echo "  -cc: clean only. Ignores all other options."
-  echo "  -8: use java 8."
-  echo "  -3: use maven 3."
+  echo "  -6: use java 6."
+  echo "  -2: use maven 2."
   exit 0
 }
 
@@ -33,7 +33,7 @@ execAction() {
 }
 
 #START
-while getopts "ctush83" flag
+while getopts "ctush62" flag
 do
   case $flag in
     s) SP_SYNC=true
@@ -50,8 +50,8 @@ do
        fi
        DO_CLEAN=true
        ;;
-    8) export SMS_V2_JAVA_HOME=$JAVA8;;
-    3) export SMS_V2_MAVEN_HOME=$MVN3;;
+    6) export SMS_V2_JAVA_HOME=$JAVA6;;
+    2) export SMS_V2_MAVEN_HOME=$MVN2;;
     h) usage;;
     *) usage;;
   esac
