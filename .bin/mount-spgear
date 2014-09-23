@@ -1,0 +1,5 @@
+#!/bin/dash
+
+sudo systemctl start ypbind
+sleep 2
+sudo systemctl start autofs
