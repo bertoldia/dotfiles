@@ -100,7 +100,6 @@ function _nsfw_review() {
     git co -b $1 origin/$1
   fi
   tig snac/doc/cic.txt
-
 }
 
 function lcd() {
