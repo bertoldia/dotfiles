@@ -103,5 +103,3 @@ POWERLINE_SH="/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline
 if [ -f $POWERLINE_SH ]; then
   source $POWERLINE_SH
 fi
-
-ll
