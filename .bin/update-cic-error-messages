@@ -6,5 +6,5 @@ if [ $? != 0 ]; then
 	exit
 fi
 
-python bin/cicParser.py -i ../nsfw/snac/doc/cic.txt -o com-yottayotta-smsv2/src/resources/DirectorErrorCodes_en_US.properties --customBundle com-yottayotta-smsv2/src/resources/DirectorErrorCodesCustomLevel_en_US.properties
-python bin/cicParser.py -i ../nsfw/snac/doc/cic.txt -o com-yottayotta-smsv2/src/resources/DirectorErrorCodesHighLevel_en_US.properties --translate --customBundle com-yottayotta-smsv2/src/resources/DirectorErrorCodesCustomLevel_en_US.properties
+python2 bin/cicParser.py -i ../nsfw/snac/doc/cic.txt -o com-emc-vplex-smsv2/src/resources/DirectorErrorCodes_en_US.properties --customBundle com-emc-vplex-smsv2/src/resources/DirectorErrorCodesCustomLevel_en_US.properties
+python2 bin/cicParser.py -i ../nsfw/snac/doc/cic.txt -o com-emc-vplex-smsv2/src/resources/DirectorErrorCodesHighLevel_en_US.properties --translate --customBundle com-emc-vplex-smsv2/src/resources/DirectorErrorCodesCustomLevel_en_US.properties
