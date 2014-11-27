@@ -1,1 +1,1 @@
-/home/bertoa/workspace/logAnalysisTool/loganalysistool.py
+../workspace/logAnalysisTool/loganalysistool.py
