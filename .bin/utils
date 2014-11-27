@@ -3,7 +3,7 @@
 SPGEAR="/spgear/zeph_comp_tools"
 JAVA8="$SPGEAR/jdk1.8.0_05"
 JAVA6="$SPGEAR/jdk1.6.0_45"
-MVN2="$SPGEAR/apache-maven-2.0.9"
+MVN2="$SPGEAR/apache-maven-2.2.1"
 MVN3="$SPGEAR/apache-maven-3.2.2"
 GIT_REPO_ROOT="/dev/null"
 
