@@ -27,6 +27,9 @@ Bundle 'monokai'
 Bundle 'badwolf'
 Bundle 'darkspectrum'
 Bundle 'desert-warm-256'
+Bundle 'mango.vim'
+Bundle 'railscasts'
+Bundle 'freeo/vim-kalisi'
 Bundle 'obvious-resize'
 Bundle 'Raimondi/delimitMate'
 Bundle 'Shougo/unite.vim'
@@ -76,7 +79,7 @@ set tags=./tags;/               " search for a tags file staring at current file
 set cst                         "to select tag when there are multiple matches
 " highlight current line and column, and set the red line over there ->
 set cursorline
-set colorcolumn=80
+set colorcolumn=100
 set showmode
 "set textwidth=80
 set wrap linebreak
@@ -101,11 +104,7 @@ let molokai_original=1
 " ---APPEARANCE---
 set background=dark
 if has("gui_running")
-  colorscheme molokai
-  "colorscheme darkspectrum
-  "colorscheme badwolf
-  "colorscheme solarized
-  "colorscheme monokai
+  colorscheme kalisi
 
   set guioptions-=T " hide toolbar
   set guioptions-=m " hide menubar
@@ -117,7 +116,7 @@ if has("gui_running")
 
   set cursorcolumn
 else
-  colorscheme solarized
+  colorscheme mango
 endif
 
 "set guifont=DejaVu\ Sans\ Mono\ 10
@@ -178,6 +177,7 @@ nmap <silent> <C-S-t> :tab sball<CR>
 
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+map <C-W> :bd <CR>
 
 "map <C-S-t> :tag
 
@@ -243,11 +243,13 @@ let g:notes_directories = ['~/notes']
 let g:notes_suffix = '.txt'
 
 "Syntastic
-let g:syntastic_java_maven_executable='/spgear/zeph_comp_tools/apache-maven-2.2.1/bin/mvn'
+let g:syntastic_java_maven_executable='/spgear/zeph_comp_tools/apache-maven-3.2.2/bin/mvn'
+"let g:syntastic_java_javac_executable='/usr/lib/jvm/java-8-openjdk/bin/javac'
+let g:syntastic_java_javac_executable='/spgear/zeph_comp_tools/jdk1.8.0_11/bin/javac'
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
-let g:syntastic_warning_symbol = '!!'
-let g:syntastic_error_symbol = '✘✘'
+let g:syntastic_warning_symbol='!!'
+let g:syntastic_error_symbol='✘✘'
 let g:syntastic_aggregate_errors = 1
 nmap <silent> [l :lprev<CR>
 nmap <silent> ]l :lnext<CR>
@@ -269,12 +271,6 @@ let g:ycm_register_as_syntastic_checker = 0
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
 set completeopt-=preview
-
-"easytags
-let g:easytags_dynamic_files = 1
-"let g:easytags_on_cursorhold = 0
-let g:easytags_auto_update = 0
-let g:easytags_python_enabled = 1
 
 "eclim
 let g:EclimCompletionMethod = 'omnifunc'
