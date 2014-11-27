@@ -3,32 +3,40 @@
 regen_ctags=false
 regen_eclipse=false
 do_clean=false
+git_gc_opt=""
 
 usage() {
   echo "Tidy your git repo:"
-  echo "Usage: tidy [-c -a]"
+  echo "Usage: tidy [-c -a -t -g]"
   echo "  -a: have ant regenerate eclipse project files."
   echo "  -t: regenerate your ctags."
   echo "  -c: git clean the repo."
+  echo "  -g: git cg --aggressive "
   exit 0
 }
 
-while getopts "thac" flag
+while getopts "thacg" flag
 do
   case $flag in
     t) regen_ctags=true;;
     a) regen_eclipse=true;;
     c) do_clean=true;;
+    g) git_gc_opt="--aggressive";;
     h) usage;;
     *) usage;;
   esac
 done
 
+set -e
+
 cd `git rev-parse --show-toplevel`
 git fetch
 git remote prune origin
+git pack-refs --all
+rm -rf .git/refs/remotes/origin/{b,z}
+git repack -ad
 git prune
-git gc
+git gc $git_gc_opt
 git fsck
 
 if [[ $do_clean == true ]]; then
@@ -43,4 +51,3 @@ fi
 if [[ $regen_ctags == true ]]; then
   ctags -R --fields=+l --extra=+q . >/dev/null 2>&1 &
 fi
-
