@@ -32,6 +32,9 @@ execAction() {
   $@
 }
 
+
+ACTION="mvn -T2C"
+
 #START
 while getopts "ctush62" flag
 do
@@ -51,7 +54,9 @@ do
        DO_CLEAN=true
        ;;
     6) export SMS_V2_JAVA_HOME=$JAVA6;;
-    2) export SMS_V2_MAVEN_HOME=$MVN2;;
+    2) export SMS_V2_MAVEN_HOME=$MVN2
+       ACTION="mvn"
+      ;;
     h) usage;;
     *) usage;;
   esac
@@ -61,8 +66,6 @@ loadBuildEnvironment
 setSmsv2Path
 
 echo $PATH
-
-ACTION="mvn"
 
 if [[ $DO_CLEAN == true ]]; then
   ACTION="$ACTION clean"
