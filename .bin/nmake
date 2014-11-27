@@ -31,7 +31,7 @@ while getopts "sc" flag
 do
   case $flag in
     s) sp_sync=true;;
-    c) action="./make.py clean";;
+    c) action="python2 make.py clean";;
     *) usage;;
   esac
 done
