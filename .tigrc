@@ -3,5 +3,7 @@ set ignore-space = all
 set vertical-split = auto
 set tab-size = 2
 set diff-context = 5
-set main-view = id:yes,color date:relative author:full,width=15 commit-title:yes,refs=yes,graph=yes
-
+set main-view = id:yes,color date:relative author:full,width=15 commit-title:yes,refs=yes,graph=no
+set show-changes = yes
+set git-colors = no
+set commit-order = topo
