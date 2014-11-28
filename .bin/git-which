@@ -1,0 +1,34 @@
+#!/bin/sh
+
+usage() {
+  echo "Usage: git which <author>"
+  echo "Show files under the current path touched by an author"
+  exit 0
+}
+
+if [ $# == 0 ]; then
+    usage
+fi
+
+AUTHOR=$1
+
+FILTER=`echo "."`
+PREFIX=""
+PWD=$(readlink -m $(pwd))
+ROOT=$(readlink -m $(git rev-parse --show-toplevel))
+
+if [ $ROOT != $PWD ]; then
+  PREFIX=`echo '.'`
+  FILTER=${PWD#"$ROOT/"}
+fi
+
+RESULTS=$(git log --no-merges --stat --author=$AUTHOR --name-only --pretty=format:"" | grep -F $FILTER | sort -u)
+
+TOTAL=0
+for PATH in $RESULTS
+do
+    echo "$PREFIX${PATH#$FILTER}"
+    TOTAL=$(($TOTAL + 1))
+done
+
+echo "$TOTAL files"
