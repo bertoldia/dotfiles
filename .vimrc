@@ -7,41 +7,43 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-" Bundles
-Bundle 'gmarik/vundle'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-sensible'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'Valloric/ListToggle'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'majutsushi/tagbar'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-notes'
-Bundle 'dterei/VimBookmarking'
-Bundle 'Indent-Guides'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'molokai'
-Bundle 'monokai'
-Bundle 'badwolf'
-Bundle 'darkspectrum'
-Bundle 'desert-warm-256'
-Bundle 'mango.vim'
-Bundle 'railscasts'
-Bundle 'freeo/vim-kalisi'
-Bundle 'obvious-resize'
-Bundle 'Raimondi/delimitMate'
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/vimproc.vim'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'ntpeters/vim-better-whitespace'
+" Plugins
+Plugin 'gmarik/vundle'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-sensible'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/ListToggle'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'majutsushi/tagbar'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
+Plugin 'dterei/VimBookmarking'
+Plugin 'Indent-Guides'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'molokai'
+Plugin 'monokai'
+Plugin 'badwolf'
+Plugin 'darkspectrum'
+Plugin 'desert-warm-256'
+Plugin 'mango.vim'
+Plugin 'railscasts'
+Plugin 'freeo/vim-kalisi'
+Plugin 'obvious-resize'
+Plugin 'Raimondi/delimitMate'
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'LaTeX-Box'
+Plugin 'dart-lang/dart-vim-plugin'
 
 " JavaScript
-"Bundle 'jelera/vim-javascript-syntax'
-"Bundle 'pangloss/vim-javascript'
-"Bundle 'marijnh/tern_for_vim'
+"Plugin 'jelera/vim-javascript-syntax'
+"Plugin 'pangloss/vim-javascript'
+"Plugin 'marijnh/tern_for_vim'
 
 
 " ---OPTIONS---
@@ -177,10 +179,11 @@ nmap <silent> <A-Right> :wincmd l<CR>
 nmap <silent> <C-S-t> :tab sball<CR>
 
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+"map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-W> :bd <CR>
 
 "map <C-S-t> :tag
+map <C-m> :wa<CR> :make<CR>
 
 " misspellings
 :iabbrev teh the
