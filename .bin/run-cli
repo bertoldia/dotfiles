@@ -2,6 +2,7 @@
 
 BIN_PATH=$(dirname $(readlink -fn $0))
 source $BIN_PATH/utils
+source $HOME/.build_environment
 
 USE_NEW_TARBALL=true
 DEBUG=false
