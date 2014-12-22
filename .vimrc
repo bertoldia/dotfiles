@@ -11,6 +11,7 @@ call vundle#rc()
 Plugin 'gmarik/vundle'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-dispatch'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/ListToggle'
 Plugin 'scrooloose/nerdcommenter'
@@ -39,9 +40,10 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'LaTeX-Box'
-Plugin 'dart-lang/dart-vim-plugin'
+Plugin 'JalaiAmitahl/maven-compiler.vim'
 
-" JavaScript
+"Plugin 'dart-lang/dart-vim-plugin'
+"Plugin 'Dart'
 "Plugin 'jelera/vim-javascript-syntax'
 "Plugin 'pangloss/vim-javascript'
 "Plugin 'marijnh/tern_for_vim'
@@ -170,7 +172,7 @@ map <A-c> "+y
 map <A-v> "+gP
 "Folding control
 "nmap <C-S-Right> :foldopen<CR>
-nmap <Space> :foldclose<CR>
+"nmap <Space> :foldclose<CR>
 " Move between windows with alt arrow
 nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
@@ -291,3 +293,11 @@ nnoremap <leader>f :Unite -no-split -buffer-name=files file_rec/async<cr>
 nnoremap <leader>y :Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <leader>b :Unite -no-split -buffer-name=buffer buffer<cr>
 nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
+
+"Dispatch
+map <F6> :Dispatch! makesms -ou <C-R>=expand("%:t:r")<CR><CR>
+map <S-F6> :Dispatch makesms -ou <C-R>=expand("%:t:r")<CR><CR>
+
+"Maven-compiler
+autocmd FileType java let b:dispatch = 'mvn'
+autocmd FileType java compiler mvn
