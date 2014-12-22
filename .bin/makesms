@@ -1,0 +1,129 @@
+#!/bin/bash
+
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+
+MVN="mvn -T2C"
+TARGET_SRC_COMPILE="compiler:compile"
+TARGET_TEST_COMPILE="compiler:testCompile"
+TARGET_TEST_RUN="surefire:test"
+TESTS_SKIP="-Dmaven.test.skip"
+TARGET_BUILD="install"
+TARGET_CLEAN="clean"
+WITH_TESTS="-Dtest="
+DEFAULT=$TARGET_BUILD
+MAKE_TARBALL="ant make-docless-tarball"
+
+DO_DEFAULT=true
+DO_TARBALL=false
+DO_BUILD=false
+DO_COMPILE=false
+DO_CLEAN=false
+DO_TESTS=false
+TESTS=""
+
+GIT_REPO_ROOT="/dev/null"
+
+usage() {
+  echo "Usage: jmake [-b -o -t -c -u [test-regex]]"
+  echo "  -b build project (default if no arguments are specified, overrides -o)"
+  echo "  -o compile project only (overrides default)"
+  echo "  -t: make a release tarball (implies -b and overrides -o)"
+  echo "  -u: execute specified unit test pattern, or all unit tests if no pattern was specified"
+  echo "      requires either -b or (at least) -o"
+  echo "  -c: clean before building (-c alone overrides default; can be combined with -o or -b)."
+  exit 0
+}
+
+execAction() {
+  echo -e "\e[1;33mExecuting $@ in `pwd` \e[0m"
+  $@
+}
+
+#START
+while getopts ":botu:ch" arg; do
+  case $arg in
+    b) DO_BUILD=true
+       DO_DEFAULT=false;;
+    o) DO_COMPILE=true
+       DO_DEFAULT=false;;
+    t) DO_TARBALL=true;;
+    c) DO_CLEAN=true
+       DO_DEFAULT=false;;
+    u) DO_TESTS=true
+       TESTS=$OPTARG;;
+    :) DO_TESTS=true;; #this is an abuse of :)
+    h) usage;;
+    \?) usage;;
+  esac
+done
+
+setSmsv2Path
+
+# saneitize (yes, not sanitize) args
+
+# -t requires -b
+if [[ $DO_TARBALL == true ]]; then
+  DO_BUILD=true
+fi
+
+# -b overrides -o
+if [[ $DO_BUILD == true ]]; then
+  DO_COMPILE=false
+fi
+
+# if -u is true, require at least -o
+if [[ $DO_TESTS == true && $DO_BUILD == false && $DO_DEFAULT == false && $DO_COMPILE == false ]]; then
+  DO_COMPILE=true
+fi
+
+# build the command
+ACTION=$MVN
+
+if [[ $DO_CLEAN == true ]]; then
+  ACTION="$ACTION clean"
+fi
+
+# -b is the default
+if [[ $DO_BUILD == true || $DO_DEFAULT == true ]]; then
+  ACTION="$ACTION $TARGET_BUILD"
+elif [[ $DO_COMPILE == true ]]; then
+  ACTION="$ACTION $TARGET_SRC_COMPILE $TARGET_TEST_COMPILE"
+fi
+
+# run unit tests
+if [[ $DO_TESTS == false ]]; then
+  ACTION="$ACTION $TESTS_SKIP"
+else
+  if [[ $DO_COMPILE == true ]]; then
+    ACTION="$ACTION $TARGET_TEST_RUN"
+  fi
+  if [[ $TESTS ]]; then
+    ACTION="$ACTION -Dtest=$TESTS"
+  fi
+fi
+
+rm $GIT_REPO_ROOT/$SMSV2_PATH/*.tgz
+
+execAction $ACTION
+
+# build the tarball, but only if building succedeed
+if [[ $? == 0 && $DO_TARBALL == true ]]; then
+  if [ basename != $SMSV2_PATH ]; then
+    cd `git rev-parse --show-toplevel`
+    cd $SMSV2_PATH
+  fi
+
+  if [ ! -e target/test-classes ]; then
+    mkdir -p target/test-classes
+  fi
+
+  loadBuildEnvironment
+  execAction $MAKE_TARBALL
+fi
+
+if [ $? == 0 ]; then
+  echo -e "\e[1;33mLast build at `date`\e[0m"
+fi
+
+exit $?
