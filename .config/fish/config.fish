@@ -1,6 +1,10 @@
 # Path to your oh-my-fish.
 set fish_path $HOME/.oh-my-fish
 
+set SPGEAR_TOOLS_EXTRA /spgear/tools/bin /spgear/spgear/bin
+set RUNNER_PATH /home/runner/bin
+set PATH $HOME/.bin $PATH $RUNNER_PATH $SPGEAR_TOOLS_EXTRA
+
 # Theme
 set fish_theme bobthefish
 set -g __fish_git_prompt_show_informative_status 1
