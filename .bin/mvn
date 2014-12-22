@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# A mvn proxy script. Loads the current repo's build_environment to set the
+# mvn path. The script is dumb in that it does not look for a local maven
+# install.
+
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+
+loadBuildEnvironment
+
+mvn $*
+
+exit $?
