@@ -2,6 +2,7 @@
 
 BIN_PATH=$(dirname $(readlink -fn $0))
 source $BIN_PATH/utils
+source $HOME/.build_environment
 
 isValidCLIRunDir
 loadBuildEnvironment $UI_DEV_DIR
