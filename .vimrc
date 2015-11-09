@@ -12,36 +12,45 @@ Plugin 'gmarik/vundle'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-dispatch'
+"Plugin 'tpope/vim-surround'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/ListToggle'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-notes'
 Plugin 'dterei/VimBookmarking'
-Plugin 'Indent-Guides'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'molokai'
-Plugin 'monokai'
-Plugin 'badwolf'
-Plugin 'darkspectrum'
-Plugin 'desert-warm-256'
-Plugin 'mango.vim'
-Plugin 'railscasts'
-Plugin 'freeo/vim-kalisi'
 Plugin 'obvious-resize'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/unite-outline'
+Plugin 'Shougo/neomru.vim'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'LaTeX-Box'
+"Plugin 'LaTeX-Box'
 Plugin 'JalaiAmitahl/maven-compiler.vim'
+Plugin 'bling/vim-airline'
 
-"Plugin 'dart-lang/dart-vim-plugin'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'molokai'
+Plugin 'monokai'
+Plugin 'darkspectrum'
+"Plugin 'desert-warm-256'
+"Plugin 'mango.vim'
+"Plugin 'railscasts'
+Plugin 'freeo/vim-kalisi'
+Plugin 'CruizeMissile/Revolution.vim'
+Plugin 'blerins/flattown'
+Plugin 'ratazzi/blackboard.vim'
+Plugin 'nielsmadan/harlequin'
+Plugin 'Yggdroot/indentLine'
+Plugin 'luochen1990/rainbow'
+
+Plugin 'dart-lang/dart-vim-plugin'
 "Plugin 'Dart'
 "Plugin 'jelera/vim-javascript-syntax'
 "Plugin 'pangloss/vim-javascript'
@@ -61,8 +70,8 @@ set hidden                      " When I close a tab don't remove the buffer
 let g:clipbrdDefaultReg = '+'
 set grepprg=grep\ -nH\ $*
 set expandtab                   " make tabs spaces
-set shiftwidth=2                " for auto and manual indent
-set tabstop=2                   " pressing tab inserts 2 spaces
+set shiftwidth=4                " for auto and manual indent
+set tabstop=4                   " pressing tab inserts 2 spaces
 set nu                          " line number
 "Folding
 set foldmethod=syntax
@@ -83,9 +92,9 @@ set tags=./tags;/               " search for a tags file staring at current file
 set cst                         "to select tag when there are multiple matches
 " highlight current line and column, and set the red line over there ->
 set cursorline
-set colorcolumn=100
+set colorcolumn=80
 set showmode
-"set textwidth=80
+set textwidth=80
 set wrap linebreak
 let &listchars = "tab:\u00b7 ,trail:\u00b7"
 set list
@@ -108,7 +117,7 @@ let molokai_original=1
 " ---APPEARANCE---
 set background=dark
 if has("gui_running")
-  colorscheme kalisi
+  colorscheme harlequin
 
   set guioptions-=T " hide toolbar
   set guioptions-=m " hide menubar
@@ -120,11 +129,10 @@ if has("gui_running")
 
   set cursorcolumn
 else
-  colorscheme mango
+  colorscheme Revolution
 endif
 
-"set guifont=DejaVu\ Sans\ Mono\ 10
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 10
+set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 10
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
@@ -132,10 +140,7 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
   " For all text files set 'textwidth' to 80 characters.
-  autocmd FileType text setlocal textwidth=80
-  autocmd Filetype markdown setlocal textwidth=80
-  autocmd Filetype python setlocal shiftwidth=4 tabstop=4
-  autocmd Filetype cpp setlocal shiftwidth=4 tabstop=4
+  autocmd Filetype java setlocal  shiftwidth=2 tabstop=2 colorcolumn=100 textwidth=100
   " use python syntax highlighting for regression test files
   autocmd BufRead,BufNewFile *.yy set filetype=python
 
@@ -146,10 +151,6 @@ if has("autocmd")
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
         \ endif
-
-  " vala syntax highlighting
-  autocmd BufRead *.vala,*.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
-  autocmd BufRead,BufNewFile *.vala,*.vapi setfiletype vala
 endif
 
 " Automatically reload .vimrc when it changes.
@@ -180,12 +181,9 @@ nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
 nmap <silent> <C-S-t> :tab sball<CR>
 
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-"map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+"map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-W> :bd <CR>
-
-"map <C-S-t> :tag
-map <C-m> :wa<CR> :make<CR>
 
 " misspellings
 :iabbrev teh the
@@ -195,11 +193,15 @@ map <C-m> :wa<CR> :make<CR>
 
 " Select all
 noremap <C-a> ggVG
-
-" insert date time when I type "dts"
-iab <expr> dts strftime("%c")
+" Line bubbling
+nmap <C-Up> ddkP
+nmap <C-Down> ddp
+vmap <C-Up> xkP`[V`]
+vmap <C-Down> xp`[V`]
 
 " >>>>>>>>>>>>>>>>>>>> Plugins Behaviour Modifications <<<<<<<<<<<<<<<<<<<<<<<
+"whitespace
+map <Leader>w :'<,'>StripWhitespace<CR>
 
 "Bookmarking. These colors work best with molokai theme
 hi default BookmarkHighlightLine ctermbg=lightblue guibg=#ce5c00 cterm=bold gui=bold
@@ -229,8 +231,8 @@ let g:tagbar_type_scala = {
     \ }
 
 "NERDTree
-noremap <S-F2> :Explore<CR>
-noremap <F2> :NERDTreeToggle<CR>
+noremap <S-F2> :NERDTreeToggle<CR>
+noremap <F2> :Explore<CR>
 
 "Buffer switching
 noremap <C-S-PageUp> :bprev<CR>
@@ -247,15 +249,20 @@ map <Leader>dg :diffget<CR>
 "vim-notes
 let g:notes_directories = ['~/notes']
 let g:notes_suffix = '.txt'
+let g:notes_word_boundaries = 1
 
 "Syntastic
-let g:syntastic_java_maven_executable='/spgear/zeph_comp_tools/apache-maven-3.2.2/bin/mvn'
-"let g:syntastic_java_javac_executable='/usr/lib/jvm/java-8-openjdk/bin/javac'
-let g:syntastic_java_javac_executable='/spgear/zeph_comp_tools/jdk1.8.0_11/bin/javac'
+let g:syntastic_java_maven_executable='$HOME/.bin/mvn'
+"let g:syntastic_java_javac_executable='/spgear/zeph_comp_tools/jdk1.8.0_11/bin/javac'
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
+let g:syntastic_python_checkers=['flake8', 'python']
 let g:syntastic_warning_symbol='!!'
 let g:syntastic_error_symbol='✘✘'
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_always_populate_loc_list = 1
+nmap <silent> [l :lprev<CR>
+nmap <silent> ]l :lnext<CR>
 
 "obvious-resize
 nmap <silent> <C-S-Up> :ObviousResizeUp<CR>
@@ -264,37 +271,75 @@ nmap <silent> <C-S-Left> :ObviousResizeLeft<CR>
 nmap <silent> <C-S-Right> :ObviousResizeRight<CR>
 
 "YCM
-let g:ycm_min_num_of_chars_for_completion = 3
-let g:ycm_min_num_identifier_candidate_chars = 4
+"let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_min_num_identifier_candidate_chars = 3
+let g:ycm_warning_symbol='!!'
+let g:ycm_error_symbol='✘✘'
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
-"let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_collect_identifiers_from_tags_files = 0
 let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_register_as_syntastic_checker = 0
-let g:ycm_add_preview_to_completeopt=0
-let g:ycm_confirm_extra_conf=0
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_confirm_extra_conf = 0
 set completeopt-=preview
-
-"eclim
-let g:EclimCompletionMethod = 'omnifunc'
 
 "Unite
 let g:unite_source_history_yank_enable = 1
 let g:unite_enable_start_insert = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#custom#source('file_rec/async','sorters','sorter_rank')
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_default_opts =
+  \ '-i --vimgrep --hidden --ignore ' .
+  \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
   let g:unite_source_grep_recursive_opt = ''
 endif
 nnoremap <leader>f :Unite -no-split -buffer-name=files file_rec/async<cr>
 nnoremap <leader>y :Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <leader>b :Unite -no-split -buffer-name=buffer buffer<cr>
+nnoremap <leader>r :Unite -no-split -buffer-name=recent file_mru<cr>
+nnoremap <leader>o :Unite -no-split -buffer-name=outline outline<cr>
 nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
 
-"Dispatch
-map <F6> :Dispatch! makesms -ou <C-R>=expand("%:t:r")<CR><CR>
-map <S-F6> :Dispatch makesms -ou <C-R>=expand("%:t:r")<CR><CR>
+"Airline
+"let g:airline#extensions#tabline#enabled = 1
 
-"Maven-compiler
-autocmd FileType java let b:dispatch = 'mvn'
+"Dispatch
+map <F6> :Make -op <C-R>=expand("%:p:h")<CR><CR>
+map <S-F6> :Make! -p <C-R>=expand("%:p:h")<CR><CR>
+map <leader>tt :Make! -tp <C-R>=expand("%:p:h")<CR><CR>
+map <leader>uu :Make! -o -u <C-R>=expand('%:t:r')<CR> -p <C-R>=expand("%:p:h")<CR><CR>
+
+"Maven-compiler java stuff
 autocmd FileType java compiler mvn
+autocmd Filetype java set makeprg=makesms
+map <S-F5> :!javac "%" && java "%:r"<CR>
+
+" IndentLines
+map <Leader>il :IndentLinesToggle<CR>
+
+": Rainbow parens
+let g:rainbow_conf = {
+\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+\   'operators': '_,_',
+\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\   'separately': {
+\       '*': {},
+\       'tex': {
+\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+\       },
+\       'lisp': {
+\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+\       },
+\       'vim': {
+\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+\       },
+\       'html': {
+\           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+\       },
+\       'css': 0,
+\   }
+\}
