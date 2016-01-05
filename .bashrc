@@ -4,12 +4,12 @@
 
 if [ -f /usr/share/git/completion/git-prompt.sh ]
 then
-  . /usr/share/git/completion/git-prompt.sh
+  source /usr/share/git/completion/git-prompt.sh
 fi
 
 if [ -f /usr/share/git/completion/git-completion.bash ]
 then
-  . /usr/share/git/completion/git-completion.bash
+  source /usr/share/git/completion/git-completion.bash
 fi
 
 # If not running interactively AND a login shell don't do anything. We need
@@ -83,23 +83,28 @@ export EDITOR=vim
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+    source ~/.bash_aliases
 fi
 
 # SMS build env
 if [ -f ~/.build_environment ]; then
-  . ~/.build_environment
+  source ~/.build_environment
 fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+    source /etc/bash_completion
 fi
 
 POWERLINE_SH="/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
-
 if [ -f $POWERLINE_SH ]; then
   source $POWERLINE_SH
+fi
+
+OH_MY_GIT=".oh-my-git/prompt.sh"
+if [ -f ~/$OH_MY_GIT ]; then
+  source ~/.oh-my-git/base.sh
+  source  ~/$OH_MY_GIT
 fi

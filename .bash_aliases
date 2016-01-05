@@ -52,8 +52,9 @@ alias regression-test='cd ${UI_REGRESSION_DIR}'
 
 alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
 
-alias pull-notes='rsync -avz -e ssh bertoa@bertoa:/home/bertoa/notes/ ~/notes/'
-alias push-notes='rsync -avz -e ssh ~/notes/ bertoa@bertoa:/home/bertoa/notes/'
+alias pull-notes='rsync -avz -e ssh bertoa@bertoa:/local/home/bertoa/notes/ ~/notes/'
+alias push-notes='rsync -avz -e ssh ~/notes/ bertoa@bertoa:/local/home/bertoa/notes/'
+alias pull-bin='rsync -avz -e ssh bertoa@bertoa:/local/home/bertoa/.bin/ ~/tmp/bin/'
 
 if [ -f /usr/bin/yaourt ]; then
   alias query='yaourt -Ss'

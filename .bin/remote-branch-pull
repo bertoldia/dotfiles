@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ssh bertoa@bertoa ".bin/remote-branch-pull `git current-branch`"

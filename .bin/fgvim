@@ -6,6 +6,7 @@ fi
 
 files=""
 
+# input is a list of (possibly partial) filenames
 for file in $@
 do
   tmp=`find . -iname "$file"`
@@ -15,8 +16,15 @@ do
   fi
 done
 
+# Found no matching files. Interpret input as a regex instead
 if [ "$files" == "" ]; then
-  exit
+  echo "Interpreting input as regex..."
+  files=`git grep -il "$@"`
+fi
+
+if [ "$files" == "" ]; then
+  echo "No matching files found."
+  exit 1
 fi
 
 gvim $files

@@ -5,20 +5,22 @@ HOST="bertoa@bertoa"
 RSYNC_CMD="rsync -avz -e ssh"
 PATHS_TO_SYNC=(
 apache-ant-1.9.2
-apache-maven-2.2.1
+#apache-maven-2.2.1
 apache-maven-3.2.2
 apache-tomcat
 gmock
-jdk1.6.0_45
+#jdk1.6.0_45
 jdk1.8.0_11
+jdk1.8.0_60
 jython-2.2.1
+jython-standalone-2.7-b2
 linux-gcc433-x86_64
 linux-v1
 linux-v1r1
 ofed
 pep8
 python-2.6.1
-saxonb8-8j
+#saxonb8-8j
 sles11-sp2
 sysroot
 sysroot-utils

@@ -14,7 +14,7 @@ fi
 
 action=$1
 
-for dir in `ls`; do
+for dir in `ls -a`; do
   if [ -e ${dir}/.git ]; then
     if [[ $action == 'ls' ]]; then
       echo $dir

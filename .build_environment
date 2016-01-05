@@ -1,18 +1,20 @@
 # The build environment for the ui repo.
 # Source this in your .bashrc
 
-#export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=1024m"
-#export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=1024m"
-
 export SPGEAR_PERL=/usr/bin/perl
 SPGEAR=/home/axel/workspace/spgear/bin
-export PATH="${HOME}/.bin:${SPGEAR}:${PATH}"
-export UI_DEV_DIR="${HOME}/workspace/dev/ui"
+#export PATH="${HOME}/.bin:${SPGEAR}:${PATH}"
+export PATH="${HOME}/.bin:${PATH}"
+export UI_DEV_DIR="${HOME}/workspace/ui"
 export UI_REVIEW_DIR="${HOME}/workspace/review/ui"
 export UI_TEST_DIR="${HOME}/workspace/test/ui"
 export UI_REGRESSION_DIR="${HOME}/workspace/test/ui-regression"
 
-export NSFW_DEV_DIR="${HOME}/workspace/dev/nsfw"
+export NSFW_DEV_DIR="${HOME}/workspace/nsfw"
+export NSFW_ROOT=$NSFW_DEV_DIR
 export NSFW_REVIEW_DIR="${HOME}/workspace/review/nsfw"
+export RUNNER_TMP="${HOME}/workspace/runner-tmp"
+
+export JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
 
 return 0

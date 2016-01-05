@@ -22,7 +22,7 @@
   co = checkout
   ci = commit
   br = branch
-  stat = status
+  st = status
   cp = cherry-pick
   ; log display
   graph = log --oneline --graph
@@ -31,7 +31,7 @@
   ; branch manipulation
   new-branch = !sh -c 'git co -b z/bertoa/$1 origin/a/$2' -
   push-branch = !git push origin `git current-branch` -f
-  push-branch-and-reupstream = !git push origin `git current-branch` && git br --set-upstream `git current-branch` origin/`git current-branch`
+  push-branch-and-reupstream = !git push origin `git current-branch` && git br --set-upstream-to origin/`git current-branch`
   delete-branch = !git push origin :$1
   rebase-branch = !git rebase --interactive HEAD~`git changes | wc -l`
   rebase-branch-to-upstream = !git rebase --interactive `git upstream`
@@ -40,7 +40,8 @@
   current-branch = rev-parse --abbrev-ref HEAD
   upstream = !git rev-parse --abbrev-ref `git current-branch`@{upstream}
   changes = !git log --oneline `git upstream`..HEAD
-  files = !git diff --name-only `git upstream`
+  files = !git diff --name-only origin/a/D40
+  ;files = !git diff --name-only `git upstream`
   my-branches = !git br -a | grep --color bertoa
   fixup = !sh -c 'git commit -a -m \"fixup! $@\" && git rebase -i $@~1' -
   squash = !sh -c 'git commit -a -m \"squash! $@\" && git rebase -i $@~1' -

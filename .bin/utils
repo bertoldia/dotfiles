@@ -9,11 +9,6 @@ GIT_REPO_ROOT="/dev/null"
 
 setGitRepoRoot() {
   GIT_REPO_ROOT=`git rev-parse --show-toplevel`
-}
-
-isGitRepo() {
-  setGitRepoRoot
-
   if [ $? != 0  ]; then
     echo "Error: not a git repository!"
     exit $?
@@ -24,7 +19,7 @@ SMSV2_PATH="com-yottayotta-smsv2"
 
 setSmsv2Path() {
   if [ $# == 0 ]; then
-    isGitRepo
+    setGitRepoRoot
     SEARCH=$GIT_REPO_ROOT
   else
     SEARCH=$1
@@ -39,7 +34,7 @@ BUILD_ENVIRONMENT="build_environment"
 
 loadBuildEnvironment() {
   if [ $# == 0 ]; then
-    isGitRepo
+    setGitRepoRoot
     SEARCH=$GIT_REPO_ROOT
   else
     SEARCH=$1
@@ -72,4 +67,33 @@ isValidCLIRunDir() {
     echo "A cli is already running asshole."
     exit -1
   fi
+}
+
+findFirstBuildDir() {
+  setGitRepoRoot
+  if [ $# -gt 0 ]; then
+    cd $1
+  fi
+  while [ ! -e pom.xml ]; do
+    cd ../
+  done
+}
+
+isNsfwRepo() {
+  setGitRepoRoot
+
+  if [[ ! -e $GIT_REPO_ROOT/snac ]]; then
+    echo "Error: not an nsfw repository!"
+    exit 1
+  fi
+}
+
+function die {
+    echo $*
+    exit 1
+}
+
+execAction() {
+  echo -e "\e[1;33mExecuting $@ in `pwd` \e[0m"
+  $@ || die $@ $?
 }
