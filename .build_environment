@@ -5,12 +5,22 @@ SPGEAR_TOOLS_EXTRA=/spgear/tools/bin:/spgear/spgear/bin
 RUNNER_PATH=/home/runner/bin
 
 export PATH="${HOME}/.bin:${PATH}:${RUNNER_PATH}:${SPGEAR_TOOLS_EXTRA}"
-export UI_DEV_DIR="${HOME}/workspace/dev/ui"
+export UI_DEV_DIR="${HOME}/workspace/ui"
 export UI_REVIEW_DIR="${HOME}/workspace/review/ui"
 export UI_TEST_DIR="${HOME}/workspace/test/ui"
 export UI_REGRESSION_DIR="${HOME}/workspace/test/ui-regression"
 
-export NSFW_DEV_DIR="${HOME}/workspace/dev/nsfw"
+export NSFW_DEV_DIR="${HOME}/workspace/nsfw"
+export NSFW_ROOT="$NSFW_DEV_DIR"
 export NSFW_REVIEW_DIR="${HOME}/workspace/review/nsfw"
+export RUNNER_TMP="${HOME}/workspace/runner-tmp"
+
+export VATS_HOME="${HOME}/workspace/vats"
+
+export DIST_PYTHON='/usr/bin/python2'
+
+export JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
+#export MAVEN_HOME='/opt/mvn'
+#export ANT_HOME='/usr/share/apache-ant'
 
 return 0

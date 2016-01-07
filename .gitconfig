@@ -1,5 +1,5 @@
 [user]
-	name = Axel von Bertoldi\n
+	name = Axel von Bertoldi
 	email = axel.bertoldi@emc.com
 [color]
   ui = auto
@@ -22,14 +22,15 @@
   co = checkout
   ci = commit
   br = branch
-  stat = status
+  rb = rebase
+  st = status
   cp = cherry-pick
   ; log display
-  graph = log --oneline --graph
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  graph = log --oneline --graph --topo-order
+  lg = log --color --graph --topo-order --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   all-my-commits = log --oneline --author='Axel von Bertoldi'
   ; branch manipulation
-  new-branch = !sh -c 'git co -b z/bertoa/$1 origin/a/$2' -
+  new-branch = !sh -c 'git co -b z/bertoa/$2-$1 origin/a/$2' -
   push-branch = !git push origin `git current-branch` -f
   push-branch-and-reupstream = !git push origin `git current-branch` && git br --set-upstream `git current-branch` origin/`git current-branch`
   delete-branch = !git push origin :$1
@@ -57,4 +58,4 @@
 [diff]
   tool = meld
 [push]
-  default = tracking
+  ;default = tracking

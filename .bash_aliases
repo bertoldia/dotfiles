@@ -21,7 +21,7 @@ alias car='cat'
 #alias gvim='gvim -p'
 alias rgvim='gvim --remote-tab-silent'
 alias rvim='vim --remote-tab-silent'
-alias ffind='find . -name'
+alias ffind='find . -iname'
 alias archive='file-roller -d'
 alias extract='file-roller -h'
 alias bin='ll ~/.bin'
@@ -62,7 +62,8 @@ alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
 if [ -f /usr/bin/yaourt ]; then
   alias query='yaourt -Ss'
   alias install='yaourt -S'
-  alias update='yaourt -Syua'
+  alias update='yaourt -Syyu'
+  alias updatea='yaourt -Syua'
   alias uninstall='yaourt -Rsc'
   alias orphaned='yaourt -Qdt'
 elif [ -f /usr/bin/apt-get ]; then
@@ -105,7 +106,9 @@ function _nsfw_review() {
     git fetch
     git co -b $1 origin/$1
   fi
-  tig snac/doc/cic.txt
+  #tig snac/doc/cic.txt
+  last_merge=`git rev-list --merges HEAD | head -n 1`
+  tig "${last_merge}..." snac/doc/cic.txt
 }
 
 function lcd() {

@@ -1,5 +1,6 @@
 #!/bin/dash
 
+sudo systemctl start rpcbind
 sudo systemctl start ypbind
 sleep 2
 sudo systemctl start autofs

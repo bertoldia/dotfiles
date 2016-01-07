@@ -12,10 +12,14 @@ TARGET_BUILD="install"
 TARGET_CLEAN="clean"
 WITH_TESTS="-Dtest="
 DEFAULT=$TARGET_BUILD
-MAKE_TARBALL="ant make-docless-tarball"
+MAKE_DEV_IMAGE="ant make-dev-image"
+MAKE_DEV_TARBALL="ant make-tar-file-from-release-image"
+MAKE_TARBALL="ant make-release-tarball"
+BUILD_PATH=`pwd`
 
 DO_DEFAULT=true
-DO_TARBALL=false
+DO_RELEASE_TARBALL=false
+DO_DEV_TARBALL=false
 DO_BUILD=false
 DO_COMPILE=false
 DO_CLEAN=false
@@ -25,47 +29,44 @@ TESTS=""
 GIT_REPO_ROOT="/dev/null"
 
 usage() {
-  echo "Usage: jmake [-b -o -t -c -u [test-regex]]"
+  echo "Usage: makesms [-b -o -t -c -u [test-regex]]"
   echo "  -b build project (default if no arguments are specified, overrides -o)"
   echo "  -o compile project only (overrides default)"
-  echo "  -t: make a release tarball (implies -b and overrides -o)"
+  echo "  -t: make a developer release tarball (implies -b and overrides -o).
+      -tt will make a std release tarball"
   echo "  -u: execute specified unit test pattern, or all unit tests if no pattern was specified"
   echo "      requires either -b or (at least) -o"
   echo "  -c: clean before building (-c alone overrides default; can be combined with -o or -b)."
+  echo "  -p: the path in which to build."
   exit 0
 }
 
-execAction() {
-  echo -e "\e[1;33mExecuting $@ in `pwd` \e[0m"
-  $@
-}
-
 #START
-while getopts ":botu:ch" arg; do
+while getopts ":botu:chp:" arg; do
   case $arg in
     b) DO_BUILD=true
        DO_DEFAULT=false;;
     o) DO_COMPILE=true
        DO_DEFAULT=false;;
-    t) DO_TARBALL=true;;
+    t) if [[ $DO_DEV_TARBALL == true ]]; then
+           DO_DEV_TARBALL=false
+           DO_RELEASE_TARBALL=true
+       elif [[ $DO_RELEASE_TARBALL == false ]]; then
+           DO_DEV_TARBALL=true
+       fi
+       DO_BUILD=true;;
     c) DO_CLEAN=true
        DO_DEFAULT=false;;
     u) DO_TESTS=true
        TESTS=$OPTARG;;
+    p) BUILD_PATH=$OPTARG;;
     :) DO_TESTS=true;; #this is an abuse of :)
     h) usage;;
     \?) usage;;
   esac
 done
 
-setSmsv2Path
-
 # saneitize (yes, not sanitize) args
-
-# -t requires -b
-if [[ $DO_TARBALL == true ]]; then
-  DO_BUILD=true
-fi
 
 # -b overrides -o
 if [[ $DO_BUILD == true ]]; then
@@ -88,30 +89,38 @@ fi
 if [[ $DO_BUILD == true || $DO_DEFAULT == true ]]; then
   ACTION="$ACTION $TARGET_BUILD"
 elif [[ $DO_COMPILE == true ]]; then
-  ACTION="$ACTION $TARGET_SRC_COMPILE $TARGET_TEST_COMPILE"
+  ACTION="$ACTION $TARGET_SRC_COMPILE"
 fi
 
 # run unit tests
 if [[ $DO_TESTS == false ]]; then
-  ACTION="$ACTION $TESTS_SKIP"
+  if [[ $DO_BUILD == true || $DO_DEFAULT == true ]]; then
+    ACTION="$ACTION $TESTS_SKIP"
+  fi
 else
   if [[ $DO_COMPILE == true ]]; then
-    ACTION="$ACTION $TARGET_TEST_RUN"
+    ACTION="$ACTION $TARGET_TEST_COMPILE $TARGET_TEST_RUN"
   fi
   if [[ $TESTS ]]; then
     ACTION="$ACTION -Dtest=$TESTS"
   fi
 fi
 
-rm $GIT_REPO_ROOT/$SMSV2_PATH/*.tgz
+findFirstBuildDir $BUILD_PATH
+setSmsv2Path
+
+rm $GIT_REPO_ROOT/$SMSV2_PATH/*.tgz 2> /dev/null
 
 execAction $ACTION
 
 # build the tarball, but only if building succedeed
-if [[ $? == 0 && $DO_TARBALL == true ]]; then
+if [[ $? != 0  ]]; then
+    exit $?
+fi
+
+if [[ $DO_RELEASE_TARBALL == true || $DO_DEV_TARBALL == true ]]; then
   if [ basename != $SMSV2_PATH ]; then
-    cd `git rev-parse --show-toplevel`
-    cd $SMSV2_PATH
+    cd $GIT_REPO_ROOT/$SMSV2_PATH
   fi
 
   if [ ! -e target/test-classes ]; then
@@ -119,7 +128,12 @@ if [[ $? == 0 && $DO_TARBALL == true ]]; then
   fi
 
   loadBuildEnvironment
-  execAction $MAKE_TARBALL
+  if [[ $DO_DEV_TARBALL == true ]]; then
+      execAction $MAKE_DEV_IMAGE
+      execAction $MAKE_DEV_TARBALL
+  else
+      execAction $MAKE_TARBALL
+  fi
 fi
 
 if [ $? == 0 ]; then

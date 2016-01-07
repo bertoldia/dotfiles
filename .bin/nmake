@@ -1,51 +1,29 @@
 #!/bin/bash
 
-sp_sync=false
-action="python2 make.py -j6"
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+
+ACTION="python2 make.py -j6"
 
 usage() {
-  echo "Usage: nmake [-s]"
+  echo "Usage: nmake [-c]"
   echo "  -c: make clean."
-  echo "  -s: sp-sync the resulting binary."
   exit 0
-}
-
-isNsfwRepo() {
-  repo_toplevel=`git rev-parse --show-toplevel`
-
-  if [ $? != 0  ]; then
-    echo "Error: not a git repository!"
-    exit $?
-  fi
-
-  if [ -f $repo_toplevel/snac ]; then
-    echo "Error: not an nsfw repository!"
-    exit $?
-  fi
 }
 
 #START
 isNsfwRepo
 
-while getopts "sc" flag
+while getopts "c" flag
 do
   case $flag in
-    s) sp_sync=true;;
-    c) action="python2 make.py clean";;
+    c) ACTION="python2 make.py clean";;
     *) usage;;
   esac
 done
 
-cd `git rev-parse --show-toplevel`/work
-echo "Building in `pwd`"
-find . -name '*.gcda' -exec rm {} \;
-echo $acion
-$action
+cd $GIT_REPO_ROOT/work
+#find . -name '*.gcda' -exec rm {} \;
+execAction $ACTION
 
-if [ $? == 0 -a $sp_sync == true ]; then
-  cd ../
-  sptool -p build/bin/nsfw
-fi
-
-echo "Last build at `date`"
-exit 0
+exit $?

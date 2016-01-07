@@ -34,11 +34,13 @@ Plugin 'ntpeters/vim-better-whitespace'
 "Plugin 'LaTeX-Box'
 Plugin 'JalaiAmitahl/maven-compiler.vim'
 Plugin 'bling/vim-airline'
+Plugin 'jeroenbourgois/vim-actionscript'
 
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'molokai'
 Plugin 'monokai'
 Plugin 'darkspectrum'
+Plugin 'mkarmona/colorsbox'
 "Plugin 'desert-warm-256'
 "Plugin 'mango.vim'
 "Plugin 'railscasts'
@@ -252,7 +254,7 @@ let g:notes_suffix = '.txt'
 let g:notes_word_boundaries = 1
 
 "Syntastic
-let g:syntastic_java_maven_executable='$HOME/.bin/mvn'
+"let g:syntastic_java_maven_executable='$HOME/.bin/mvn'
 "let g:syntastic_java_javac_executable='/spgear/zeph_comp_tools/jdk1.8.0_11/bin/javac'
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
@@ -320,6 +322,7 @@ map <S-F5> :!javac "%" && java "%:r"<CR>
 " IndentLines
 map <Leader>il :IndentLinesToggle<CR>
 
+map <Leader>rt :RainbowToggle<CR>
 ": Rainbow parens
 let g:rainbow_conf = {
 \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],

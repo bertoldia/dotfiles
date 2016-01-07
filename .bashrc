@@ -2,16 +2,6 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-if [ -f /usr/share/git/completion/git-prompt.sh ]
-then
-  . /usr/share/git/completion/git-prompt.sh
-fi
-
-if [ -f /usr/share/git/completion/git-completion.bash ]
-then
-  . /usr/share/git/completion/git-completion.bash
-fi
-
 # If not running interactively AND a login shell don't do anything. We need
 # both conditions to be albe to work correctly with tmux (which is both
 # interactive and login) and also spgear scripts (which are login but not
@@ -51,7 +41,23 @@ purple='\[\e[1;35m\]'
 cyan='\[\e[1;36m\]'
 white='\[\e[1;37m\]'
 default='\[\e[0m\]'
-PS1="$white\u$blue@$yellow\h $purple\$(__git_ps1 ' %s ')$green\W$default: "
+
+# Prompts!!!
+#PS1="$white\u$blue@$yellow\h $purple\$(__git_ps1 ' %s ')$green\W$default: "
+PS1="$white\u$blue@$yellow\h $green\W$default: "
+
+OH_MY_GIT=".oh-my-git/prompt.sh"
+POWERLINE_SH="/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
+
+#if [ -f ~/$OH_MY_GIT ]; then
+  #source ~/.oh-my-git/base.sh
+  #source ~/$OH_MY_GIT
+#elif [ -f $POWERLINE_SH ]; then
+if [ -f $POWERLINE_SH ]; then
+  source $POWERLINE_SH
+else
+  PS1="$white\u$blue@$yellow\h $purple\$(__git_ps1 ' %s ')$green\W$default: "
+fi
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -66,7 +72,6 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='LC_COLLATE=C ls --color=auto --group-directories-first'
-
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
     alias grep='egrep --color=auto'
@@ -77,11 +82,6 @@ fi
 export INPUTRC=~/.inputrc
 export EDITOR=vim
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -91,15 +91,16 @@ if [ -f ~/.build_environment ]; then
   . ~/.build_environment
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-POWERLINE_SH="/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
+if [ -f /usr/share/git/completion/git-prompt.sh ]
+then
+  . /usr/share/git/completion/git-prompt.sh
+fi
 
-if [ -f $POWERLINE_SH ]; then
-  source $POWERLINE_SH
+if [ -f /usr/share/git/completion/git-completion.bash ]
+then
+  . /usr/share/git/completion/git-completion.bash
 fi

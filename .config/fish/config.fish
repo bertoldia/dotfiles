@@ -1,5 +1,5 @@
 # Path to your oh-my-fish.
-set fish_path $HOME/.oh-my-fish
+#set fish_path $HOME/.oh-my-fish
 
 set SPGEAR_TOOLS_EXTRA /spgear/tools/bin /spgear/spgear/bin
 set RUNNER_PATH /home/runner/bin
@@ -11,6 +11,9 @@ set -g __fish_git_prompt_show_informative_status 1
 set -g __fish_git_prompt_color_branch magenta bold
 
 # Aliases
+alias ls='ls --color=auto --group-directories-first'
+alias ll='ls -lhF'
+alias lall='ls -lhaF'
 alias q="cd ../"
 alias qq="cd ../../"
 alias fishrc="gvim $HOME/.config/fish/config.fish"

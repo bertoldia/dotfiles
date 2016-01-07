@@ -27,12 +27,6 @@ usage() {
   exit 0
 }
 
-execAction() {
-  echo -e "\e[1;33m  Executing $@ in `pwd` \e[0m"
-  $@
-}
-
-
 ACTION="mvn -T2C"
 
 #START
