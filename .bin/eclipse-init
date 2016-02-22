@@ -1,0 +1,10 @@
+#!/bin/bash
+
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+
+setGitRepoRoot
+cd $GIT_REPO_ROOT
+
+mvn eclipse:clean
+mvn eclipse:eclipse -DoutputDirectory=target-eclipse/classes

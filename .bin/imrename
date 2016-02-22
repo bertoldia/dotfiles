@@ -1,0 +1,4 @@
+#!/bin/bash
+
+chmod 644 "$@";
+jhead -autorot -nf%Y_%m_%d-%H_%M_%S "$@";

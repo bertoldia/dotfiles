@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+source $HOME/.build_environment
+
+# Needs /etc/issue update
+#PYTHON=/spgear/tools/bin/python
+PYTHON=/spgear/tools/ubuntu-8_64/python-2.6.1/bin/python
+
+cd $RUNNER_TMP
+rm -fr $RUNNER_TMP/*
+touch .runner-work-dir-flag
+
+$NSFW_DEV_DIR/runner/bin/runLocal -p $PYTHON -w $RUNNER_TMP -b $NSFW_DEV_DIR/build/bin/nsfw -s MdiTestSuite
+
+pkill -f site
+killall nsfw

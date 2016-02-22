@@ -1,0 +1,27 @@
+#!/bin/bash
+
+HOST="bertoa@vafadm"
+RSYNC_CMD="rsync -avz -e ssh"
+PATHS_TO_SYNC=(
+#/spgear/tools
+#/spgear/zeph_comp_tools/apache-ant-1.6.5/
+#/spgear/zeph_comp_tools/apache-maven-2.2.1/
+#/spgear/zeph_comp_tools/jdk1.6.0_45/
+#/spgear/zeph_comp_tools/saxonb8-8j/
+/spgear/store/ui/objects/
+/spgear/zeph_comp_tools/apache-ant-1.9.2/
+/spgear/zeph_comp_tools/apache-maven-3.2.2/
+/spgear/zeph_comp_tools/jdk1.8.0_11/
+/spgear/zeph_comp_tools/ofed/
+/spgear/zeph_comp_tools/python-2.6.1/
+/spgear/zeph_comp_tools/sysroot/
+/spgear/zeph_comp_tools/sysroot-utils/
+/spgear/zeph_comp_tools/jython-2.2.1/
+/spgear/zeph_comp_tools/pep8/
+)
+
+for P in ${PATHS_TO_SYNC[@]};
+do
+  echo "$RSYNC_CMD $HOST:$P $P"
+  $RSYNC_CMD $HOST:$P/ $P/ &
+done

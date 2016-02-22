@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd /opt/emc
+sudo /etc/init.d/VPlexManagementConsole stop
+sudo rm VPlex
+sudo mv VPlex.good VPlex
+sudo /etc/init.d/VPlexManagementConsole start
+

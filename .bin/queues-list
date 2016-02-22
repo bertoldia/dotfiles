@@ -1,0 +1,32 @@
+#!/usr/bin/dart -c
+
+import 'dart:io';
+import 'dart:async';
+
+var _ctest = '/home/runner/bin/ctest';
+var exp = new RegExp(r'^ \*\*|^\([0-9]*\)|^running|^System:');
+
+Future<ProcessResult> showSystem(String sys) =>
+  Process.run(_ctest, [sys, 'show', '--no-track']);
+
+String getJobs(ProcessResult sysInfo) =>
+  sysInfo.stdout.trim().split('\n').where(exp.hasMatch).toList().join('\n');
+
+void printResults(List<ProcessResult> results) =>
+  print(results.map(getJobs).toList().join('\n\n'));
+
+List<Future<ProcessResult>> showAll(List<String> systems) =>
+  systems.map(showSystem).toList();
+
+Future processSystems(List<String> systems) => Future.wait(showAll(systems));
+
+List<String> getSystems(ProcessResult result) =>
+  result.stdout.trimRight().split('\n').last.trim().split(' ');
+
+Future<ProcessResult> ctest() => Process.run(_ctest, []);
+
+Future listQueues() => ctest().then(getSystems).then(processSystems).then(printResults);
+
+void main() {
+  listQueues();
+}

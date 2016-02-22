@@ -1,0 +1,60 @@
+#!/bin/bash
+
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+
+VATS_HOME="${HOME}/workspace/vats"
+VATS_CONFIG="${HOME}/.vats/linux-tower.yaml"
+#VATS_CONFIG="${HOME}/.vats/cavalier.yaml"
+#VATS_CONFIG="${HOME}/.vats/pothole.yaml"
+VATS_BIN="./run-vats"
+
+
+usage() {
+  echo "Usage: run-vats -t <test> [-s <system>]"
+  echo "  -t: The test or suite to tun. Required"
+  echo "  -s: The SUT config against which the test should be run. Defaults to
+  linux-tower."
+  exit 0
+}
+
+while getopts "s:t:h" arg; do
+  case $arg in
+    s) VATS_CONFIG=$OPTARG;;
+    t) TEST=$OPTARG;;
+    h) usage;;
+    \?) usage;;
+  esac
+done
+
+echo $TEST
+if [ ! $TEST ]; then
+    echo "No test!?"
+    exit 1
+fi
+
+if [ -e $TEST ]; then
+  TEST=$(readlink -f $TEST)
+else
+  TEST="tests/$TEST"
+fi
+
+if [ -e $VATS_CONFIG ]; then
+  VATS_CONFIG=$(readlink -f $VATS_CONFIG)
+else
+  VATS_CONFIG="${HOME}/.vats/$VATS_CONFIG"
+fi
+
+cd $UI_DEV_DIR/vats
+
+if [ ! -e $TEST ]; then
+  echo "Can\'t find test file $TEST"
+  exit 1
+fi
+
+rm -fr /tmp/vats/*
+rm -fr logs/*
+
+CMD="${VATS_BIN} --config ${VATS_CONFIG} ${VATS_HOME} ${TEST}"
+
+execAction $CMD

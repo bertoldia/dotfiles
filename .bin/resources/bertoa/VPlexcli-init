@@ -1,0 +1,4 @@
+connect --no-prompt -c
+alias compose "storage-tool compose"
+alias dismantle "storage-tool dismantle"
+

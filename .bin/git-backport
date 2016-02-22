@@ -1,0 +1,6 @@
+#!/bin/sh
+
+log=$(git show --oneline $1)
+git commit --allow-empty -m "Backport-start: $log"
+git cherry-pick -x $1^..$1^2
+git commit --allow-empty -m "Backport-end: $log"

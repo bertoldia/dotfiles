@@ -1,0 +1,59 @@
+#!/bin/bash
+
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+
+BASE_URL="vplex"
+USERNAME="Username:service"
+PASSWORD="Password:Mi@Dim7T"
+SSH_CONFIG="${HOME}/.ssh/config"
+METHOD="GET"
+
+getHost() {
+    if grep -q "Host *${1}" $SSH_CONFIG
+    then
+        if [ $(grep $1 $SSH_CONFIG | wc -l) -gt 1 ]
+        then
+          echo "$1 resolves to multiple hosts:"
+          grep $1 $SSH_CONFIG
+          exit 1
+        fi
+        HOST=`grep -A3 $1 $SSH_CONFIG | grep "Hostname" | awk '{print $2}'`
+        echo "Using host $HOST"
+    else
+        HOST=$1
+    fi
+}
+
+getHost $1
+shift
+
+while getopts ":lcs" arg; do
+  case $arg in
+    l) METHOD="GET"
+       shift
+       CTX=$1
+       ARGS="";;
+    c) METHOD="POST"
+       shift
+       CTX=$1
+       #shift
+       #ARGS="-d \"{'args': '$*'}\"";;
+       ;;
+    s) METHOD="PUT"
+       echo "...not yet..."
+       exit 1;;
+    \?) exit 1;;
+  esac
+done
+
+
+#CMD="curl -k -X ${METHOD} -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/${CTX} ${ARGS}"
+#CMD="curl -k -X ${METHOD} -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/${CTX}"
+CMD="curl -k -X POST -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/version -d \"{'args': '-a'}\""
+#CMD="curl -k -X GET -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/clusters"
+#CMD="curl -k -X $METHOD -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/version"
+#curl -k -XPUT -H "Username:service" -H "Password:Mi@Dim7T" "https://10.7.41.205/vplex/clusters/cluster-1/devices/r0_EMC-Invista-144044-1_scale_9_1?visibility=local"
+
+
+execAction $CMD ${ARGS}

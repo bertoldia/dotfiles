@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rubber --force --inplace --pdf *.tex
+gvim -p *.tex
+evince *.pdf&

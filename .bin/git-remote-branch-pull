@@ -1,0 +1,8 @@
+#!/bin/bash
+
+. ~/.build_environment
+cd $UI_DEV_DIR
+git co $1
+git pull
+git co -
+exit 0

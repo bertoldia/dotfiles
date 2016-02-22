@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# Requires the following
+# $NSFW_DIR environment variable
+# python 2.* installed
+
+
+usage() {
+  echo "Usage: linux-tower <spawn|terminate> [options]"
+  exit 0
+}
+
+##START
+#while getopts ":botu:chp:" arg; do
+  #case $arg in
+    #b) DO_BUILD=true
+       #DO_DEFAULT=false;;
+    #o) DO_COMPILE=true
+       #DO_DEFAULT=false;;
+    #t) DO_TARBALL=true;;
+    #c) DO_CLEAN=true
+       #DO_DEFAULT=false;;
+    #u) DO_TESTS=true
+       #TESTS=$OPTARG;;
+    #p) BUILD_PATH=$OPTARG;;
+    #:) DO_TESTS=true;; #this is an abuse of :)
+    #h) usage;;
+    #\?) usage;;
+  #esac
+#done
+
+VENV_PATH="/tmp/linux-tower/venv"
+RUNNER_WD="/tmp/linux-tower/tmp"
+ALT_RUNNER_WD="$HOME/workspace/linux-tower/tmp"
+
+terminate() {
+    killall nsfw xterm
+    exit 0
+}
+
+# Make sure the default python version is 2.*
+load_python_env() {
+    PYTHON_2_IS_DEFAULT=$(python --version 2>&1 | grep -o "2\.[0-9]+")
+
+    if [ -z $PYTHON_2_IS_DEFAULT ]; then
+        virtualenv2 --no-site-packages --python `which python2` $VENV_PATH
+        source $VENV_PATH/bin/activate
+        pip install django
+    fi
+}
+
+# Runner's working dir can not be on a tmpfs partition
+get_runner_working_dir() {
+    TMP_ON_TMPFS=$(findmnt --target /tmp | grep -o "\<tmpfs\>" | sort -u)
+
+    if [ -n $TMP_ON_TMPFS ]; then
+        echo "/tmp is on a tmpfs partition... using $ALT_RUNNER_WD instead."
+        mkdir -p $ALT_RUNNER_WD
+        RUNNER_WD=$ALT_RUNNER_WD
+    fi
+}
+
+spawn() {
+    load_python_env
+    get_runner_working_dir
+    $NSFW_DIR/runner/bin/runTest.py \
+        -b $NSFW_DIR/build/bin/nsfw \
+        -w $RUNNER_WD \
+        -t InteractiveSandbox.interactiveConsole \
+        --topology 2x2 \
+        -c $NSFW_DIR/runner/conf/desktop/linux-desktop.xml
+
+    if [ -z $PYTHON_2_IS_DEFAULT ]; then
+        deactivate
+    fi
+}
+
+
+
+case $1 in
+  "spawn") ;;
+  "terminate") ;;
+  *) usage;;
+esac
+
+TARGET=$1
+shift
+
+$TARGET $*

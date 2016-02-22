@@ -1,0 +1,18 @@
+#!/usr/bin/dart
+
+import 'dart:io';
+import 'dart:convert';
+
+var cmd = 'mvn';
+var args = ['-T2C','compiler:compile'];
+
+main() {
+  Process.start(cmd, args).then((Process process) {
+    process.stdout
+           .transform(UTF8.decoder)
+           .listen((data) { print(data); });
+    process.exitCode.then((code) {
+      exit(code);
+    });
+  });
+}

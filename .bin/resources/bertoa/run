@@ -1,0 +1,15 @@
+#!/bin/bash
+
+TARBALL=`ls *.tgz`
+end=${#TARBALL}-4
+CURRENT_SMS=${TARBALL:0:${end}}
+
+rm -fr ${CURRENT_SMS}
+tar -zxf ${TARBALL}
+
+cd cli
+rm *.log_*
+rm *PERPETUAL*
+
+cd ../
+${CURRENT_SMS}/VPlexcli --cli-directory cli/ -s 51111

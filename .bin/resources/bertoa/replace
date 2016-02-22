@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd /opt/emc
+sudo /etc/init.d/VPlexManagementConsole stop
+sudo mv VPlex VPlex.good
+sudo ln -s ~/bertoa/sms VPlex
+mkdir -p VPlex/var/run
+sudo /etc/init.d/VPlexManagementConsole start
+

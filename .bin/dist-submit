@@ -1,0 +1,26 @@
+#!/bin/bash
+
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+
+RUNNER_HOME="/home/runner"
+CTEST_BIN="${RUNNER_HOME}/bin/ctest"
+
+usage() {
+  echo "Usage: dist-submit <system>"
+  exit
+}
+
+if [ $# == 0 ]; then
+  echo "Error: missing system."
+  usage
+fi
+
+setSmsv2Path
+
+SYSTEM=$1
+shift
+BRANCH=`git current-branch`
+COMMAND="${CTEST_BIN} ${SYSTEM} submitsms ${BRANCH} $@"
+echo ${COMMAND}
+exec ${COMMAND}

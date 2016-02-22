@@ -1,0 +1,45 @@
+#!/usr/bin/dart -c
+
+import 'dart:io';
+import 'dart:async';
+
+var CTEST = '/home/runner/bin/ctest';
+var IS_NAME = new RegExp(r'^System:');
+var IS_JOB = new RegExp(r'^\([0-9]*\)');
+var VALID_SYSTEMS = new RegExp(r'nst-e');
+
+String getQueueName(ProcessResult pr) =>
+  pr.stdout.trim().split('\n').firstWhere(IS_NAME.hasMatch).split(' ')[1];
+
+int getJobCount(ProcessResult pr) =>
+   pr.stdout.trim().split('\n').where(IS_JOB.hasMatch).toList().length;
+
+ProcessResult shorter(ProcessResult l, ProcessResult r) =>
+   getJobCount(l) <= getJobCount(r) ? l : r;
+
+ProcessResult getShortestQueue(List<ProcessResult> results) => results.reduce(shorter);
+
+Future<ProcessResult> showSystem(String sys) =>
+  Process.run(CTEST, [sys, 'show', '--no-track']);
+
+List<Future<ProcessResult>> showAll(List<String> systems) =>
+  systems.map(showSystem).toList();
+
+Future<List<ProcessResult>> queryQueues(List<String> systems) =>
+  Future.wait(showAll(systems));
+
+List<String> getQueueNames(ProcessResult result) =>
+  result.stdout.trimRight().split('\n').last.trim().split(' ')
+               .where(VALID_SYSTEMS.hasMatch).toList();
+
+Future<ProcessResult> ctest() => Process.run(CTEST, []);
+
+Future printShortestQueue() => ctest().then(getQueueNames)
+                                      .then(queryQueues)
+                                      .then(getShortestQueue)
+                                      .then(getQueueName)
+                                      .then(print);
+
+void main() {
+  printShortestQueue();
+}

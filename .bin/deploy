@@ -1,0 +1,7 @@
+#!/bin/bash
+
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+
+setGitRepoRoot
+$GIT_REPO_ROOT/dev-tools/deploy-dev-image-to-sms.sh $*
