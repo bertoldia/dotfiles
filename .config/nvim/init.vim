@@ -1,16 +1,13 @@
-set nocompatible
-filetype off
-call plug#begin('~/.vim/bundle')
+call plug#begin('~/.config/nvim/bundle')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-sensible'
   Plug 'Valloric/YouCompleteMe'
   Plug 'Valloric/ListToggle'
   Plug 'scrooloose/nerdcommenter'
-  Plug 'scrooloose/syntastic'
+  "Plug 'scrooloose/syntastic'
+  Plug 'benekastah/neomake'
   Plug 'majutsushi/tagbar' | Plug 'bling/vim-airline'
   Plug 'Lokaltog/vim-easymotion'
-  Plug 'xolox/vim-misc'
-  Plug 'xolox/vim-notes'
   Plug 'MattesGroeger/vim-bookmarks'
   Plug 'obvious-resize'
   Plug 'Raimondi/delimitMate'
@@ -20,17 +17,17 @@ call plug#begin('~/.vim/bundle')
   Plug 'Shougo/vimproc.vim'
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
+  Plug 'cazador481/fakeclip.neovim'
   Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
   Plug 'dart-lang/dart-vim-plugin'
+  "Plug 'Dart'
+
   Plug 'molokai'
-  Plug 'monokai'
-  Plug 'darkspectrum'
   Plug 'mango.vim'
   Plug 'freeo/vim-kalisi'
   Plug 'CruizeMissile/Revolution.vim'
   Plug 'blerins/flattown'
-  Plug 'ratazzi/blackboard.vim'
   Plug 'nielsmadan/harlequin'
 call plug#end()
 
@@ -88,16 +85,8 @@ let molokai_original=1
 
 " ---APPEARANCE---
 set background=dark
-if has("gui_running")
-  colorscheme harlequin
-
-  set guioptions-=T " hide toolbar
-  set guioptions-=m " hide menubar
-  set guitablabel=%!expand(\"\%:t\")
-  set cursorcolumn
-else
-  colorscheme mango
-endif
+set cursorcolumn
+colorscheme kalisi
 
 set guifont=Source\ Code\ Pro\ 10
 
@@ -117,7 +106,7 @@ if has("autocmd")
         \ endif
 endif
 
-" Automatically reload .vimrc when it changes.
+" Automatically reload .nvimrc when it changes.
 augroup reload_vimrc " {
   autocmd!
   autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -195,11 +184,6 @@ map <Leader>gb :Gblame<CR>
 map <Leader>dp :diffput<CR>
 map <Leader>dg :diffget<CR>
 
-"vim-notes
-let g:notes_directories = ['~/notes']
-let g:notes_suffix = '.txt'
-let g:notes_word_boundaries = 1
-
 "Syntastic
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
@@ -250,10 +234,13 @@ nnoremap <leader>r :Unite -no-split -buffer-name=recent file_mru<cr>
 nnoremap <leader>o :Unite -no-split -buffer-name=outline outline<cr>
 nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
 
+"set clipboard+=unnamedplus
+
 "IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
 
 " vim-test
+let test#strategy = "neovim"
 nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
@@ -263,3 +250,11 @@ let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
 function! test#java#maventest#executable() abort
   return 'mvn compiler:compile compiler:testCompile surefire:test'
 endfunction
+
+" neomake
+autocmd! BufWritePost * Neomake
+let g:neomake_java_checkstyle_maker = {
+    \ 'args': ['-c', '/opt/checkstyle/sun_checks.xml'],
+    \ 'errorformat': '%f:%l:\ %m,%f:%l:%v:\ %m,%-G%.%#',
+    \ }
+"let g:neomake_java_enabled_makers = ['javac', 'checkstyle']
