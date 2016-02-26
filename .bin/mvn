@@ -9,10 +9,10 @@ source $BIN_PATH/utils
 
 loadBuildEnvironment
 
-if [ -z $MAVEN_HOME ]; then
-    /bin/mvn $*
-else
+if [[ -n $MAVEN_HOME && -e $MAVEN_HOME ]]; then
     mvn $*
+else
+    /usr/bin/mvn $*
 fi
 
 exit $?
