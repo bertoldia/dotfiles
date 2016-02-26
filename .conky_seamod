@@ -72,6 +72,7 @@ ${cpubar cpu2 10,200 666666 666666}
 ${cpubar cpu3 10,200 666666 666666}
 ${cpubar cpu4 10,200 666666 666666}
 ${cpubar cpu5 10,200 666666 666666}
+${cpubar cpu6 10,200 666666 666666}
 ${cpubar cpu7 10,200 666666 666666}
 ${cpubar cpu8 10,200 666666 666666}
 # Showing TOP 5 CPU-consumers
