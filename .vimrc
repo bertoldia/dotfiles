@@ -1,63 +1,41 @@
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
 set nocompatible
 filetype off
+call plug#begin('~/.vim/bundle')
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-sensible'
+  Plug 'Valloric/YouCompleteMe'
+  Plug 'Valloric/ListToggle'
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'scrooloose/syntastic'
+  Plug 'majutsushi/tagbar' | Plug 'bling/vim-airline'
+  Plug 'Lokaltog/vim-easymotion'
+  Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
+  Plug 'MattesGroeger/vim-bookmarks'
+  Plug 'obvious-resize'
+  Plug 'Raimondi/delimitMate'
+  Plug 'Shougo/unite.vim'
+  Plug 'Shougo/unite-outline'
+  Plug 'Shougo/neomru.vim'
+  Plug 'Shougo/vimproc.vim'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'ntpeters/vim-better-whitespace'
+  Plug 'janko-m/vim-test'
+  Plug 'Yggdroot/indentLine'
+  Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
+  "Plug 'LaTeX-Box'
+  Plug 'jeroenbourgois/vim-actionscript', {'for': 'actionscript'}
+  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
 
-" Vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" Plugins
-Plugin 'gmarik/vundle'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-dispatch'
-"Plugin 'tpope/vim-surround'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'Valloric/ListToggle'
-Plugin 'scrooloose/nerdcommenter'
-"Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'majutsushi/tagbar'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-notes'
-Plugin 'dterei/VimBookmarking'
-Plugin 'obvious-resize'
-Plugin 'Raimondi/delimitMate'
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/unite-outline'
-Plugin 'Shougo/neomru.vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'ntpeters/vim-better-whitespace'
-"Plugin 'LaTeX-Box'
-Plugin 'JalaiAmitahl/maven-compiler.vim'
-Plugin 'bling/vim-airline'
-Plugin 'jeroenbourgois/vim-actionscript'
-
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'molokai'
-Plugin 'monokai'
-Plugin 'darkspectrum'
-Plugin 'mkarmona/colorsbox'
-"Plugin 'desert-warm-256'
-"Plugin 'mango.vim'
-"Plugin 'railscasts'
-Plugin 'freeo/vim-kalisi'
-Plugin 'CruizeMissile/Revolution.vim'
-Plugin 'blerins/flattown'
-Plugin 'ratazzi/blackboard.vim'
-Plugin 'nielsmadan/harlequin'
-Plugin 'Yggdroot/indentLine'
-Plugin 'luochen1990/rainbow'
-
-Plugin 'dart-lang/dart-vim-plugin'
-"Plugin 'Dart'
-"Plugin 'jelera/vim-javascript-syntax'
-"Plugin 'pangloss/vim-javascript'
-"Plugin 'marijnh/tern_for_vim'
-
+  Plug 'molokai'
+  Plug 'monokai'
+  Plug 'darkspectrum'
+  Plug 'mango.vim'
+  Plug 'freeo/vim-kalisi'
+  Plug 'CruizeMissile/Revolution.vim'
+  Plug 'blerins/flattown'
+  Plug 'ratazzi/blackboard.vim'
+  Plug 'nielsmadan/harlequin'
+call plug#end()
 
 " ---OPTIONS---
 
@@ -72,8 +50,8 @@ set hidden                      " When I close a tab don't remove the buffer
 let g:clipbrdDefaultReg = '+'
 set grepprg=grep\ -nH\ $*
 set expandtab                   " make tabs spaces
-set shiftwidth=4                " for auto and manual indent
-set tabstop=4                   " pressing tab inserts 2 spaces
+set shiftwidth=2                " for auto and manual indent
+set tabstop=2                   " pressing tab inserts 2 spaces
 set nu                          " line number
 "Folding
 set foldmethod=syntax
@@ -83,7 +61,6 @@ set foldlevel=1
 set foldnestmax=5
 set spl=en spell                " spell-checklanguage
 set spell                       " spell-check on
-"compiler ~/.bin/jmake          " Set compiler
 set switchbuf=usetab,newtab     " Buffer control options
 " Cool tab completion stuff
 set wildmode=list:full
@@ -110,10 +87,6 @@ set showbreak=↪
 syntax enable
 filetype plugin indent on
 
-"Status line
-"set statusline=%{g:bufBStr}%#NowBuf#%{g:bufNStr}%#StatusLine#%{g:bufAStr}%<%=%{fugitive#statusline()}[%Y][%c,%l/%L(%P)]
-
-let g:solarized_hitrail=1
 let molokai_original=1
 
 " ---APPEARANCE---
@@ -123,33 +96,25 @@ if has("gui_running")
 
   set guioptions-=T " hide toolbar
   set guioptions-=m " hide menubar
-  "set guioptions-=r " hide scrollbar
-  "set guioptions-=R " hide scrollbar
-  "set guioptions-=l " hide scrollbar
-  "set guioptions-=L " hide scrollbar
   set guitablabel=%!expand(\"\%:t\")
-
   set cursorcolumn
 else
   colorscheme Revolution
 endif
 
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 10
+set guifont=Source\ Code\ Pro\ 10
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-  " For all text files set 'textwidth' to 80 characters.
-  autocmd Filetype java setlocal  shiftwidth=2 tabstop=2 colorcolumn=100 textwidth=100
-  " use python syntax highlighting for regression test files
-  autocmd BufRead,BufNewFile *.yy set filetype=python
+  autocmd Filetype,BufReadPost,BufNewFile java setlocal shiftwidth=2 tabstop=2 colorcolumn=100 textwidth=100
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
+  autocmd BufReadPost !gitcommit
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
         \ endif
@@ -173,9 +138,6 @@ map <C-b> :w<CR> :!pdflatex %<CR>
 " copy/paste
 map <A-c> "+y
 map <A-v> "+gP
-"Folding control
-"nmap <C-S-Right> :foldopen<CR>
-"nmap <Space> :foldclose<CR>
 " Move between windows with alt arrow
 nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
@@ -195,22 +157,10 @@ map <C-W> :bd <CR>
 
 " Select all
 noremap <C-a> ggVG
-" Line bubbling
-nmap <C-Up> ddkP
-nmap <C-Down> ddp
-vmap <C-Up> xkP`[V`]
-vmap <C-Down> xp`[V`]
 
 " >>>>>>>>>>>>>>>>>>>> Plugins Behaviour Modifications <<<<<<<<<<<<<<<<<<<<<<<
-"whitespace
-map <Leader>w :'<,'>StripWhitespace<CR>
-
-"Bookmarking. These colors work best with molokai theme
-hi default BookmarkHighlightLine ctermbg=lightblue guibg=#ce5c00 cterm=bold gui=bold
-hi default BookmarkHighlightText ctermbg=lightblue guibg=#ce5c00 cterm=bold gui=bold
-"sign define bookmark text=• linehl=BookmarkHighlightLine texthl=BookmarkHighlightText
-map <silent> <S-F3> :ClearBookmark<CR>
-map <silent> <F3> :ToggleBookmark<CR>
+" Whitespace
+noremap <Leader>w :'<,'>StripWhitespace<CR>
 
 "Tagbar
 map <F8> :TagbarToggle<CR>
@@ -230,7 +180,7 @@ let g:tagbar_type_scala = {
         \ 'r:cclasses',
         \ 'm:methods'
     \ ]
-    \ }
+\ }
 
 "NERDTree
 noremap <S-F2> :NERDTreeToggle<CR>
@@ -254,8 +204,6 @@ let g:notes_suffix = '.txt'
 let g:notes_word_boundaries = 1
 
 "Syntastic
-"let g:syntastic_java_maven_executable='$HOME/.bin/mvn'
-"let g:syntastic_java_javac_executable='/spgear/zeph_comp_tools/jdk1.8.0_11/bin/javac'
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
 let g:syntastic_python_checkers=['flake8', 'python']
@@ -305,44 +253,16 @@ nnoremap <leader>r :Unite -no-split -buffer-name=recent file_mru<cr>
 nnoremap <leader>o :Unite -no-split -buffer-name=outline outline<cr>
 nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
 
-"Airline
-"let g:airline#extensions#tabline#enabled = 1
+"IndentLines
+noremap <Leader>il :IndentLinesToggle<CR>
 
-"Dispatch
-map <F6> :Make -op <C-R>=expand("%:p:h")<CR><CR>
-map <S-F6> :Make! -p <C-R>=expand("%:p:h")<CR><CR>
-map <leader>tt :Make! -tp <C-R>=expand("%:p:h")<CR><CR>
-map <leader>uu :Make! -o -u <C-R>=expand('%:t:r')<CR> -p <C-R>=expand("%:p:h")<CR><CR>
-
-"Maven-compiler java stuff
-autocmd FileType java compiler mvn
-autocmd Filetype java set makeprg=makesms
-map <S-F5> :!javac "%" && java "%:r"<CR>
-
-" IndentLines
-map <Leader>il :IndentLinesToggle<CR>
-
-map <Leader>rt :RainbowToggle<CR>
-": Rainbow parens
-let g:rainbow_conf = {
-\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-\   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-\   'operators': '_,_',
-\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-\   'separately': {
-\       '*': {},
-\       'tex': {
-\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-\       },
-\       'lisp': {
-\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-\       },
-\       'vim': {
-\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-\       },
-\       'html': {
-\           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-\       },
-\       'css': 0,
-\   }
-\}
+" vim-test
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tv :TestVisit<CR>
+let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
+function! test#java#maventest#executable() abort
+  return 'mvn compiler:compile compiler:testCompile surefire:test'
+endfunction
