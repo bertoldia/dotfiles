@@ -19,8 +19,8 @@ export VATS_HOME="${HOME}/workspace/vats"
 
 export DIST_PYTHON='/usr/bin/python2'
 
-export JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
-#export MAVEN_HOME='/opt/mvn'
+export SMS_V2_JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
+#export SMS_V2_MAVEN_HOME='/opt/mvn'
 #export ANT_HOME='/usr/share/apache-ant'
 
 return 0
