@@ -1,7 +1,6 @@
 call plug#begin('~/.config/nvim/bundle')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-sensible'
-  Plug 'tpope/vim-dispatch'
   Plug 'Valloric/YouCompleteMe'
   Plug 'Valloric/ListToggle'
   Plug 'scrooloose/nerdcommenter'
@@ -15,12 +14,17 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'Shougo/unite.vim'
   Plug 'Shougo/unite-outline'
   Plug 'Shougo/neomru.vim'
-  "Plug 'Shougo/vimproc.vim'
+  Plug 'Shougo/vimproc.vim'
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'cazador481/fakeclip.neovim'
-  Plug 'artur-shaik/vim-javacomplete2'
   Plug 'janko-m/vim-test'
+  Plug 'Yggdroot/indentLine'
+  Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
+  Plug 'jeroenbourgois/vim-actionscript', {'for': 'actionscript'}
+  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
+
+  Plug 'artur-shaik/vim-javacomplete2'
 
   Plug 'molokai'
   Plug 'monokai'
@@ -31,11 +35,6 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'blerins/flattown'
   Plug 'ratazzi/blackboard.vim'
   Plug 'nielsmadan/harlequin'
-  Plug 'Yggdroot/indentLine'
-  Plug 'luochen1990/rainbow'
-  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
-
-  Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 
 " ---OPTIONS---
@@ -91,11 +90,7 @@ filetype plugin indent on
 " ---APPEARANCE---
 set background=dark
 set cursorcolumn
-"colorscheme Revolution
 colorscheme kalisi
-"colorscheme molokai
-
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 10
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
@@ -107,7 +102,7 @@ if has("autocmd")
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
+  autocmd BufReadPost !gitcommit
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
         \ endif
@@ -152,15 +147,8 @@ map <C-W> :bd <CR>
 noremap <C-a> ggVG
 
 " >>>>>>>>>>>>>>>>>>>> Plugins Behaviour Modifications <<<<<<<<<<<<<<<<<<<<<<<
-"whitespace
-map <Leader>w :'<,'>StripWhitespace<CR>
-
-"Bookmarking. These colors work best with molokai theme
-hi default BookmarkHighlightLine ctermbg=lightblue guibg=#ce5c00 cterm=bold gui=bold
-hi default BookmarkHighlightText ctermbg=lightblue guibg=#ce5c00 cterm=bold gui=bold
-sign define bookmark text=• linehl=BookmarkHighlightLine texthl=BookmarkHighlightText
-map <silent> <S-F3> :ClearBookmark<CR>
-map <silent> <F3> :ToggleBookmark<CR>
+" Whitespace
+noremap <Leader>w :'<,'>StripWhitespace<CR>
 
 "Tagbar
 map <F8> :TagbarToggle<CR>
@@ -180,7 +168,7 @@ let g:tagbar_type_scala = {
         \ 'r:cclasses',
         \ 'm:methods'
     \ ]
-    \ }
+\ }
 
 "NERDTree
 noremap <S-F2> :NERDTreeToggle<CR>
@@ -248,49 +236,10 @@ nnoremap <leader>r :Unite -no-split -buffer-name=recent file_mru<cr>
 nnoremap <leader>o :Unite -no-split -buffer-name=outline outline<cr>
 nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
 
-"Airline
-"let g:airline#extensions#tabline#enabled = 1
-
-"Dispatch
-map <F6> :Make -op <C-R>=expand("%:p:h")<CR><CR>
-map <S-F6> :Make! -p <C-R>=expand("%:p:h")<CR><CR>
-map <leader>tt :Make! -tp <C-R>=expand("%:p:h")<CR><CR>
-map <leader>uu :Make! -o -u <C-R>=expand('%:t:r')<CR> -p <C-R>=expand("%:p:h")<CR><CR>
-
-"Maven-compiler java stuff
-"autocmd FileType java compiler mvn
-"autocmd Filetype java set makeprg=makesms
-map <S-F5> :!javac "%" && java "%:r"<CR>
-
 " IndentLines
-map <Leader>il :IndentLinesToggle<CR>
+noremap <Leader>il :IndentLinesToggle<CR>
 
-map <Leader>rt :RainbowToggle<CR>
-": Rainbow parens
-let g:rainbow_conf = {
-\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-\   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-\   'operators': '_,_',
-\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-\   'separately': {
-\       '*': {},
-\       'tex': {
-\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-\       },
-\       'lisp': {
-\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-\       },
-\       'vim': {
-\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-\       },
-\       'html': {
-\           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-\       },
-\       'css': 0,
-\   }
-\}
-
-"vim-test
+" vim-test
 let test#strategy = "neovim"
 nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>tf :TestFile<CR>
@@ -302,12 +251,10 @@ function! test#java#maventest#executable() abort
   return 'mvn compiler:compile compiler:testCompile surefire:test'
 endfunction
 
-"neomake
+" neomake
 autocmd! BufWritePost * Neomake
 let g:neomake_java_checkstyle_maker = {
     \ 'args': ['-c', '/opt/checkstyle/sun_checks.xml'],
     \ 'errorformat': '%f:%l:\ %m,%f:%l:%v:\ %m,%-G%.%#',
     \ }
 "let g:neomake_java_enabled_makers = ['javac', 'checkstyle']
-
-

@@ -22,9 +22,9 @@ call plug#begin('~/.vim/bundle')
   Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
   Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
-  "Plug 'LaTeX-Box'
+  "Plug 'LaTeX-Box', {'for': 'tex'}
   Plug 'jeroenbourgois/vim-actionscript', {'for': 'actionscript'}
-  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
+  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
 
   Plug 'molokai'
   Plug 'monokai'
