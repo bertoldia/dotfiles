@@ -3,6 +3,7 @@ alias lall='ls -hlaF'
 
 alias q='lcd ../'
 alias cd='lcd'
+alias mkdir='mkdir -p'
 alias go='gnome-open'
 alias df='df -h'
 alias du='du -h'
@@ -38,20 +39,6 @@ alias vimrc='gvim ~/.vimrc'
 alias aliasedit='gvim ~/.bash_aliases'
 alias gitconfig='gvim ~/.gitconfig'
 alias sshconfig='gvim ~/.ssh/config'
-
-#runner
-alias ctest='/home/runner/bin/ctest'
-alias rtest='/home/runner/bin/rtest'
-alias runner='echo "Usage: runner-SYSTEM <D10|D20> [extra args]"'
-alias runner-argonaut-disruptor-h='runner-bin argonaut-disruptor-h'
-alias runner-argo-large-geo-nst-e='runner-bin argo-large-geo-nst-e'
-alias runner-argo-small-geo-nst-e='runner-bin argo-small-geo-nst-e'
-alias runner-wild-small-geo-full-nst-e='runner-bin wild-small-geo-full-nst-e'
-alias runner-wild-small-geo-nst-e='runner-bin wild-small-geo-nst-e'
-alias runner-wild-small-metro-nst-e='runner-bin wild-small-metro-nst-e'
-alias runner-wildcatve-disruptor-e='runner-bin wildcatve-disruptor-e'
-alias runner-sms-mario-1='runner-bin sms-mario-1'
-alias runner-sms-dev-6='runner-bin sms-dev-6'
 
 alias work='cd ${UI_DEV_DIR}/com-emc-vplex-smsv2'
 alias ui-review='_ui_review'
@@ -107,7 +94,6 @@ function _nsfw_review() {
     git fetch
     git co -b $1 origin/$1
   fi
-  #tig snac/doc/cic.txt
   last_merge=`git rev-list --merges HEAD | head -n 1`
   tig "${last_merge}..." snac/doc/cic.txt
 }

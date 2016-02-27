@@ -11,7 +11,7 @@ export UI_TEST_DIR="${HOME}/workspace/test/ui"
 export UI_REGRESSION_DIR="${HOME}/workspace/test/ui-regression"
 
 export NSFW_DEV_DIR="${HOME}/workspace/nsfw"
-export NSFW_ROOT="$NSFW_DEV_DIR"
+export NSFW_ROOT=$NSFW_DEV_DIR
 export NSFW_REVIEW_DIR="${HOME}/workspace/review/nsfw"
 export RUNNER_TMP="${HOME}/workspace/runner-tmp"
 
