@@ -20,8 +20,10 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'cazador481/fakeclip.neovim'
   Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
-  Plug 'dart-lang/dart-vim-plugin'
-  "Plug 'Dart'
+  Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
+  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
+
+  Plug 'artur-shaik/vim-javacomplete2'
 
   Plug 'molokai'
   Plug 'mango.vim'
@@ -88,8 +90,6 @@ set background=dark
 set cursorcolumn
 colorscheme kalisi
 
-set guifont=Source\ Code\ Pro\ 10
-
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
@@ -100,7 +100,7 @@ if has("autocmd")
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
+  autocmd BufReadPost !gitcommit
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
         \ endif
@@ -236,7 +236,7 @@ nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
 
 "set clipboard+=unnamedplus
 
-"IndentLines
+" IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
 
 " vim-test

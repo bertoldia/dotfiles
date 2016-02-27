@@ -9,8 +9,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'scrooloose/syntastic'
   Plug 'majutsushi/tagbar' | Plug 'bling/vim-airline'
   Plug 'Lokaltog/vim-easymotion'
-  Plug 'xolox/vim-misc'
-  Plug 'xolox/vim-notes'
+  Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
   Plug 'MattesGroeger/vim-bookmarks'
   Plug 'obvious-resize'
   Plug 'Raimondi/delimitMate'
@@ -22,7 +21,10 @@ call plug#begin('~/.vim/bundle')
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
-  Plug 'dart-lang/dart-vim-plugin'
+  Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
+  "Plug 'LaTeX-Box', {'for': 'tex'}
+  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
+
   Plug 'molokai'
   Plug 'monokai'
   Plug 'darkspectrum'
@@ -111,7 +113,7 @@ if has("autocmd")
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
+  autocmd BufReadPost !gitcommit
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
         \ endif
