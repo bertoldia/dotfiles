@@ -1,8 +1,11 @@
 #!/bin/bash
 
-tarball=$1
+LUSER=$USER
+RUSER="service"
+
+TARBALL=$1
 shift
 
-for sys in $@; do
-  scp -C $tarball $sys://home/service/bertoa/$tarball ;
+for RSYS in $@; do
+  scp -C $TARBALL $RSYS://home/$RUSER/$LUSER/$TARBALL;
 done
