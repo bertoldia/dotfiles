@@ -1,9 +1,14 @@
 #!/bin/bash
 
+TARBALL=`ls *.tgz`
+END=${#TARBALL}-4
+VPLEX=${TARBALL:0:${END}}
+INSTALL=$(basename `pwd`)
+
 cd /opt/emc
 sudo /etc/init.d/VPlexManagementConsole stop
 sudo mv VPlex VPlex.good
-sudo ln -s ~/bertoa/sms VPlex
+sudo ln -s ~/$INSTALL/$VPLEX VPlex
 mkdir -p VPlex/var/run
 sudo /etc/init.d/VPlexManagementConsole start
 
