@@ -1,5 +1,9 @@
 #!/bin/bash
 
-ssh-copy-id -i ~/.ssh/id_rsa.pub service@$1
-scp ~/.bin/resources/env.tgz service@$1://home/service
-ssh service@$1 'tar -zxvf env.tgz ; rm env.tgz ; cp /var/log/VPlex/cli/connections bertoa/cli'
+LUSER=$USER
+RUSER="service"
+RSYS=$1
+
+ssh-copy-id -i ~/.ssh/id_rsa.pub $RUSER@$RSYS
+rsync -avzL -e "ssh -l $RUSER" $HOME/.bin/resources/ $RUSER@$RSYS://home/$RUSER/$LUSER/
+ssh $RUSER@$1 "cp /var/log/VPlex/cli/connections $LUSER/cli"
