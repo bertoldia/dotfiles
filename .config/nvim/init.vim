@@ -17,14 +17,12 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'Shougo/vimproc.vim'
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
-  Plug 'cazador481/fakeclip.neovim'
   Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
   Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
-  Plug 'jeroenbourgois/vim-actionscript', {'for': 'actionscript'}
-  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
-
-  Plug 'artur-shaik/vim-javacomplete2'
+  Plug 'miyakogi/vim-dartanalyzer', {'for': 'dart'}
+  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
+  Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
 
   Plug 'molokai'
   Plug 'monokai'
@@ -35,6 +33,7 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'blerins/flattown'
   Plug 'ratazzi/blackboard.vim'
   Plug 'nielsmadan/harlequin'
+  Plug 'nanotech/jellybeans.vim'
 call plug#end()
 
 " ---OPTIONS---
@@ -236,7 +235,7 @@ nnoremap <leader>r :Unite -no-split -buffer-name=recent file_mru<cr>
 nnoremap <leader>o :Unite -no-split -buffer-name=outline outline<cr>
 nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
 
-" IndentLines
+"IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
 
 " vim-test
@@ -247,9 +246,7 @@ nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
 let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
-function! test#java#maventest#executable() abort
-  return 'mvn compiler:compile compiler:testCompile surefire:test'
-endfunction
+let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
 
 " neomake
 autocmd! BufWritePost * Neomake
