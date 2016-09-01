@@ -8,20 +8,22 @@ VATS_CONFIG="${HOME}/.vats/linux-tower.yaml"
 #VATS_CONFIG="${HOME}/.vats/cavalier.yaml"
 #VATS_CONFIG="${HOME}/.vats/pothole.yaml"
 VATS_BIN="./run-vats"
+DELETE_PREVIOUS_RESULTS=true
 
 
 usage() {
   echo "Usage: run-vats -t <test> [-s <system>]"
   echo "  -t: The test or suite to tun. Required"
-  echo "  -s: The SUT config against which the test should be run. Defaults to
-  linux-tower."
+  echo "  -s: The SUT config against which the test should be run. Defaults to linux-tower."
+  echo "  -l: Do not delete (i.e. leave) existing test results. Defaults to false."
   exit 0
 }
 
-while getopts "s:t:h" arg; do
+while getopts "s:t:lh" arg; do
   case $arg in
     s) VATS_CONFIG=$OPTARG;;
     t) TEST=$OPTARG;;
+    l) DELETE_PREVIOUS_RESULTS=false;;
     h) usage;;
     \?) usage;;
   esac
@@ -47,13 +49,17 @@ fi
 
 cd $UI_DEV_DIR/vats
 
-if [ ! -e $TEST ]; then
-  echo "Can\'t find test file $TEST"
-  exit 1
-fi
+#if [ ! -e $TEST ]; then
+  #echo "Can\'t find test file $TEST"
+  #exit 1
+#fi
 
-rm -fr /tmp/vats/*
-rm -fr logs/*
+echo "$TEST"
+
+if [[ $DELETE_PREVIOUS_RESULTS == true ]]; then
+  rm -fr /tmp/vats/*
+  rm -fr logs/*
+fi
 
 CMD="${VATS_BIN} --config ${VATS_CONFIG} ${VATS_HOME} ${TEST}"
 

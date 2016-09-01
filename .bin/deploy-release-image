@@ -4,8 +4,10 @@ LUSER=$USER
 RUSER="service"
 
 TARBALL=$1
+DEST=$(basename $TARBALL)
+
 shift
 
 for RSYS in $@; do
-  scp -C $TARBALL $RSYS://home/$RUSER/$LUSER/$TARBALL;
+  scp -C $TARBALL $RSYS://home/$RUSER/$LUSER/$DEST;
 done

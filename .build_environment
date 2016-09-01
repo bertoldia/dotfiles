@@ -1,7 +1,8 @@
 # The build environment for the ui repo.
 # Source this in your .bashrc
 
-SPGEAR_TOOLS_EXTRA=/spgear/tools/bin:/spgear/spgear/bin
+#SPGEAR_TOOLS_EXTRA=/spgear/tools/bin:/spgear/spgear/bin
+SPGEAR_TOOLS_EXTRA=/spgear/spgear/bin
 RUNNER_PATH=/home/runner/bin
 
 export PATH="${HOME}/.bin:${PATH}:${RUNNER_PATH}:${SPGEAR_TOOLS_EXTRA}"

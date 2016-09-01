@@ -6,4 +6,4 @@ RSYS=$1
 
 ssh-copy-id -i ~/.ssh/id_rsa.pub $RUSER@$RSYS
 rsync -avzL -e "ssh -l $RUSER" $HOME/.bin/resources/ $RUSER@$RSYS://home/$RUSER/$LUSER/
-ssh $RUSER@$1 "cp /var/log/VPlex/cli/connections $LUSER/cli"
+ssh $RUSER@$1 "cp /var/log/VPlex/cli/connections $LUSER/cli; cp /var/log/VPlex/cli/jaas.config $LUSER/cli"

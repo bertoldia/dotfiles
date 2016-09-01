@@ -5,6 +5,8 @@ END=${#TARBALL}-4
 VPLEX=${TARBALL:0:${END}}
 INSTALL=$(basename `pwd`)
 
+tar -zxvf $TARBALL
+
 cd /opt/emc
 sudo /etc/init.d/VPlexManagementConsole stop
 sudo mv VPlex VPlex.good

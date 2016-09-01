@@ -33,7 +33,7 @@
   new-branch = !sh -c 'git co -b z/bertoa/$2-$1 origin/a/$2' -
   push-branch = !git push origin `git current-branch` -f
   push-branch-and-reupstream = !git push origin `git current-branch` && git br --set-upstream `git current-branch` origin/`git current-branch`
-  delete-branch = !git push origin :$1
+  delete-branch = !sh -c 'git push origin :$1' -
   rebase-branch = !git rebase --interactive HEAD~`git changes | wc -l`
   rebase-branch-to-upstream = !git rebase --interactive `git upstream`
   change-upstream = !sh -c 'git branch --set-upstream-to \"$@\"' -
@@ -59,3 +59,7 @@
   tool = meld
 [push]
   ;default = tracking
+[push]
+	default = simple
+[gui]
+	recentrepo = /local/home/bertoa/workspace/nsfw

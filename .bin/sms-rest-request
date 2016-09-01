@@ -47,13 +47,13 @@ while getopts ":lcs" arg; do
   esac
 done
 
-
 #CMD="curl -k -X ${METHOD} -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/${CTX} ${ARGS}"
-#CMD="curl -k -X ${METHOD} -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/${CTX}"
-CMD="curl -k -X POST -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/version -d \"{'args': '-a'}\""
+#CMD="curl -k -X POST -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/version -d \"{'args': '-a'}\""
 #CMD="curl -k -X GET -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/clusters"
 #CMD="curl -k -X $METHOD -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/version"
 #curl -k -XPUT -H "Username:service" -H "Password:Mi@Dim7T" "https://10.7.41.205/vplex/clusters/cluster-1/devices/r0_EMC-Invista-144044-1_scale_9_1?visibility=local"
 
+#curl -k -X GET -H "Username:service" -H "Password:Mi@Dim7T" https://127.0.0.1/vplex/clusters
 
+CMD="curl -k -A "blarney" -X ${METHOD} -H ${USERNAME} -H ${PASSWORD} https://${HOST}/${BASE_URL}/${CTX}"
 execAction $CMD ${ARGS}
