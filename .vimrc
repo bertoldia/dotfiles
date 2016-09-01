@@ -6,6 +6,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'Valloric/YouCompleteMe'
   Plug 'Valloric/ListToggle'
   Plug 'scrooloose/nerdcommenter'
+  Plug 'scrooloose/nerdtree'
   Plug 'scrooloose/syntastic'
   Plug 'majutsushi/tagbar' | Plug 'bling/vim-airline'
   Plug 'Lokaltog/vim-easymotion'
@@ -16,25 +17,27 @@ call plug#begin('~/.vim/bundle')
   Plug 'Shougo/unite.vim'
   Plug 'Shougo/unite-outline'
   Plug 'Shougo/neomru.vim'
-  Plug 'Shougo/vimproc.vim'
+ Plug 'Shougo/vimproc.vim'
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
   Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
+  Plug 'miyakogi/vim-dartanalyzer', {'for': 'dart'}
   "Plug 'LaTeX-Box', {'for': 'tex'}
-  Plug 'jeroenbourgois/vim-actionscript', {'for': 'actionscript'}
   Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
+  Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+  Plug 'aklt/plantuml-syntax', {'for': 'plantuml'}
 
   Plug 'molokai'
   Plug 'monokai'
   Plug 'darkspectrum'
   Plug 'mango.vim'
   Plug 'freeo/vim-kalisi'
-  Plug 'CruizeMissile/Revolution.vim'
   Plug 'blerins/flattown'
   Plug 'ratazzi/blackboard.vim'
   Plug 'nielsmadan/harlequin'
+  Plug 'nanotech/jellybeans.vim'
 call plug#end()
 
 " ---OPTIONS---
@@ -92,17 +95,14 @@ let molokai_original=1
 " ---APPEARANCE---
 set background=dark
 if has("gui_running")
-  colorscheme harlequin
-
+  set guifont=Source\ Code\ Pro\ Medium\ 10
   set guioptions-=T " hide toolbar
   set guioptions-=m " hide menubar
   set guitablabel=%!expand(\"\%:t\")
-  set cursorcolumn
-else
-  colorscheme Revolution
 endif
 
-set guifont=Source\ Code\ Pro\ 10
+set cursorcolumn
+colorscheme kalisi
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
@@ -202,6 +202,7 @@ map <Leader>dg :diffget<CR>
 let g:notes_directories = ['~/notes']
 let g:notes_suffix = '.txt'
 let g:notes_word_boundaries = 1
+let g:notes_conceal_url = 0
 
 "Syntastic
 let g:syntastic_java_checkers=['javac', 'checkstyle']
@@ -263,6 +264,4 @@ nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
 let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
-function! test#java#maventest#executable() abort
-  return 'mvn compiler:compile compiler:testCompile surefire:test'
-endfunction
+let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
