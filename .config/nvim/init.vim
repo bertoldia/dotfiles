@@ -1,9 +1,10 @@
 call plug#begin('~/.config/nvim/bundle')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-sensible'
-  Plug 'Valloric/YouCompleteMe'
+  "Plug 'Valloric/YouCompleteMe'
   Plug 'Valloric/ListToggle'
   Plug 'scrooloose/nerdcommenter'
+  Plug 'scrooloose/nerdtree'
   "Plug 'scrooloose/syntastic'
   Plug 'benekastah/neomake'
   Plug 'majutsushi/tagbar' | Plug 'bling/vim-airline'
@@ -11,29 +12,30 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'MattesGroeger/vim-bookmarks'
   Plug 'obvious-resize'
   Plug 'Raimondi/delimitMate'
-  Plug 'Shougo/unite.vim'
-  Plug 'Shougo/unite-outline'
-  Plug 'Shougo/neomru.vim'
-  Plug 'Shougo/vimproc.vim'
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
-  Plug 'janko-m/vim-test'
+  "Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
-  Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
-  Plug 'miyakogi/vim-dartanalyzer', {'for': 'dart'}
-  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
-  Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+  "Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
+  "Plug 'miyakogi/vim-dartanalyzer', {'for': 'dart'}
+  "Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
+  "Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+  "Plug 'aklt/plantuml-syntax', {'for': 'plantuml'}
+  Plug 'fatih/vim-go', {'for': 'go'}
+  Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
+  Plug 'Shougo/neomru.vim'
+  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+  Plug 'zchee/deoplete-go', {'do': 'make', 'for': 'go'}
+  Plug 'c0r73x/neotags.nvim'
+
 
   Plug 'molokai'
   Plug 'monokai'
   Plug 'darkspectrum'
   Plug 'mkarmona/colorsbox'
   Plug 'freeo/vim-kalisi'
-  Plug 'CruizeMissile/Revolution.vim'
   Plug 'blerins/flattown'
-  Plug 'ratazzi/blackboard.vim'
   Plug 'nielsmadan/harlequin'
-  Plug 'nanotech/jellybeans.vim'
 call plug#end()
 
 " ---OPTIONS---
@@ -70,12 +72,15 @@ set tags=./tags;/               " search for a tags file staring at current file
 set cst                         "to select tag when there are multiple matches
 " highlight current line and column, and set the red line over there ->
 set cursorline
+set cursorcolumn
 set colorcolumn=80
 set showmode
 set textwidth=80
 set wrap linebreak
 let &listchars = "tab:\u00b7 ,trail:\u00b7"
 set list
+set title
+set completeopt=menuone,longest,preview
 
 "Change cursor shape and colour in insert mode
 set guicursor+=n-v-c:blinkon0
@@ -88,7 +93,6 @@ filetype plugin indent on
 
 " ---APPEARANCE---
 set background=dark
-set cursorcolumn
 colorscheme kalisi
 
 " Make p in Visual mode replace the selected text with the "" register.
@@ -97,6 +101,7 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
   autocmd Filetype,BufReadPost,BufNewFile java setlocal shiftwidth=2 tabstop=2 colorcolumn=100 textwidth=100
+  autocmd Filetype go set nolist
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -125,12 +130,13 @@ map <C-b> :w<CR> :!pdflatex %<CR>
 " copy/paste
 map <A-c> "+y
 map <A-v> "+gP
-" Move between windows with alt arrow
+" Move between M-windows with alt arrow
 nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
 nmap <silent> <C-S-t> :tab sball<CR>
+
 
 "map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
@@ -153,21 +159,6 @@ noremap <Leader>w :'<,'>StripWhitespace<CR>
 map <F8> :TagbarToggle<CR>
 let g:tagbar_left = 0
 let g:tagbar_sort = 0
-let g:tagbar_type_scala = {
-    \ 'ctagstype' : 'Scala',
-    \ 'kinds'     : [
-        \ 'p:packages:1',
-        \ 'V:values',
-        \ 'v:variables',
-        \ 'T:types',
-        \ 't:traits',
-        \ 'o:objects',
-        \ 'a:aclasses',
-        \ 'c:classes',
-        \ 'r:cclasses',
-        \ 'm:methods'
-    \ ]
-\ }
 
 "NERDTree
 noremap <S-F2> :NERDTreeToggle<CR>
@@ -176,6 +167,9 @@ noremap <F2> :Explore<CR>
 "Buffer switching
 noremap <C-S-PageUp> :bprev<CR>
 noremap <C-S-PageDown> :bnext<CR>
+
+noremap <C-PageUp> :tabprev<CR>
+noremap <C-PageDown> :tabnext<CR>
 
 "Fugitive
 map <Leader>gd :Gdiff<CR>
@@ -216,24 +210,39 @@ let g:ycm_confirm_extra_conf = 0
 set completeopt-=preview
 
 "Unite
-let g:unite_source_history_yank_enable = 1
-let g:unite_enable_start_insert = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-call unite#custom#source('file_rec/async','sorters','sorter_rank')
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts =
-  \ '-i --vimgrep --hidden --ignore ' .
-  \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-  let g:unite_source_grep_recursive_opt = ''
-endif
-nnoremap <leader>f :Unite -no-split -buffer-name=files file_rec/async<cr>
-nnoremap <leader>y :Unite -no-split -buffer-name=yank history/yank<cr>
-nnoremap <leader>b :Unite -no-split -buffer-name=buffer buffer<cr>
-nnoremap <leader>r :Unite -no-split -buffer-name=recent file_mru<cr>
-nnoremap <leader>o :Unite -no-split -buffer-name=outline outline<cr>
-nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
+"let g:unite_source_history_yank_enable = 1
+"let g:unite_enable_start_insert = 1
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+"call unite#filters#sorter_default#use(['sorter_rank'])
+"call unite#custom#source('file_rec/async','sorters','sorter_rank')
+"if executable('ag')
+  "let g:unite_source_grep_command = 'ag'
+  "let g:unite_source_grep_default_opts =
+  "\ '-i --vimgrep --hidden --ignore ' .
+  "\ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+  "let g:unite_source_grep_recursive_opt = ''
+"endif
+
+"Denite
+"call denite#custom#var('grep', 'command', ['ag'])
+"call denite#custom#var('grep', 'recursive_opts', [])
+"call denite#custom#var('grep', 'default_opts',
+  "\ ['-i', '--vimgrep', '--hidden',
+  "\ '--ignore', '.git', '--ignore', '*.swp'])
+"call denite#custom#var('file_rec', 'command',
+  "\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+call denite#custom#map('insert', '<Down>', 'move_to_next_line')
+call denite#custom#map('normal', '<Down>', 'move_to_next_line')
+call denite#custom#map('insert', '<Up>', 'move_to_prev_line')
+call denite#custom#map('normal', '<Up>', 'move_to_prev_line')
+call denite#custom#map('insert', '<Esc>', 'enter_mode:normal')
+nnoremap <leader>f :Denite -buffer-name=files file_rec<cr>
+nnoremap <leader>b :Denite -buffer-name=buffer buffer<cr>
+nnoremap <leader>r :Denite -buffer-name=recent file_mru<cr>
+nnoremap <leader>o :Denite -buffer-name=outline outline<cr>
+nnoremap <leader>g :DeniteCursorWord -buffer-name=grep grep:.<cr><cr>
+
+
 
 "IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
@@ -248,6 +257,9 @@ nmap <silent> <leader>tv :TestVisit<CR>
 let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
 let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
 
+" javacomplete2
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
 " neomake
 autocmd! BufWritePost * Neomake
 let g:neomake_java_checkstyle_maker = {
@@ -255,3 +267,31 @@ let g:neomake_java_checkstyle_maker = {
     \ 'errorformat': '%f:%l:\ %m,%f:%l:%v:\ %m,%-G%.%#',
     \ }
 "let g:neomake_java_enabled_makers = ['javac', 'checkstyle']
+let g:neomake_go_enabled_makers = ['go', 'govet']
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
+"let g:deoplete#sources#go#gocode_binary = '$GOBIN/gocode'
+let g:deoplete#sources#go#gocode_binary = '/local/home/bertoa/.go/bin/gocode'
+
+" vim-go
+let g:go_oracle_scope="gitlab.spgear.lab.emc.com/dolphin/go-mongo-proxy"
+" open test/implementation file in a vsplit instead of the same window
+let g:go_alternate_mode = "vsplit"
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_term_enabled = 1
+
+"neotags
+let g:neotags_enabled = 1
+let g:neotags_appendpath = 0
+let g:neotags_ctags_bin = 'ag -g "" '. getcwd() .' | ctags'
+let g:neotags_ctags_args = [
+            \ '-L -',
+            \ '--fields=+l',
+            \ '--c-kinds=+p',
+            \ '--c++-kinds=+p',
+            \ '--sort=no',
+            \ '--extra=+q'
+            \ ]
