@@ -17,7 +17,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'Shougo/unite.vim'
   Plug 'Shougo/unite-outline'
   Plug 'Shougo/neomru.vim'
- Plug 'Shougo/vimproc.vim'
+  Plug 'Shougo/vimproc.vim'
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'janko-m/vim-test'
@@ -28,16 +28,18 @@ call plug#begin('~/.vim/bundle')
   Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
   Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
   Plug 'aklt/plantuml-syntax', {'for': 'plantuml'}
+  Plug 'fatih/vim-go', {'for': 'go'}
 
   Plug 'molokai'
   Plug 'monokai'
-  Plug 'darkspectrum'
   Plug 'mango.vim'
   Plug 'freeo/vim-kalisi'
   Plug 'blerins/flattown'
-  Plug 'ratazzi/blackboard.vim'
   Plug 'nielsmadan/harlequin'
-  Plug 'nanotech/jellybeans.vim'
+  Plug 'joshdick/onedark.vim'
+  Plug 'morhetz/gruvbox'
+  Plug 'mhartington/oceanic-next'
+
 call plug#end()
 
 " ---OPTIONS---
@@ -53,8 +55,8 @@ set hidden                      " When I close a tab don't remove the buffer
 let g:clipbrdDefaultReg = '+'
 set grepprg=grep\ -nH\ $*
 set expandtab                   " make tabs spaces
-set shiftwidth=2                " for auto and manual indent
-set tabstop=2                   " pressing tab inserts 2 spaces
+set shiftwidth=4                " for auto and manual indent
+set tabstop=4                   " pressing tab inserts 2 spaces
 set nu                          " line number
 "Folding
 set foldmethod=syntax
@@ -73,7 +75,8 @@ set smartcase                   " And so is Artificial Intelligence!
 set tags=./tags;/               " search for a tags file staring at current file's wd and going up until one is found
 set cst                         "to select tag when there are multiple matches
 " highlight current line and column, and set the red line over there ->
-set cursorline
+"set cursorline
+"set cursorcolumn
 set colorcolumn=80
 set showmode
 set textwidth=80
@@ -101,7 +104,6 @@ if has("gui_running")
   set guitablabel=%!expand(\"\%:t\")
 endif
 
-set cursorcolumn
 colorscheme kalisi
 
 " Make p in Visual mode replace the selected text with the "" register.
@@ -208,6 +210,8 @@ let g:notes_conceal_url = 0
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
 let g:syntastic_python_checkers=['flake8', 'python']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 let g:syntastic_warning_symbol='!!'
 let g:syntastic_error_symbol='✘✘'
 let g:syntastic_aggregate_errors = 1
@@ -265,3 +269,9 @@ nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
 let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
 let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
+
+" javacomplete2
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" go
+let g:go_list_type = "quickfix"
