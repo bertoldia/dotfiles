@@ -5,7 +5,6 @@
 SPGEAR_TOOLS_EXTRA=/spgear/spgear/bin
 RUNNER_PATH=/home/runner/bin
 
-export PATH="${HOME}/.bin:${PATH}:${RUNNER_PATH}:${SPGEAR_TOOLS_EXTRA}"
 export UI_DEV_DIR="${HOME}/workspace/ui"
 export UI_REVIEW_DIR="${HOME}/workspace/review/ui"
 export UI_TEST_DIR="${HOME}/workspace/test/ui"
@@ -23,5 +22,14 @@ export DIST_PYTHON='/usr/bin/python2'
 export SMS_V2_JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
 #export SMS_V2_MAVEN_HOME='/opt/mvn'
 #export ANT_HOME='/usr/share/apache-ant'
+
+
+#dolphin
+export DOLPHIN_DEV_DIR="$HOME/workspace/dolphin"
+export GOPATH="$HOME/.go"
+export GOBIN="$GOPATH/bin"
+
+#export PATH="$HOME/.bin:$PATH:$RUNNER_PATH:$SPGEAR_TOOLS_EXTRA:$GOBIN"
+export PATH="$HOME/.bin:$GOBIN:$PATH"
 
 return 0
