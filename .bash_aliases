@@ -4,7 +4,6 @@ alias lall='ls -hlaF'
 alias q='lcd ../'
 alias cd='lcd'
 alias mkdir='mkdir -p'
-alias go='gnome-open'
 alias df='df -h'
 alias du='du -h'
 if [ -f /usr/bin/colormake ]; then
@@ -22,7 +21,10 @@ alias car='cat'
 #alias gvim='gvim -p'
 alias rgvim='gvim --remote-tab-silent'
 alias rvim='vim --remote-tab-silent'
-alias gnvim='nvim-wrapper'
+alias gnvim='$HOME/.local/bin/pynvim --font "Source Code Pro Medium" 10'
+alias gnvim-update='/usr/bin/pip install -U --user neovim-gui'
+qvim() { nvim-qt "$@" 2> /dev/null & }
+
 alias ffind='find . -iname'
 alias archive='file-roller -d'
 alias extract='file-roller -h'
@@ -34,12 +36,14 @@ alias trash='_trash'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
 
 #rc edit shortcuts
-alias bashrc='vim ~/.bashrc'
-alias vimrc='gvim ~/.vimrc'
-alias aliasedit='gvim ~/.bash_aliases'
-alias gitconfig='gvim ~/.gitconfig'
-alias sshconfig='gvim ~/.ssh/config'
+alias bashrc='nvim ~/.bashrc'
+alias vimrc='vim ~/.vimrc'
+alias nvimrc='nvim ~/.config/nvim/init.vim'
+alias aliasedit='nvim ~/.bash_aliases'
+alias gitconfig='nvim ~/.gitconfig'
+alias sshconfig='nvim ~/.ssh/config'
 
+# vplex
 alias work='cd ${UI_DEV_DIR}/com-emc-vplex-smsv2'
 alias ui-review='_ui_review'
 alias nsfw-review='_nsfw_review'
@@ -47,6 +51,10 @@ alias regression-test='cd ${UI_REGRESSION_DIR}'
 
 alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
 
+# dolphin
+alias dlog='python $DOLPHIN_DEV_DIR/dlog/dlog.py'
+
+# manjaro
 if [ -f /usr/bin/yaourt ]; then
   alias query='yaourt -Ss'
   alias install='yaourt -S'
