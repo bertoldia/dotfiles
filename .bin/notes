@@ -1,3 +1,3 @@
 #!/bin/bash
 cd ~/notes
-gvim +'colorscheme slate' .
+gvim +'colorscheme desert' .  -geom 150x80

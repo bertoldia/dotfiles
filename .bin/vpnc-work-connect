@@ -1,3 +1,0 @@
-#!/bin/sh
-
-sudo vpnc --natt-mode=none --enable-1des office --username bertoa

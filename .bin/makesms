@@ -19,47 +19,48 @@ BUILD_PATH=`pwd`
 
 DO_DEFAULT=true
 DO_RELEASE_TARBALL=false
+DO_DEV_IMAGE=false
 DO_DEV_TARBALL=false
 DO_BUILD=false
 DO_COMPILE=false
 DO_CLEAN=false
 DO_TESTS=false
+PRINT_ENV=false
 TESTS=""
 
 GIT_REPO_ROOT="/dev/null"
 
 usage() {
-  echo "Usage: makesms [-b -o -t -c -u [test-regex]]"
+  echo "Usage: makesms [-b -o -i -e -t -c -u [test-regex]]"
   echo "  -b build project (default if no arguments are specified, overrides -o)"
   echo "  -o compile project only (overrides default)"
-  echo "  -t: make a developer release tarball (implies -b and overrides -o).
-      -tt will make a std release tarball"
+  echo "  -i make a developer image (implies -b)"
+  echo "  -t: make a release tarball (implies -b)"
   echo "  -u: execute specified unit test pattern, or all unit tests if no pattern was specified"
   echo "      requires either -b or (at least) -o"
   echo "  -c: clean before building (-c alone overrides default; can be combined with -o or -b)."
   echo "  -p: the path in which to build."
+  echo "  -e: Print the build environment and exit."
   exit 0
 }
 
 #START
-while getopts ":botu:chp:" arg; do
+while getopts ":boiteu:chp:" arg; do
   case $arg in
     b) DO_BUILD=true
        DO_DEFAULT=false;;
     o) DO_COMPILE=true
        DO_DEFAULT=false;;
-    t) if [[ $DO_DEV_TARBALL == true ]]; then
-           DO_DEV_TARBALL=false
-           DO_RELEASE_TARBALL=true
-       elif [[ $DO_RELEASE_TARBALL == false ]]; then
-           DO_DEV_TARBALL=true
-       fi
+    i) DO_DEV_IMAGE=true
+       DO_BUILD=true;;
+    t) DO_RELEASE_TARBALL=true
        DO_BUILD=true;;
     c) DO_CLEAN=true
        DO_DEFAULT=false;;
     u) DO_TESTS=true
        TESTS=$OPTARG;;
     p) BUILD_PATH=$OPTARG;;
+    e) PRINT_ENV=true;;
     :) DO_TESTS=true;; #this is an abuse of :)
     h) usage;;
     \?) usage;;
@@ -108,8 +109,14 @@ fi
 
 findFirstBuildDir $BUILD_PATH
 setSmsv2Path
+loadBuildEnvironment
 
 rm $GIT_REPO_ROOT/$SMSV2_PATH/*.tgz 2> /dev/null
+
+TOOLS=`env | grep "JAVA\|ANT\|MVN\|MAVEN" | sort`
+echo -e "\e[1;33mUsing build_environment:\n$TOOLS\e[0m"
+
+if [[ $PRINT_ENV == true ]]; then exit 0; fi
 
 execAction $ACTION
 
@@ -118,7 +125,7 @@ if [[ $? != 0  ]]; then
     exit $?
 fi
 
-if [[ $DO_RELEASE_TARBALL == true || $DO_DEV_TARBALL == true ]]; then
+if [[ $DO_DEV_IMAGE == true || $DO_RELEASE_TARBALL == true ]]; then
   if [ basename != $SMSV2_PATH ]; then
     cd $GIT_REPO_ROOT/$SMSV2_PATH
   fi
@@ -127,11 +134,11 @@ if [[ $DO_RELEASE_TARBALL == true || $DO_DEV_TARBALL == true ]]; then
     mkdir -p target/test-classes
   fi
 
-  loadBuildEnvironment
-  if [[ $DO_DEV_TARBALL == true ]]; then
+  if [[ $DO_DEV_IMAGE == true ]]; then
       execAction $MAKE_DEV_IMAGE
-      execAction $MAKE_DEV_TARBALL
-  else
+  fi
+
+  if [[ $DO_RELEASE_TARBALL == true ]]; then
       execAction $MAKE_TARBALL
   fi
 fi

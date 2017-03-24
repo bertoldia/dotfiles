@@ -1,9 +1,11 @@
 set line-graphics = utf-8
 set ignore-space = all
 set vertical-split = auto
+set ignore-case = true
 set tab-size = 2
 set diff-context = 5
-set main-view = id:yes,color date:relative author:full,width=15 commit-title:yes,refs=yes,graph=no
+set main-view = id:yes,color date:relative author:abbreviated,width:10 commit-title:overflow:no,refs:yes,graph:no
 set show-changes = yes
-set git-colors = no
+set git-colors = yes
 set commit-order = topo
+set refresh-mode = auto

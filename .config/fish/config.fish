@@ -11,6 +11,9 @@ set -g __fish_git_prompt_show_informative_status 1
 set -g __fish_git_prompt_color_branch magenta bold
 
 # Aliases
+alias ls='ls --color=auto --group-directories-first'
+alias ll='ls -lhF'
+alias lall='ls -lhaF'
 alias q="cd ../"
 alias qq="cd ../../"
 alias fishrc="gvim $HOME/.config/fish/config.fish"

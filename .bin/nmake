@@ -3,8 +3,7 @@
 BIN_PATH=$(dirname $(readlink -fn $0))
 source $BIN_PATH/utils
 
-sp_sync=false
-ACTION="python2 make.py -j4"
+ACTION="python2 make.py -j8"
 
 usage() {
   echo "Usage: nmake [-c]"
