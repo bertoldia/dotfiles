@@ -22,17 +22,18 @@
   co = checkout
   ci = commit
   br = branch
+  rb = rebase
   st = status
   cp = cherry-pick
   ; log display
-  graph = log --oneline --graph
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  graph = log --oneline --graph --topo-order
+  lg = log --color --graph --topo-order --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   all-my-commits = log --oneline --author='Axel von Bertoldi'
   ; branch manipulation
-  new-branch = !sh -c 'git co -b z/bertoa/$1 origin/a/$2' -
+  new-branch = !sh -c 'git co -b z/bertoa/$2-$1 origin/a/$2' -
   push-branch = !git push origin `git current-branch` -f
-  push-branch-and-reupstream = !git push origin `git current-branch` && git br --set-upstream-to origin/`git current-branch`
-  delete-branch = !git push origin :$1
+  push-branch-and-reupstream = !git push origin `git current-branch` && git br --set-upstream `git current-branch` origin/`git current-branch`
+  delete-branch = !sh -c 'git push origin :$1' -
   rebase-branch = !git rebase --interactive HEAD~`git changes | wc -l`
   rebase-branch-to-upstream = !git rebase --interactive `git upstream`
   change-upstream = !sh -c 'git branch --set-upstream-to \"$@\"' -
@@ -40,8 +41,7 @@
   current-branch = rev-parse --abbrev-ref HEAD
   upstream = !git rev-parse --abbrev-ref `git current-branch`@{upstream}
   changes = !git log --oneline `git upstream`..HEAD
-  files = !git diff --name-only origin/a/D40
-  ;files = !git diff --name-only `git upstream`
+  files = !git diff --name-only `git upstream`
   my-branches = !git br -a | grep --color bertoa
   fixup = !sh -c 'git commit -a -m \"fixup! $@\" && git rebase -i $@~1' -
   squash = !sh -c 'git commit -a -m \"squash! $@\" && git rebase -i $@~1' -
@@ -50,6 +50,7 @@
 [core]
   editor = vim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [branch]
   autosetupmerge = true
   autosetuprebase = always
@@ -59,3 +60,8 @@
   tool = meld
 [push]
   default = tracking
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
