@@ -1,20 +1,32 @@
 # The build environment for the ui repo.
 # Source this in your .bashrc
 
-export SPGEAR_PERL=/usr/bin/perl
-SPGEAR=/home/axel/workspace/spgear/bin
-#export PATH="${HOME}/.bin:${SPGEAR}:${PATH}"
-export PATH="${HOME}/.bin:${PATH}"
-export UI_DEV_DIR="${HOME}/workspace/ui"
-export UI_REVIEW_DIR="${HOME}/workspace/review/ui"
-export UI_TEST_DIR="${HOME}/workspace/test/ui"
-export UI_REGRESSION_DIR="${HOME}/workspace/test/ui-regression"
+export VPLEX_ROOT="$HOME/workspace/vplex"
+export DOLPHIN_ROOT="$HOME/workspace/vplex"
 
-export NSFW_DEV_DIR="${HOME}/workspace/nsfw"
+export UI_DEV_DIR="$VPLEX_ROOT/ui"
+export UI_REVIEW_DIR="$VPLEX_ROOT/review/ui"
+export UI_TEST_DIR="$VPLEX_ROOT/test/ui"
+#export UI_REGRESSION_DIR="$VPLEX_ROOT/test/ui-regression"
+
+export NSFW_DEV_DIR="$VPLEX_ROOT/nsfw"
 export NSFW_ROOT=$NSFW_DEV_DIR
-export NSFW_REVIEW_DIR="${HOME}/workspace/review/nsfw"
-export RUNNER_TMP="${HOME}/workspace/runner-tmp"
+export NSFW_REVIEW_DIR="$VPLEX_ROOT/review/nsfw"
+export RUNNER_TMP="$VPLEX_ROOT/runner-tmp"
 
-export JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
+export VATS_HOME="$VPLEX_ROOT/vats"
+
+export SMS_V2_JAVA_HOME="/usr/lib/jvm/java-8-openjdk"
+export SMS_V2_MAVEN_HOME="/opt/mvn"
+export SMS_V2_ANT_HOME="/usr/share/apache-ant"
+
+
+#dolphin
+export DOLPHIN_DEV_DIR="$DOLPHIN_ROOT"
+export GOPATH="$HOME/.go"
+export GOBIN="$GOPATH/bin"
+
+#export PATH="$HOME/.bin:$PATH:$RUNNER_PATH:$SPGEAR_TOOLS_EXTRA:$GOBIN"
+export PATH="$HOME/.bin:$GOBIN:$PATH"
 
 return 0
