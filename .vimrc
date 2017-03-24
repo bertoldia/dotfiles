@@ -3,9 +3,10 @@ filetype off
 call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-sensible'
-  Plug 'Valloric/YouCompleteMe'
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   Plug 'Valloric/ListToggle'
   Plug 'scrooloose/nerdcommenter'
+  Plug 'scrooloose/nerdtree'
   Plug 'scrooloose/syntastic'
   Plug 'majutsushi/tagbar' | Plug 'bling/vim-airline'
   Plug 'Lokaltog/vim-easymotion'
@@ -16,24 +17,21 @@ call plug#begin('~/.vim/bundle')
   Plug 'Shougo/unite.vim'
   Plug 'Shougo/unite-outline'
   Plug 'Shougo/neomru.vim'
-  Plug 'Shougo/vimproc.vim'
+  Plug 'Shougo/vimproc.vim', { 'do': 'make' }
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
   Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
+  Plug 'miyakogi/vim-dartanalyzer', {'for': 'dart'}
   "Plug 'LaTeX-Box', {'for': 'tex'}
   Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
+  Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+  Plug 'aklt/plantuml-syntax', {'for': 'plantuml'}
 
-  Plug 'molokai'
-  Plug 'monokai'
-  Plug 'darkspectrum'
-  Plug 'mango.vim'
+  Plug 'morhetz/gruvbox'
   Plug 'freeo/vim-kalisi'
-  Plug 'CruizeMissile/Revolution.vim'
   Plug 'blerins/flattown'
-  Plug 'ratazzi/blackboard.vim'
-  Plug 'nielsmadan/harlequin'
 call plug#end()
 
 " ---OPTIONS---
@@ -49,8 +47,8 @@ set hidden                      " When I close a tab don't remove the buffer
 let g:clipbrdDefaultReg = '+'
 set grepprg=grep\ -nH\ $*
 set expandtab                   " make tabs spaces
-set shiftwidth=2                " for auto and manual indent
-set tabstop=2                   " pressing tab inserts 2 spaces
+set shiftwidth=4                " for auto and manual indent
+set tabstop=4                   " pressing tab inserts 2 spaces
 set nu                          " line number
 "Folding
 set foldmethod=syntax
@@ -70,12 +68,15 @@ set tags=./tags;/               " search for a tags file staring at current file
 set cst                         "to select tag when there are multiple matches
 " highlight current line and column, and set the red line over there ->
 set cursorline
+set cursorcolumn
 set colorcolumn=80
 set showmode
 set textwidth=80
 set wrap linebreak
 let &listchars = "tab:\u00b7 ,trail:\u00b7"
 set list
+set title
+set completeopt=menuone,longest,preview
 
 "Change cursor shape and colour in insert mode
 set guicursor+=n-v-c:blinkon0
@@ -91,17 +92,13 @@ let molokai_original=1
 " ---APPEARANCE---
 set background=dark
 if has("gui_running")
-  colorscheme harlequin
-
+  set guifont=Source\ Code\ Pro\ Medium\ 10
   set guioptions-=T " hide toolbar
   set guioptions-=m " hide menubar
   set guitablabel=%!expand(\"\%:t\")
-  set cursorcolumn
-else
-  colorscheme mango
 endif
 
-set guifont=Source\ Code\ Pro\ 10
+colorscheme gruvbox
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
@@ -121,8 +118,7 @@ endif
 
 " Automatically reload .vimrc when it changes.
 augroup reload_vimrc " {
-  autocmd!
-  autocmd BufWritePost $MYVIMRC source $MYVIMRC
+  autocmd! BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
 
 "re-mappings
@@ -137,16 +133,22 @@ map <C-b> :w<CR> :!xelatex %<CR>
 " copy/paste
 map <A-c> "+y
 map <A-v> "+gP
-" Move between windows with alt arrow
+
+" Buffer, tab and viewport movement
 nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
+nmap <silent> <C-PageUp> :tabprev<CR>
+nmap <silent> <C-PageDown> :tabnext<CR>
+nmap <C-S-PageUp> :bprev<CR>
+nmap <C-S-PageDown> :bnext<CR>
 nmap <silent> <C-S-t> :tab sball<CR>
 
 "map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-map <C-W> :bd <CR>
+"map <C-W> :bd <CR>
+map <C-W> :bp\| bd #<CR>
 
 " misspellings
 :iabbrev teh the
@@ -185,10 +187,6 @@ let g:tagbar_type_scala = {
 noremap <S-F2> :NERDTreeToggle<CR>
 noremap <F2> :Explore<CR>
 
-"Buffer switching
-noremap <C-S-PageUp> :bprev<CR>
-noremap <C-S-PageDown> :bnext<CR>
-
 "Fugitive
 map <Leader>gd :Gdiff<CR>
 map <Leader>gs :Gstatus<CR>
@@ -201,11 +199,14 @@ map <Leader>dg :diffget<CR>
 let g:notes_directories = ['~/notes']
 let g:notes_suffix = '.txt'
 let g:notes_word_boundaries = 1
+let g:notes_conceal_url = 0
 
 "Syntastic
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
 let g:syntastic_python_checkers=['flake8', 'python']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 let g:syntastic_warning_symbol='!!'
 let g:syntastic_error_symbol='✘✘'
 let g:syntastic_aggregate_errors = 1
@@ -224,8 +225,8 @@ nmap <silent> <C-S-Right> :ObviousResizeRight<CR>
 let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_warning_symbol='!!'
 let g:ycm_error_symbol='✘✘'
-let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
+"let g:ycm_complete_in_comments = 1
+"let g:ycm_complete_in_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 0
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_add_preview_to_completeopt = 0
@@ -262,6 +263,7 @@ nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
 let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
-function! test#java#maventest#executable() abort
-  return 'mvn compiler:compile compiler:testCompile surefire:test'
-endfunction
+let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
+
+" javacomplete2
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
