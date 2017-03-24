@@ -25,12 +25,13 @@ DO_BUILD=false
 DO_COMPILE=false
 DO_CLEAN=false
 DO_TESTS=false
+PRINT_ENV=false
 TESTS=""
 
 GIT_REPO_ROOT="/dev/null"
 
 usage() {
-  echo "Usage: makesms [-b -o -i -t -c -u [test-regex]]"
+  echo "Usage: makesms [-b -o -i -e -t -c -u [test-regex]]"
   echo "  -b build project (default if no arguments are specified, overrides -o)"
   echo "  -o compile project only (overrides default)"
   echo "  -i make a developer image (implies -b)"
@@ -39,11 +40,12 @@ usage() {
   echo "      requires either -b or (at least) -o"
   echo "  -c: clean before building (-c alone overrides default; can be combined with -o or -b)."
   echo "  -p: the path in which to build."
+  echo "  -e: Print the build environment and exit."
   exit 0
 }
 
 #START
-while getopts ":boitu:chp:" arg; do
+while getopts ":boiteu:chp:" arg; do
   case $arg in
     b) DO_BUILD=true
        DO_DEFAULT=false;;
@@ -58,6 +60,7 @@ while getopts ":boitu:chp:" arg; do
     u) DO_TESTS=true
        TESTS=$OPTARG;;
     p) BUILD_PATH=$OPTARG;;
+    e) PRINT_ENV=true;;
     :) DO_TESTS=true;; #this is an abuse of :)
     h) usage;;
     \?) usage;;
@@ -106,8 +109,14 @@ fi
 
 findFirstBuildDir $BUILD_PATH
 setSmsv2Path
+loadBuildEnvironment
 
 rm $GIT_REPO_ROOT/$SMSV2_PATH/*.tgz 2> /dev/null
+
+TOOLS=`env | grep "JAVA\|ANT\|MVN\|MAVEN" | sort`
+echo -e "\e[1;33mUsing build_environment:\n$TOOLS\e[0m"
+
+if [[ $PRINT_ENV == true ]]; then exit 0; fi
 
 execAction $ACTION
 
@@ -125,7 +134,6 @@ if [[ $DO_DEV_IMAGE == true || $DO_RELEASE_TARBALL == true ]]; then
     mkdir -p target/test-classes
   fi
 
-  loadBuildEnvironment
   if [[ $DO_DEV_IMAGE == true ]]; then
       execAction $MAKE_DEV_IMAGE
   fi
