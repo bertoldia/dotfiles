@@ -1,41 +1,35 @@
 call plug#begin('~/.config/nvim/bundle')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-sensible'
-  "Plug 'Valloric/YouCompleteMe'
+  "Plug 'Valloric/YouCompleteMe', {'do': './install.py' }
   Plug 'Valloric/ListToggle'
   Plug 'scrooloose/nerdcommenter'
   Plug 'scrooloose/nerdtree'
   "Plug 'scrooloose/syntastic'
   Plug 'benekastah/neomake'
-  Plug 'majutsushi/tagbar' | Plug 'bling/vim-airline'
+  Plug 'majutsushi/tagbar'
+  Plug 'bling/vim-airline'
   Plug 'Lokaltog/vim-easymotion'
   Plug 'MattesGroeger/vim-bookmarks'
   Plug 'obvious-resize'
   Plug 'Raimondi/delimitMate'
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
-  "Plug 'janko-m/vim-test'
+  Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
-  "Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
-  "Plug 'miyakogi/vim-dartanalyzer', {'for': 'dart'}
-  "Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
-  "Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
-  "Plug 'aklt/plantuml-syntax', {'for': 'plantuml'}
-  Plug 'fatih/vim-go', {'for': 'go'}
   Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
   Plug 'Shougo/neomru.vim'
+  Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
   Plug 'zchee/deoplete-go', {'do': 'make', 'for': 'go'}
   Plug 'c0r73x/neotags.nvim'
 
+  Plug 'rust-lang/rust.vim',  {'for': 'rust'}
+  Plug 'sebastianmarkow/deoplete-rust',  {'for': 'rust'}
 
-  Plug 'molokai'
-  Plug 'monokai'
-  Plug 'darkspectrum'
-  Plug 'mkarmona/colorsbox'
+  Plug 'morhetz/gruvbox'
   Plug 'freeo/vim-kalisi'
   Plug 'blerins/flattown'
-  Plug 'nielsmadan/harlequin'
 call plug#end()
 
 " ---OPTIONS---
@@ -93,7 +87,7 @@ filetype plugin indent on
 
 " ---APPEARANCE---
 set background=dark
-colorscheme kalisi
+colorscheme gruvbox
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
@@ -114,8 +108,7 @@ endif
 
 " Automatically reload .nvimrc when it changes.
 augroup reload_vimrc " {
-  autocmd!
-  autocmd BufWritePost $MYVIMRC source $MYVIMRC
+  autocmd! BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
 
 "re-mappings
@@ -130,17 +123,21 @@ map <C-b> :w<CR> :!pdflatex %<CR>
 " copy/paste
 map <A-c> "+y
 map <A-v> "+gP
-" Move between M-windows with alt arrow
+
+" Buffer, tab and viewport movement
 nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
+nmap <silent> <C-PageUp> :tabprev<CR>
+nmap <silent> <C-PageDown> :tabnext<CR>
+nmap <C-S-PageUp> :bprev<CR>
+nmap <C-S-PageDown> :bnext<CR>
 nmap <silent> <C-S-t> :tab sball<CR>
-
 
 "map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-map <C-W> :bd <CR>
+map <C-W> :bp\| bd #<CR>
 
 " misspellings
 :iabbrev teh the
@@ -164,13 +161,6 @@ let g:tagbar_sort = 0
 noremap <S-F2> :NERDTreeToggle<CR>
 noremap <F2> :Explore<CR>
 
-"Buffer switching
-noremap <C-S-PageUp> :bprev<CR>
-noremap <C-S-PageDown> :bnext<CR>
-
-noremap <C-PageUp> :tabprev<CR>
-noremap <C-PageDown> :tabnext<CR>
-
 "Fugitive
 map <Leader>gd :Gdiff<CR>
 map <Leader>gs :Gstatus<CR>
@@ -179,14 +169,12 @@ map <Leader>gb :Gblame<CR>
 map <Leader>dp :diffput<CR>
 map <Leader>dg :diffget<CR>
 
-"Syntastic
-let g:syntastic_java_checkers=['javac', 'checkstyle']
-let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
-let g:syntastic_python_checkers=['flake8', 'python']
-let g:syntastic_warning_symbol='!!'
-let g:syntastic_error_symbol='✘✘'
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 1
+" gitgutter
+"let g:gitgutter_highlight_lines = 1
+nmap <Leader>hs <Plug>GitGutterStageHunk
+nmap <Leader>hu <Plug>GitGutterUndoHunk
+nmap <Leader>hv <Plug>GitGutterPreviewHunk
+
 nmap <silent> [l :lprev<CR>
 nmap <silent> ]l :lnext<CR>
 
@@ -201,27 +189,13 @@ nmap <silent> <C-S-Right> :ObviousResizeRight<CR>
 let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_warning_symbol='!!'
 let g:ycm_error_symbol='✘✘'
-let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
+"let g:ycm_complete_in_comments = 1
+"let g:ycm_complete_in_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 0
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_confirm_extra_conf = 0
 set completeopt-=preview
-
-"Unite
-"let g:unite_source_history_yank_enable = 1
-"let g:unite_enable_start_insert = 1
-"call unite#filters#matcher_default#use(['matcher_fuzzy'])
-"call unite#filters#sorter_default#use(['sorter_rank'])
-"call unite#custom#source('file_rec/async','sorters','sorter_rank')
-"if executable('ag')
-  "let g:unite_source_grep_command = 'ag'
-  "let g:unite_source_grep_default_opts =
-  "\ '-i --vimgrep --hidden --ignore ' .
-  "\ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-  "let g:unite_source_grep_recursive_opt = ''
-"endif
 
 "Denite
 "call denite#custom#var('grep', 'command', ['ag'])
@@ -231,11 +205,11 @@ set completeopt-=preview
   "\ '--ignore', '.git', '--ignore', '*.swp'])
 "call denite#custom#var('file_rec', 'command',
   "\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-call denite#custom#map('insert', '<Down>', 'move_to_next_line')
-call denite#custom#map('normal', '<Down>', 'move_to_next_line')
-call denite#custom#map('insert', '<Up>', 'move_to_prev_line')
-call denite#custom#map('normal', '<Up>', 'move_to_prev_line')
-call denite#custom#map('insert', '<Esc>', 'enter_mode:normal')
+call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('normal', '<Down>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<Up>', '<denite:move_to_prev_line>', 'noremap')
+call denite#custom#map('normal', '<Up>', '<denite:move_to_prev_line>', 'noremap')
+call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>', 'noremap')
 nnoremap <leader>f :Denite -buffer-name=files file_rec<cr>
 nnoremap <leader>b :Denite -buffer-name=buffer buffer<cr>
 nnoremap <leader>r :Denite -buffer-name=recent file_mru<cr>
@@ -257,9 +231,6 @@ nmap <silent> <leader>tv :TestVisit<CR>
 let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
 let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
 
-" javacomplete2
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
 " neomake
 autocmd! BufWritePost * Neomake
 let g:neomake_java_checkstyle_maker = {
@@ -271,7 +242,6 @@ let g:neomake_go_enabled_makers = ['go', 'govet']
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-"let g:deoplete#sources#go#gocode_binary = '$GOBIN/gocode'
 let g:deoplete#sources#go#gocode_binary = '/local/home/bertoa/.go/bin/gocode'
 
 " vim-go
@@ -282,6 +252,8 @@ let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_term_enabled = 1
+nmap <silent> <leader>gc :GoCoverage<CR>
+nmap <silent> <leader>gt :GoTest<CR>
 
 "neotags
 let g:neotags_enabled = 1
@@ -295,3 +267,8 @@ let g:neotags_ctags_args = [
             \ '--sort=no',
             \ '--extra=+q'
             \ ]
+
+" rust
+let g:rustfmt_autosave = 1
+let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
+let g:deoplete#sources#rust#rust_source_path='/usr/src/rust/src'
