@@ -66,7 +66,6 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='LC_COLLATE=C ls --color=auto --group-directories-first'
-
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
     alias grep='egrep --color=auto'
@@ -77,11 +76,6 @@ fi
 export INPUTRC=~/.inputrc
 export EDITOR=vim
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
 fi
@@ -91,9 +85,6 @@ if [ -f ~/.build_environment ]; then
   source ~/.build_environment
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     source /etc/bash_completion
 fi
@@ -106,5 +97,5 @@ fi
 OH_MY_GIT=".oh-my-git/prompt.sh"
 if [ -f ~/$OH_MY_GIT ]; then
   source ~/.oh-my-git/base.sh
-  source  ~/$OH_MY_GIT
+  source ~/$OH_MY_GIT
 fi

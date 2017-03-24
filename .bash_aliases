@@ -2,11 +2,8 @@ alias ll='ls -hlF'
 alias lall='ls -hlaF'
 
 alias q='lcd ../'
-alias ..='lcd ../'
-alias ...='lcd ../....//'
 alias cd='lcd'
 alias mkdir='mkdir -p'
-alias go='gnome-open'
 alias df='df -h'
 alias du='du -h'
 if [ -f /usr/bin/colormake ]; then
@@ -28,38 +25,48 @@ alias cleantex='rm *.aux *.dvi *.out *.ps *.log *.pdf'
 #alias gvim='gvim -p'
 alias rgvim='gvim --remote-tab-silent'
 alias rvim='vim --remote-tab-silent'
-alias ffind='find . -name'
+alias gnvim='$HOME/.local/bin/pynvim --font "Source Code Pro Medium" 10'
+alias gnvim-update='/usr/bin/pip install -U --user neovim-gui'
+qvim() { nvim-qt "$@" 2> /dev/null & }
+
+alias ffind='find . -iname'
 alias archive='file-roller -d'
 alias extract='file-roller -h'
 alias bin='ll ~/.bin'
 alias gti='git'
 alias gg='git grep'
+alias gitd='git-dag'
 alias trash='_trash'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
 
+alias docekr='docker'
+
 #rc edit shortcuts
-alias bashrc='vim ~/.bashrc'
-alias vimrc='gvim ~/.vimrc'
-alias aliasedit='gvim ~/.bash_aliases'
-alias gitconfig='gvim ~/.gitconfig'
-alias sshconfig='gvim ~/.ssh/config'
+alias bashrc='nvim ~/.bashrc'
+alias vimrc='vim ~/.vimrc'
+alias nvimrc='nvim ~/.config/nvim/init.vim'
+alias aliasedit='nvim ~/.bash_aliases'
+alias gitconfig='nvim ~/.gitconfig'
+alias sshconfig='nvim ~/.ssh/config'
 
-
+# vplex
 alias work='cd ${UI_DEV_DIR}/com-emc-vplex-smsv2'
 alias ui-review='_ui_review'
 alias nsfw-review='_nsfw_review'
+alias dolphin-review='_dolphin_review'
 alias regression-test='cd ${UI_REGRESSION_DIR}'
 
 alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
 
-alias pull-notes='rsync -avz -e ssh bertoa@bertoa:/local/home/bertoa/notes/ ~/notes/'
-alias push-notes='rsync -avz -e ssh ~/notes/ bertoa@bertoa:/local/home/bertoa/notes/'
-alias pull-bin='rsync -avz -e ssh bertoa@bertoa:/local/home/bertoa/.bin/ ~/tmp/bin/'
+# dolphin
+alias dlog='python $DOLPHIN_DEV_DIR/dlog/dlog.py'
 
+# manjaro
 if [ -f /usr/bin/yaourt ]; then
   alias query='yaourt -Ss'
   alias install='yaourt -S'
-  alias update='yaourt -Syua'
+  alias update='yaourt -Syyu'
+  alias updatea='yaourt -Syua --noconfirm'
   alias uninstall='yaourt -Rsc'
   alias orphaned='yaourt -Qdt'
   alias not_installed='_search_not_installed'
@@ -80,21 +87,17 @@ fi
 
 alias reload='source ~/.bashrc'
 
+#CEC VM's
+alias win10='rdesktop -x -P 10.244.117.58 -u Administrator -p Password123! -g 1280x1024'
+
 function _ui_review() {
-  cd $UI_REVIEW_DIR
-  branch_exists=`git br | grep ${1} | wc -l`
-  if [ $branch_exists == 1  ]; then
-    git co $1
-    git pull
-  else
-    git fetch
-    git co -b $1 origin/$1
-  fi
-  tig
+  cd $UI_DEV_DIR
+  git fetch
+  tig origin/$1
 }
 
 function _nsfw_review() {
-  cd $NSFW_REVIEW_DIR
+  cd $NSFW_DEV_DIR
   branch_exists=`git br | grep ${1} | wc -l`
   if [ $branch_exists == 1  ]; then
     git co $1
@@ -103,7 +106,14 @@ function _nsfw_review() {
     git fetch
     git co -b $1 origin/$1
   fi
-  tig snac/doc/cic.txt
+  last_merge=`git rev-list --merges HEAD | head -n 1`
+  tig "${last_merge}..." snac/doc/cic.txt
+}
+
+function _dolphin_review() {
+  cd $DOLPHIN_DEV_DIR/go-mongo-proxy
+  git fetch
+  tig origin/$1
 }
 
 function lcd() {
@@ -118,12 +128,13 @@ function _trash() {
 
 function _momify() {
     mogrify -resize 800x600 "$@";
-    imrename $@; 
+    imrename $@;
 }
 
 function _dropboxify() {
-    mogrify -resize 1024x768 "$@";
-    imrename $@; 
+    #mogrify -resize 1024x768 "$@";
+    mogrify -resize 1280x1024 "$@";
+    imrename $@;
 }
 
 function _search_not_installed() {
