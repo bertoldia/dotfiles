@@ -35,6 +35,8 @@ alias gitd='git-dag'
 alias trash='_trash'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
 
+alias docekr='docker'
+
 #rc edit shortcuts
 alias bashrc='nvim ~/.bashrc'
 alias vimrc='vim ~/.vimrc'
@@ -48,6 +50,9 @@ alias work='cd ${UI_DEV_DIR}/com-emc-vplex-smsv2'
 alias ui-review='_ui_review'
 alias nsfw-review='_nsfw_review'
 alias regression-test='cd ${UI_REGRESSION_DIR}'
+alias nsfw-config='rm -f work/config.* ; ./configure PLATFORM=linux BUILD_UNITTESTS=no\
+                   BUILD_TESTS=no PYTHON=/usr/bin/python2 BUILD_PYTHON_GRPC_STUBS=yes\
+                   BUILD_GO_GRPC_STUBS=yes --automatic'
 
 alias vim-cleanup='ffind '*.swp' -exec rm {} \;'
 
@@ -62,6 +67,7 @@ if [ -f /usr/bin/yaourt ]; then
   alias updatea='yaourt -Syua --noconfirm'
   alias uninstall='yaourt -Rsc'
   alias orphaned='yaourt -Qdt'
+  alias not_installed='_search_not_installed'
 elif [ -f /usr/bin/apt-get ]; then
   alias install='sudo apt-get install'
   alias uninstall='sudo apt-get remove'
@@ -79,21 +85,17 @@ fi
 
 alias reload='source ~/.bashrc'
 
+#CEC VM's
+alias win10='rdesktop -x -P 10.244.117.58 -u Administrator -p Password123! -g 1280x1024'
+
 function _ui_review() {
-  cd $UI_REVIEW_DIR
-  branch_exists=`git br | grep ${1} | wc -l`
-  if [ $branch_exists == 1  ]; then
-    git co $1
-    git pull
-  else
-    git fetch
-    git co -b $1 origin/$1
-  fi
-  tig
+  cd $UI_DEV_DIR
+  git fetch
+  tig origin/$1
 }
 
 function _nsfw_review() {
-  cd $NSFW_REVIEW_DIR
+  cd $NSFW_DEV_DIR
   branch_exists=`git br | grep ${1} | wc -l`
   if [ $branch_exists == 1  ]; then
     git co $1
@@ -114,4 +116,8 @@ function lcd() {
 
 function _trash() {
   mv "$@" ~/.local/share/Trash/files/;
+}
+
+function _search_not_installed() {
+  pacman -Ss $1 | pcregrep -vM 'installed.*\n.*'
 }
