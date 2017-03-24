@@ -1,0 +1,55 @@
+#!/bin/bash
+
+BIN_PATH=$(dirname $(readlink -fn $0))
+source $BIN_PATH/utils
+
+regen_ctags=false
+do_clean=false
+git_gc_opt=""
+
+usage() {
+  echo "Tidy your git repo:"
+  echo "Usage: tidy [-c -t -g]"
+  echo "  -t: regenerate your ctags."
+  echo "  -c: git clean the repo."
+  echo "  -g: git cg --aggressive "
+  echo "  -a: git tidy -tcg "
+  exit 0
+}
+
+while getopts "thcga" flag
+do
+  case $flag in
+    t) regen_ctags=true;;
+    c) do_clean=true;;
+    g) git_gc_opt="--aggressive";;
+    a) git_gc_opt="--aggressive"
+       do_clean==true
+       regen_ctags=true;;
+    h) usage;;
+    *) usage;;
+  esac
+done
+
+setGitRepoRoot
+cd $GIT_REPO_ROOT
+
+#git fetch
+for remote in `git remote`; do
+    git remote prune $remote
+    rm -rf .git/refs/remotes/$remote/{b,z}
+done
+
+git pack-refs --all
+git repack -ad
+git prune
+git gc $git_gc_opt
+git fsck
+
+if [[ $do_clean == true ]]; then
+  git clean -fx -e .metadata -e tags -e .project -e .classpath
+fi
+
+if [[ $regen_ctags == true ]]; then
+  ctags -R --fields=+l --extra=+q . >/dev/null 2>&1 &
+fi

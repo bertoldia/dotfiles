@@ -1,0 +1,4 @@
+#!/bin/bash
+
+NSS_SSL_CBC_RANDOM_IV=0 NSS_ALLOW_WEAK_SIGNATURE_ALG=1 pidgin &
+davmail ~/.davmail/emc.properties
