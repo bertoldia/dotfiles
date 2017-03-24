@@ -8,6 +8,7 @@ USE_NEW_TARBALL=true
 DEBUG=false
 BASE_SPAWN_CMD="VPlexcli --cli-directory cli -s 51111"
 DEBUG_SPAWN_CMD="jdb.sh --dbgport=4000"
+USE_DEV_IMAGE=false
 
 usage() {
   echo "Run the last compiled cli"
@@ -15,15 +16,17 @@ usage() {
   echo "  -d: with debug."
   echo "  -e: use the already unpacked cli tarball."
   echo "  -8: use java 8."
+  echo "  -v: use the developer image build instead of release tarball."
   exit 0
 }
 
-while getopts "ed8" flag
+while getopts "ed8v" flag
 do
   case $flag in
     e) USE_NEW_TARBALL=false;;
     d) DEBUG=true;;
     8) export SMS_V2_JAVA_HOME=$JAVA8;;
+    v) USE_DEV_IMAGE=true;;
     h) usage;;
     *) usage;;
   esac
@@ -53,6 +56,12 @@ else
   fi
 
   CURRENT_SMS=`ls | grep smsv2-`
+fi
+
+
+if [ $USE_DEV_IMAGE  == true ]; then
+    IMAGE_PATH="smsv2-D50.0.0.0"
+    CURRENT_SMS="$UI_DEV_DIR/$SMSV2_PATH/target/$IMAGE_PATH"
 fi
 
 if [ $DEBUG  == true ]; then

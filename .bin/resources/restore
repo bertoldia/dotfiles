@@ -2,7 +2,8 @@
 
 cd /opt/emc
 sudo /etc/init.d/VPlexManagementConsole stop
+sudo /usr/sbin/service-maintenance-window
 sudo rm VPlex
 sudo mv VPlex.good VPlex
+exit
 sudo /etc/init.d/VPlexManagementConsole start
-

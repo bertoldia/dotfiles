@@ -1,1 +1,1 @@
-../workspace/logAnalysisTool/loganalysistool.py
+/local/home/bertoa/workspace/vplex/old/logAnalysisTool/loganalysistool.py

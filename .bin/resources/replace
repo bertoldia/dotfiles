@@ -9,8 +9,13 @@ tar -zxvf $TARBALL
 
 cd /opt/emc
 sudo /etc/init.d/VPlexManagementConsole stop
-sudo mv VPlex VPlex.good
-sudo ln -s ~/$INSTALL/$VPLEX VPlex
+sudo /usr/sbin/service-maintenance-window
+mv VPlex VPlex.good
+mv ~/$INSTALL/$VPLEX VPlex
 mkdir -p VPlex/var/run
+chmod go+w VPlex/var/run
+chown root:groupSvc /opt/emc/VPlex
+cd /opt/emc/VPlex/
+chown -R service:users *
+exit
 sudo /etc/init.d/VPlexManagementConsole start
-

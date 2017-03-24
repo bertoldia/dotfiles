@@ -1,6 +1,6 @@
 #!/bin/bash
 
-address=`ifconfig eth0 | grep 'inet ' | awk '{print $2}' | sed 's/addr://'`
+address=`ifconfig enp0s25 | grep 'inet ' | awk '{print $2}' | sed 's/addr://'`
 
 cd ~/.bin
 echo "#!/bin/bash" > bertoa
