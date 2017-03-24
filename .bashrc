@@ -2,6 +2,16 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+if [ -f /usr/share/git/completion/git-prompt.sh ]
+then
+  source /usr/share/git/completion/git-prompt.sh
+fi
+
+if [ -f /usr/share/git/completion/git-completion.bash ]
+then
+  source /usr/share/git/completion/git-completion.bash
+fi
+
 # If not running interactively AND a login shell don't do anything. We need
 # both conditions to be albe to work correctly with tmux (which is both
 # interactive and login) and also spgear scripts (which are login but not
@@ -41,23 +51,7 @@ purple='\[\e[1;35m\]'
 cyan='\[\e[1;36m\]'
 white='\[\e[1;37m\]'
 default='\[\e[0m\]'
-
-# Prompts!!!
-#PS1="$white\u$blue@$yellow\h $purple\$(__git_ps1 ' %s ')$green\W$default: "
-PS1="$white\u$blue@$yellow\h $green\W$default: "
-
-OH_MY_GIT=".oh-my-git/prompt.sh"
-POWERLINE_SH="/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
-
-#if [ -f ~/$OH_MY_GIT ]; then
-  #source ~/.oh-my-git/base.sh
-  #source ~/$OH_MY_GIT
-#elif [ -f $POWERLINE_SH ]; then
-if [ -f $POWERLINE_SH ]; then
-  source $POWERLINE_SH
-else
-  PS1="$white\u$blue@$yellow\h $purple\$(__git_ps1 ' %s ')$green\W$default: "
-fi
+PS1="$white\u$blue@$yellow\h $purple\$(__git_ps1 ' %s ')$green\W$default: "
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -83,24 +77,25 @@ export INPUTRC=~/.inputrc
 export EDITOR=vim
 
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+    source ~/.bash_aliases
 fi
 
 # SMS build env
 if [ -f ~/.build_environment ]; then
-  . ~/.build_environment
+  source ~/.build_environment
 fi
 
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+    source /etc/bash_completion
 fi
 
-if [ -f /usr/share/git/completion/git-prompt.sh ]
-then
-  . /usr/share/git/completion/git-prompt.sh
+POWERLINE_SH="/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
+if [ -f $POWERLINE_SH ]; then
+  source $POWERLINE_SH
 fi
 
-if [ -f /usr/share/git/completion/git-completion.bash ]
-then
-  . /usr/share/git/completion/git-completion.bash
+OH_MY_GIT=".oh-my-git/prompt.sh"
+if [ -f ~/$OH_MY_GIT ]; then
+  source ~/.oh-my-git/base.sh
+  source ~/$OH_MY_GIT
 fi
