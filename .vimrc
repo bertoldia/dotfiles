@@ -3,35 +3,36 @@ filetype off
 call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-sensible'
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   Plug 'Valloric/ListToggle'
   Plug 'scrooloose/nerdcommenter'
   Plug 'scrooloose/nerdtree'
-  Plug 'scrooloose/syntastic'
-  Plug 'majutsushi/tagbar' | Plug 'bling/vim-airline'
+  Plug 'majutsushi/tagbar'
+  Plug 'bling/vim-airline'
   Plug 'Lokaltog/vim-easymotion'
-  Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
   Plug 'MattesGroeger/vim-bookmarks'
-  Plug 'obvious-resize'
+  Plug 'roman/golden-ratio'
   Plug 'Raimondi/delimitMate'
-  Plug 'Shougo/unite.vim'
-  Plug 'Shougo/unite-outline'
-  Plug 'Shougo/neomru.vim'
-  Plug 'Shougo/vimproc.vim', {'do': 'make'}
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
-"  Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
-"  Plug 'miyakogi/vim-dartanalyzer', {'for': 'dart'}
-  "Plug 'LaTeX-Box', {'for': 'tex'}
+  " Completion
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+  " Static analysis
+  Plug 'scrooloose/syntastic'
+  " Fuzzy finding
+  Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+  Plug 'junegunn/fzf.vim'
+  " Languages
   Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
   Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
-  Plug 'aklt/plantuml-syntax', {'for': 'plantuml'}
-
+  " Colors
   Plug 'morhetz/gruvbox'
   Plug 'freeo/vim-kalisi'
   Plug 'blerins/flattown'
+  Plug 'nightsense/willy'
+  " Misc
+  Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
 call plug#end()
 
 " ---OPTIONS---
@@ -87,12 +88,10 @@ set showbreak=↪
 syntax enable
 filetype plugin indent on
 
-let molokai_original=1
-
 " ---APPEARANCE---
 set background=dark
 if has("gui_running")
-  set guifont=Source\ Code\ Pro\ Medium\ 10
+  set guifont=Source\ Code\ Pro\ for\ Powerline\ Semibold\ 10
   set guioptions-=T " hide toolbar
   set guioptions-=m " hide menubar
   set guitablabel=%!expand(\"\%:t\")
@@ -133,6 +132,7 @@ map <C-b> :w<CR> :!pdflatex %<CR>
 " copy/paste
 map <A-c> "+y
 map <A-v> "+gP
+
 " Buffer, tab and viewport movement
 nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
@@ -146,7 +146,6 @@ nmap <silent> <C-S-t> :tab sball<CR>
 
 "map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-"map <C-W> :bd <CR>
 map <C-W> :bp\| bd #<CR>
 
 " misspellings
@@ -166,24 +165,10 @@ noremap <Leader>w :'<,'>StripWhitespace<CR>
 map <F8> :TagbarToggle<CR>
 let g:tagbar_left = 0
 let g:tagbar_sort = 0
-let g:tagbar_type_scala = {
-    \ 'ctagstype' : 'Scala',
-    \ 'kinds'     : [
-        \ 'p:packages:1',
-        \ 'V:values',
-        \ 'v:variables',
-        \ 'T:types',
-        \ 't:traits',
-        \ 'o:objects',
-        \ 'a:aclasses',
-        \ 'c:classes',
-        \ 'r:cclasses',
-        \ 'm:methods'
-    \ ]
-\ }
 
 "NERDTree
 noremap <S-F2> :NERDTreeToggle<CR>
+let NERDTreeMinimalUI=1
 noremap <F2> :Explore<CR>
 
 "Fugitive
@@ -194,6 +179,12 @@ map <Leader>gb :Gblame<CR>
 map <Leader>dp :diffput<CR>
 map <Leader>dg :diffget<CR>
 
+" gitgutter
+"let g:gitgutter_highlight_lines = 1
+nmap <Leader>hs <Plug>GitGutterStageHunk
+nmap <Leader>hu <Plug>GitGutterUndoHunk
+nmap <Leader>hv <Plug>GitGutterPreviewHunk
+
 "vim-notes
 let g:notes_directories = ['~/notes']
 let g:notes_suffix = '.txt'
@@ -203,7 +194,7 @@ let g:notes_conceal_url = 0
 "Syntastic
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
-let g:syntastic_python_checkers=['flake8', 'python']
+let g:syntastic_python_checkers=['flake8', 'python', 'pep8']
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 let g:syntastic_warning_symbol='!!'
@@ -212,12 +203,6 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 1
 nmap <silent> [l :lprev<CR>
 nmap <silent> ]l :lnext<CR>
-
-"obvious-resize
-nmap <silent> <C-S-Up> :ObviousResizeUp<CR>
-nmap <silent> <C-S-Down> :ObviousResizeDown<CR>
-nmap <silent> <C-S-Left> :ObviousResizeLeft<CR>
-nmap <silent> <C-S-Right> :ObviousResizeRight<CR>
 
 "YCM
 "let g:ycm_min_num_of_chars_for_completion = 3
@@ -232,27 +217,14 @@ let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_confirm_extra_conf = 0
 set completeopt-=preview
 
-"Unite
-let g:unite_source_history_yank_enable = 1
-let g:unite_enable_start_insert = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-call unite#custom#source('file_rec/async','sorters','sorter_rank')
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts =
-  \ '-i --vimgrep --hidden --ignore ' .
-  \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-  let g:unite_source_grep_recursive_opt = ''
-endif
-nnoremap <leader>f :Unite -no-split -buffer-name=files file_rec/async<cr>
-nnoremap <leader>y :Unite -no-split -buffer-name=yank history/yank<cr>
-nnoremap <leader>b :Unite -no-split -buffer-name=buffer buffer<cr>
-nnoremap <leader>r :Unite -no-split -buffer-name=recent file_mru<cr>
-nnoremap <leader>o :Unite -no-split -buffer-name=outline outline<cr>
-nnoremap <leader>g :UniteWithCursorWord -no-split -buffer-name=grep grep:.<cr>
+" FZF
+nnoremap <Leader>f :Files!<CR>
+nnoremap <Leader>b :Buffers!<CR>
+nnoremap <Leader>r :History!<CR>
+nnoremap <Leader>g :Ag! <C-R><C-W><CR>
+nnoremap <Leader>o :BTags!<CR>
 
-"IndentLines
+" IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
 
 " vim-test
@@ -261,8 +233,11 @@ nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
-let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
+let g:test#java#maventest#file_pattern = '^.*\([Tt]est\|Suite\).*\.java$'
 let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
 
 " javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" golden-ratio
+let g:golden_ratio_exclude_nonmodifiable = 1
