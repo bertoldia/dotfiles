@@ -24,6 +24,7 @@ alias rvim='vim --remote-tab-silent'
 alias gnvim='$HOME/.local/bin/pynvim --font "Source Code Pro Medium" 10'
 alias gnvim-update='/usr/bin/pip install -U --user neovim-gui'
 qvim() { nvim-qt "$@" 2> /dev/null & }
+gonvim() { /usr/bin/gonvim "$@" &> /dev/null & }
 
 alias ffind='find . -iname'
 alias archive='file-roller -d'
@@ -87,6 +88,7 @@ alias reload='source ~/.bashrc'
 
 #CEC VM's
 alias win10='rdesktop -x -P 10.244.117.58 -u Administrator -p Password123! -g 1280x1024'
+alias win7='rdesktop -x -P 10.244.117.58 -u Administrator -p Password123! -g 1280x1024'
 
 function _ui_review() {
   cd $UI_DEV_DIR
