@@ -3,7 +3,7 @@
 BIN_PATH=$(dirname $(readlink -fn $0))
 source $BIN_PATH/utils
 
-VATS_HOME="${HOME}/workspace/vats"
+VATS_HOME="${HOME}/workspace/vplex/vats"
 VATS_CONFIG="${HOME}/.vats/linux-tower.yaml"
 #VATS_CONFIG="${HOME}/.vats/cavalier.yaml"
 #VATS_CONFIG="${HOME}/.vats/pothole.yaml"
@@ -47,7 +47,7 @@ else
   VATS_CONFIG="${HOME}/.vats/$VATS_CONFIG"
 fi
 
-cd $UI_DEV_DIR/vats
+cd $UI_DEV_DIR/vatstests
 
 #if [ ! -e $TEST ]; then
   #echo "Can\'t find test file $TEST"

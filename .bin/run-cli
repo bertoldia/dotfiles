@@ -71,6 +71,6 @@ else
   SPAWN_CMD="${CURRENT_SMS}/${BASE_SPAWN_CMD}"
 fi
 
-cleanup
+#cleanup
 echo ${SPAWN_CMD}
 ${SPAWN_CMD}
