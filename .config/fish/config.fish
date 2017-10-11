@@ -1,9 +1,9 @@
 # Path to your oh-my-fish.
 #set fish_path $HOME/.oh-my-fish
 
-set SPGEAR_TOOLS_EXTRA /spgear/tools/bin /spgear/spgear/bin
-set RUNNER_PATH /home/runner/bin
-set PATH $HOME/.bin $PATH $RUNNER_PATH $SPGEAR_TOOLS_EXTRA
+#set SPGEAR_TOOLS_EXTRA /spgear/tools/bin /spgear/spgear/bin
+#set RUNNER_PATH /home/runner/bin
+#set PATH $HOME/.bin $PATH $RUNNER_PATH $SPGEAR_TOOLS_EXTRA
 
 # Theme
 set fish_theme bobthefish
@@ -32,4 +32,4 @@ set fish_plugins archlinux/pacman jump
 #set fish_custom $HOME/dotfiles/oh-my-fish
 
 # Load oh-my-fish configuration.
-. $fish_path/oh-my-fish.fish
+#source $fish_path/oh-my-fish.fish
