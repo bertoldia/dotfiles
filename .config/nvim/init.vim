@@ -1,35 +1,40 @@
 call plug#begin('~/.config/nvim/bundle')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-sensible'
-  "Plug 'Valloric/YouCompleteMe', {'do': './install.py' }
   Plug 'Valloric/ListToggle'
   Plug 'scrooloose/nerdcommenter'
   Plug 'scrooloose/nerdtree'
-  "Plug 'scrooloose/syntastic'
-  Plug 'benekastah/neomake'
   Plug 'majutsushi/tagbar'
   Plug 'bling/vim-airline'
   Plug 'Lokaltog/vim-easymotion'
   Plug 'MattesGroeger/vim-bookmarks'
-  Plug 'obvious-resize'
+  Plug 'roman/golden-ratio'
   Plug 'Raimondi/delimitMate'
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'janko-m/vim-test'
   Plug 'Yggdroot/indentLine'
-  Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
-  Plug 'Shougo/neomru.vim'
-  Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
+  " Completion
   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+  " Static analysis
+  Plug 'benekastah/neomake'
+  " Fuzzy finding
+  Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+  Plug 'junegunn/fzf.vim'
+  " Languages
+  Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
   Plug 'zchee/deoplete-go', {'do': 'make', 'for': 'go'}
-  Plug 'c0r73x/neotags.nvim'
-
   Plug 'rust-lang/rust.vim',  {'for': 'rust'}
   Plug 'sebastianmarkow/deoplete-rust',  {'for': 'rust'}
-
+  Plug 'udalov/kotlin-vim'
+  " Colors
   Plug 'morhetz/gruvbox'
   Plug 'freeo/vim-kalisi'
   Plug 'blerins/flattown'
+  Plug 'nightsense/willy'
+  " Misc
+  "Plug 'c0r73x/neotags.nvim'
+  Plug 'equalsraf/neovim-gui-shim'
 call plug#end()
 
 " ---OPTIONS---
@@ -74,7 +79,7 @@ set wrap linebreak
 let &listchars = "tab:\u00b7 ,trail:\u00b7"
 set list
 set title
-set completeopt=menuone,longest,preview
+set completeopt=longest,menuone,preview
 
 "Change cursor shape and colour in insert mode
 set guicursor+=n-v-c:blinkon0
@@ -159,6 +164,7 @@ let g:tagbar_sort = 0
 
 "NERDTree
 noremap <S-F2> :NERDTreeToggle<CR>
+let NERDTreeMinimalUI=1
 noremap <F2> :Explore<CR>
 
 "Fugitive
@@ -178,47 +184,14 @@ nmap <Leader>hv <Plug>GitGutterPreviewHunk
 nmap <silent> [l :lprev<CR>
 nmap <silent> ]l :lnext<CR>
 
-"obvious-resize
-nmap <silent> <C-S-Up> :ObviousResizeUp<CR>
-nmap <silent> <C-S-Down> :ObviousResizeDown<CR>
-nmap <silent> <C-S-Left> :ObviousResizeLeft<CR>
-nmap <silent> <C-S-Right> :ObviousResizeRight<CR>
+" FZF
+nnoremap <Leader>f :Files!<CR>
+nnoremap <Leader>b :Buffers!<CR>
+nnoremap <Leader>r :History!<CR>
+nnoremap <Leader>g :Ag! <C-R><C-W><CR>
+nnoremap <Leader>o :BTags!<CR>
 
-"YCM
-"let g:ycm_min_num_of_chars_for_completion = 3
-let g:ycm_min_num_identifier_candidate_chars = 3
-let g:ycm_warning_symbol='!!'
-let g:ycm_error_symbol='✘✘'
-"let g:ycm_complete_in_comments = 1
-"let g:ycm_complete_in_strings = 1
-let g:ycm_collect_identifiers_from_tags_files = 0
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_confirm_extra_conf = 0
-set completeopt-=preview
-
-"Denite
-"call denite#custom#var('grep', 'command', ['ag'])
-"call denite#custom#var('grep', 'recursive_opts', [])
-"call denite#custom#var('grep', 'default_opts',
-  "\ ['-i', '--vimgrep', '--hidden',
-  "\ '--ignore', '.git', '--ignore', '*.swp'])
-"call denite#custom#var('file_rec', 'command',
-  "\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('normal', '<Down>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<Up>', '<denite:move_to_prev_line>', 'noremap')
-call denite#custom#map('normal', '<Up>', '<denite:move_to_prev_line>', 'noremap')
-call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>', 'noremap')
-nnoremap <leader>f :Denite -buffer-name=files file_rec<cr>
-nnoremap <leader>b :Denite -buffer-name=buffer buffer<cr>
-nnoremap <leader>r :Denite -buffer-name=recent file_mru<cr>
-nnoremap <leader>o :Denite -buffer-name=outline outline<cr>
-nnoremap <leader>g :DeniteCursorWord -buffer-name=grep grep:.<cr><cr>
-
-
-
-"IndentLines
+" IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
 
 " vim-test
@@ -239,6 +212,7 @@ let g:neomake_java_checkstyle_maker = {
     \ }
 "let g:neomake_java_enabled_makers = ['javac', 'checkstyle']
 let g:neomake_go_enabled_makers = ['go', 'govet']
+let g:neomake_python_enabled_makers = ['flake8', 'python', 'pep8']
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -272,3 +246,6 @@ let g:neotags_ctags_args = [
 let g:rustfmt_autosave = 1
 let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
 let g:deoplete#sources#rust#rust_source_path='/usr/src/rust/src'
+
+" golden-ratio
+let g:golden_ratio_exclude_nonmodifiable=1

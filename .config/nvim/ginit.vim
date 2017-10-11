@@ -1,1 +1,2 @@
-Guifont Source Code Pro:b:h10
+Guifont Source Code Pro for Powerline::h10
+GuiLinespace 0
