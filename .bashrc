@@ -13,12 +13,19 @@ then
 fi
 
 # If not running interactively AND a login shell don't do anything. We need
-# both conditions to be albe to work correctly with tmux (which is both
+# both conditions to be able to work correctly with tmux (which is both
 # interactive and login) and also spgear scripts (which are login but not
 # interactive).
 if [[ -z $PS1 ]] && shopt -q login_shell; then return
 fi
 #[ -z "$PS1" ] && return
+
+
+if [[ -n $SSH_CONNECTION ]] ; then
+    echo "---tmux sessions"
+    tmux list-sessions
+fi
+
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -75,6 +82,7 @@ fi
 
 export INPUTRC=~/.inputrc
 export EDITOR=vim
+export PAGER=most
 
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
@@ -89,13 +97,13 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     source /etc/bash_completion
 fi
 
-POWERLINE_SH="/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
+POWERLINE_SH="/usr/lib/python3.6/site-packages/powerline/bindings/bash/powerline.sh"
+OH_MY_GIT="$HOME/.oh-my-git/prompt.sh"
 if [ -f $POWERLINE_SH ]; then
   source $POWERLINE_SH
+elif [ -f $OH_MY_GIT ]; then
+  source ~/.oh-my-git/base.sh
+  source $OH_MY_GIT
 fi
 
-OH_MY_GIT=".oh-my-git/prompt.sh"
-if [ -f ~/$OH_MY_GIT ]; then
-  source ~/.oh-my-git/base.sh
-  source ~/$OH_MY_GIT
-fi
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
