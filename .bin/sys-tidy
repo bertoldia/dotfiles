@@ -2,5 +2,5 @@
 
 sudo pacman -Scc
 sudo pacman-optimize
-sudo pacman-mirrors -g &
+sudo pacman-mirrors -f 0 &
 sudo fstrim -av
