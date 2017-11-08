@@ -1,20 +1,21 @@
-alias ll='ls -hlF'
-alias lall='ls -hlaF'
+which exa &> /dev/null && \
+  alias ll="exa -bgl --color=automatic --group-directories-first" || \
+  alias ll='ls -hlF'
+
+which exa &> /dev/null && \
+  alias la="exa -abgl --color=automatic --group-directories-first" || \
+  alias lall='ls -hlaF'
 
 alias q='lcd ../'
 alias cd='lcd'
 alias mkdir='mkdir -p'
 alias df='df -h'
 alias du='du -h'
-if [ -f /usr/bin/colormake ]; then
-    alias make='colormake -j4'
-else
-    alias make='make -j4'
-fi
 
-if [ -f /usr/bin/htop ]; then
-  alias top='htop -d 12'
-fi
+which colormake &> /dev/null && alias make='colormake -j10' || alias make='make -j10'
+which htop &> /dev/null && top='htop -d 12'
+which glances &> /dev/null && alias top='glances'
+
 alias locate='locate -e'
 alias car='cat'
 #alias vim='vim -p'
@@ -74,20 +75,14 @@ elif [ -f /usr/bin/apt-get ]; then
   alias uninstall='sudo apt-get remove'
 fi
 
-if [ -f /usr/bin/pacman-color ]; then
-    alias pacman='pacman-color'
-fi
-
-if [ -f /usr/bin/colordiff ]; then
-    alias diff='colordiff -cp'
-else
-    alias diff='diff -cp'
-fi
+which pacman-color &> /dev/null && alias pacman='pacman-color'
+which colordiff &> /dev/null && alias diff='colordiff -yp' || alias diff='diff -yp'
 
 alias reload='source ~/.bashrc'
 
+
 #CEC VM's
-alias win10='rdesktop -x -P 10.244.117.58 -u Administrator -p Password123! -g 1280x1024'
+alias win10='rdesktop -x -P 10.207.84.118 -u Administrator -p Password123! -g 1280x1024'
 alias win7='rdesktop -x -P 10.244.117.58 -u Administrator -p Password123! -g 1280x1024'
 
 function _ui_review() {

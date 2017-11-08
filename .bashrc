@@ -2,16 +2,6 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-if [ -f /usr/share/git/completion/git-prompt.sh ]
-then
-  source /usr/share/git/completion/git-prompt.sh
-fi
-
-if [ -f /usr/share/git/completion/git-completion.bash ]
-then
-  source /usr/share/git/completion/git-completion.bash
-fi
-
 # If not running interactively AND a login shell don't do anything. We need
 # both conditions to be able to work correctly with tmux (which is both
 # interactive and login) and also spgear scripts (which are login but not
@@ -20,12 +10,7 @@ if [[ -z $PS1 ]] && shopt -q login_shell; then return
 fi
 #[ -z "$PS1" ] && return
 
-
-if [[ -n $SSH_CONNECTION ]] ; then
-    echo "---tmux sessions"
-    tmux list-sessions
-fi
-
+[[ -n $SSH_CONNECTION ]] && [[ $(pgrep -c tmux) -gt 0 ]] && tmux ls
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -84,18 +69,14 @@ export INPUTRC=~/.inputrc
 export EDITOR=vim
 export PAGER=most
 
-if [ -f ~/.bash_aliases ]; then
-    source ~/.bash_aliases
-fi
-
-# SMS build env
-if [ -f ~/.build_environment ]; then
-  source ~/.build_environment
-fi
-
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    source /etc/bash_completion
-fi
+[ -f ~/.bash_aliases ] && source ~/.bash_aliases
+[ -f ~/.build_environment ] && source ~/.build_environment
+bash_completion=/usr/share/bash-completion/bash_completion
+[ -f $bash_completion ] && ! shopt -oq posix && source $bash_completion
+git_prompt=/usr/share/git/git-prompt.sh
+[ -f $git_prompt ] && source $git_prompt
+git_completion=/usr/share/git/completion/git-completion.bash
+[ -f $git_completion ] && source $git_completion
 
 POWERLINE_SH="/usr/lib/python3.6/site-packages/powerline/bindings/bash/powerline.sh"
 OH_MY_GIT="$HOME/.oh-my-git/prompt.sh"
@@ -106,4 +87,7 @@ elif [ -f $OH_MY_GIT ]; then
   source $OH_MY_GIT
 fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+FZF=/usr/share/fzf/key-bindings.bash
+[ -f $FZF ] && source $FZF
+
+
