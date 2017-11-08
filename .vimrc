@@ -21,7 +21,6 @@ call plug#begin('~/.vim/bundle')
   " Static analysis
   Plug 'scrooloose/syntastic'
   " Fuzzy finding
-  Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
   Plug 'junegunn/fzf.vim'
   " Languages
   Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
