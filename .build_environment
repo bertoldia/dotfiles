@@ -35,4 +35,6 @@ export GOBIN="$GOPATH/bin"
 #export PATH="$HOME/.bin:$PATH:$RUNNER_PATH:$SPGEAR_TOOLS_EXTRA:$GOBIN"
 export PATH="$HOME/.bin:$HOME/.local/bin:$GOBIN:$PATH:$RUNNER_PATH"
 
+export CYC_ROOT=$HOME/workspace/cyclone
+
 return 0
