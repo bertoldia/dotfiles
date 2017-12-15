@@ -1,0 +1,10 @@
+colorscheme gruvbox
+set global indentwidth 4
+map global normal <c-n> :bn<ret>
+map global normal <c-p> :bp<ret>
+hook global WinCreate .* %{addhl number_lines}
+#map global insert <tab> '<a-;><gt>'
+map global insert <backtab> '<a-;><lt>'
+hook global InsertChar \t %{
+  exec -draft -itersel h@
+}
