@@ -2,30 +2,16 @@
 
 ################################################################################
 usage() {
-  echo "Usage: repos <ls|any git command>"
-  echo "  ls: list git repos only."
+  echo "Usage: repos [any git command]"
   exit
 }
 ################################################################################
 
 if [ $# == 0 ]; then
-  usage
+    action="dirname {}"
+else
+    action="cd {}/../; git $1"
 fi
 
-action=$1
-
-for dir in `ls -a`; do
-  if [ -e ${dir}/.git ]; then
-    if [[ $action == 'ls' ]]; then
-      echo $dir
-    elif [[ $action != 'not' ]]; then
-      cd $dir
-      echo "executing 'git $action' in $dir"
-      git $action
-      cd ../
-    fi
-  elif [[ $action == 'not' ]]; then
-    echo $dir
-  fi
-done
-
+repos=$(find . -maxdepth 3 -type d -name .git) 
+parallel $action ::: $repos 2> /dev/null

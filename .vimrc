@@ -25,6 +25,7 @@ call plug#begin('~/.vim/bundle')
   " Languages
   Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
   Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+  Plug 'udalov/kotlin-vim'
   " Colors
   Plug 'morhetz/gruvbox'
   Plug 'freeo/vim-kalisi'

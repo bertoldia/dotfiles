@@ -2,11 +2,12 @@
 set fish_theme bobthefish
 set theme_color_scheme gruvbox
 
+set PATH $PATH $HOME/.bin
+
 # Plugins
 #set fish_plugins vi-mode
 #set fish_plugins autojump vi-mode
 #set fish_plugins vi-mode fzf-autojump fzf
-
 
 # Aliases
 alias ls='ls --color=auto --group-directories-first'
@@ -17,14 +18,19 @@ alias qq="cd ../../"
 alias fishrc="gvim $HOME/.config/fish/config.fish"
 alias j="jump"
 alias gg="git grep"
-alias vimrc='gvim $HOME/.vimrc'
+alias vimrc='vim $HOME/.vimrc'
+alias nvimrc='nvim $HOME/.config/nvim/init.vim'
 alias ffind='find . -name'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
 alias ll="exa -bgl --color=automatic --group-directories-first"
 alias la="exa -abgl --color=automatic --group-directories-first"
 
 function qvim
-    nvim-qt $argv 2> /dev/null &
+    nvim-qt $argv >&2 /dev/null &
+end
+
+function gnvim
+    gonvim $argv > /dev/null ^&1 &
 end
 
 if test -e /usr/bin/yaourt

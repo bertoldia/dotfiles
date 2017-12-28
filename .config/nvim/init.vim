@@ -19,7 +19,8 @@ call plug#begin('~/.config/nvim/bundle')
   " Static analysis
   Plug 'benekastah/neomake'
   " Fuzzy finding
-  Plug '/usr/bin/fzf'
+  "Comment this out when updating
+  Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
   " Languages
   Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
@@ -35,7 +36,7 @@ call plug#begin('~/.config/nvim/bundle')
   " Misc
   "Plug 'c0r73x/neotags.nvim'
   Plug 'equalsraf/neovim-gui-shim'
-  Plug 'euclio/vim-markdown-composer', {'do': 'cargo build --release'}
+  "Plug 'euclio/vim-markdown-composer', {'do': 'cargo build --release'}
 call plug#end()
 
 " ---OPTIONS---

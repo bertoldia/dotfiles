@@ -1,0 +1,9 @@
+#!/bin/bash
+
+git filter-branch -f --env-filter '
+    if [[ "$GIT_AUTHOR_EMAIL" = "bertoldia@gmail.com" || "$GIT_COMMITTER_EMAIL" = "bertoldia@gmail.com" ]];
+    then
+        export GIT_COMMITTER_EMAIL="axel.bertoldi@emc.com";
+        export GIT_AUTHOR_EMAIL="axel.bertoldi@emc.com";
+    fi' \
+`git upstream`..HEAD
