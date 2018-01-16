@@ -1,35 +1,53 @@
-# Path to your oh-my-fish.
-set fish_path $HOME/.oh-my-fish
-
-set SPGEAR_TOOLS_EXTRA /spgear/tools/bin /spgear/spgear/bin
-set RUNNER_PATH /home/runner/bin
-set PATH $HOME/.bin $PATH $RUNNER_PATH $SPGEAR_TOOLS_EXTRA
-
 # Theme
-set fish_theme bobthefish
-set -g __fish_git_prompt_show_informative_status 1
-set -g __fish_git_prompt_color_branch magenta bold
+set theme_color_scheme gruvbox
+set PATH $HOME/.bin $PATH
+set GOPATH "/home/axel/.go"
+set GOBIN "/home/axel/.go/bin"
+
+
+# Typos
+alias gti='git'
+alias docekr='docker'
+alias car='cat'
 
 # Aliases
 alias ls='ls --color=auto --group-directories-first'
-alias ll='ls -lhF'
-alias lall='ls -lhaF'
+alias ll='exa --group-directories-first -lbg'
+alias la='exa --group-directories-first -bga'
+alias lal='exa --group-directories-first -lbga'
+
 alias q="cd ../"
 alias qq="cd ../../"
 alias fishrc="gvim $HOME/.config/fish/config.fish"
 alias j="jump"
 alias gg="git grep"
-alias vimrc='gvim $HOME/.vimrc'
-alias ffind='find . -name'
+alias vimrc='vim $HOME/.vimrc'
+alias nvimrc='nvim $HOME/.config/nvim/init.vim'
+alias ffind='find . -iname'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-fish/plugins/*)
-# Custom plugins may be added to ~/.oh-my-fish/custom/plugins/
-# Example format: set fish_plugins autojump bundler
-set fish_plugins archlinux/pacman jump
+function qvim
+    nvim-qt $argv 2> /dev/null &
+end
 
-# Path to your custom folder (default path is $FISH/custom)
-#set fish_custom $HOME/dotfiles/oh-my-fish
+function gnvim
+    #gonvim $argv > /dev/null ^&1 &
+    nvim-gtk $argv > /dev/null ^&1 &
+end
 
-# Load oh-my-fish configuration.
-. $fish_path/oh-my-fish.fish
+# manjaro
+if test -e /usr/bin/yaourt
+  alias query='yaourt -Ss'
+  alias install='yaourt -S'
+  alias update='yaourt -Syyu'
+  alias updatea='yaourt -Syua --noconfirm'
+  alias uninstall='yaourt -Rsc'
+  alias orphaned='yaourt -Qdt'
+  alias not_installed='_search_not_installed'
+end
+
+# FZF
+set FZF_DEFAULT_OPTS "--no-height --no-reverse"
+set FZF_CTRL_T_OPTS "--preview 'highlight -O ansi -l {} 2> /dev/null; or cat {} 2> /dev/null; or tree -C {} 2> /dev/null | head -200'"
+set FZF_CTRL_R_OPTS "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+set FZF_ALT_C_OPTS "--preview 'tree -C {} | head -200'"
