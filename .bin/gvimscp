@@ -1,3 +1,0 @@
-#!/bin/bash
-
-gvim scp://bertoa@128.222.209.211//export/local1/nobackup/bertoa/$1

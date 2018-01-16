@@ -1,7 +1,0 @@
-#!/bin/bash
-
-. ~/.build_environment
-CIC_PATH=$NSFW_DEV_DIR/snac/doc/cic.txt
-
-git co a/D40
-gvim +'colorscheme desert' $CIC_PATH
