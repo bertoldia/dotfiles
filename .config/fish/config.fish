@@ -48,6 +48,6 @@ end
 
 # FZF
 set FZF_DEFAULT_OPTS "--no-height --no-reverse"
-set FZF_CTRL_T_OPTS "--preview 'highlight -O ansi -l {} 2> /dev/null; or cat {} 2> /dev/null; or tree -C {} 2> /dev/null | head -200'"
+set FZF_CTRL_T_OPTS "--preview 'highlight -O ansi -l {} 2> /dev/null; or cat {} 2> /dev/null; or exa -TL 2 {} 2> /dev/null | head -200'"
 set FZF_CTRL_R_OPTS "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-set FZF_ALT_C_OPTS "--preview 'tree -C {} | head -200'"
+set FZF_ALT_C_OPTS "--preview 'exa -TL 2 {} | head -200'"

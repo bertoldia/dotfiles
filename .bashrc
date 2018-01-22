@@ -99,3 +99,5 @@ if [ -f ~/$OH_MY_GIT ]; then
   source ~/.oh-my-git/base.sh
   source ~/$OH_MY_GIT
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
