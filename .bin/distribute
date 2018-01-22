@@ -1,8 +1,0 @@
-#!/bin/bash
-
-tarball=$1
-shift
-
-for sys in $@; do
-  scp -C $tarball $sys://home/service/bertoa/$tarball ;
-done
