@@ -4,4 +4,4 @@ sudo pacman -Scc
 sudo pacman-optimize
 #sudo pacmarge -s -n
 sudo fstrim -av
-sudo pacman-mirrors -g &
+sudo pacman-mirrors -f 0 &
