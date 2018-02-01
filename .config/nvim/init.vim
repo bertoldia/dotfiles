@@ -26,7 +26,10 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'zchee/deoplete-go', {'do': 'make', 'for': 'go'}
   Plug 'rust-lang/rust.vim', {'for': 'rust'}
   Plug 'sebastianmarkow/deoplete-rust', {'for': 'rust'}
-  Plug 'udalov/kotlin-vim'
+  Plug 'udalov/kotlin-vim', {'for': 'kotlin'}
+
+  Plug 'benjie/neomake-local-eslint.vim', {'for': 'javascript'}
+  Plug 'pangloss/vim-javascript', {'for': 'javascript'}
   " Colors
   Plug 'morhetz/gruvbox'
   Plug 'ajmwagar/vim-deus'
@@ -219,7 +222,8 @@ let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
 let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
 
 " neomake
-autocmd! BufWritePost * Neomake
+"autocmd! BufWritePost * Neomake
+call neomake#configure#automake('w')
 let g:neomake_java_checkstyle_maker = {
     \ 'args': ['-c', '/opt/checkstyle/sun_checks.xml'],
     \ 'errorformat': '%f:%l:\ %m,%f:%l:%v:\ %m,%-G%.%#',
@@ -227,10 +231,11 @@ let g:neomake_java_checkstyle_maker = {
 "let g:neomake_java_enabled_makers = ['javac', 'checkstyle']
 let g:neomake_go_enabled_makers = ['go', 'govet']
 let g:neomake_python_enabled_makers = ['flake8', 'python', 'pep8']
+let g:neomake_javascript_enabled_makers = ['eslint']
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go#gocode_binary = '/local/home/bertoa/.go/bin/gocode'
+let g:deoplete#sources#go#gocode_binary = '$HOME/.go/bin/gocode'
 
 " vim-go
 let g:go_oracle_scope="gitlab.spgear.lab.emc.com/dolphin/go-mongo-proxy"
