@@ -197,7 +197,6 @@ map <Leader>dg :diffget<CR>
 nmap <Leader>hs <Plug>GitGutterStageHunk
 nmap <Leader>hu <Plug>GitGutterUndoHunk
 nmap <Leader>hv <Plug>GitGutterPreviewHunk
-
 nmap <silent> [l :lprev<CR>
 nmap <silent> ]l :lnext<CR>
 
@@ -235,10 +234,11 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go#gocode_binary = '$HOME/.go/bin/gocode'
+inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
 " vim-go
-let g:go_oracle_scope="gitlab.spgear.lab.emc.com/dolphin/go-mongo-proxy"
+let g:deoplete#sources#go#gocode_binary = '$HOME/.go/bin/gocode'
 " open test/implementation file in a vsplit instead of the same window
 let g:go_alternate_mode = "vsplit"
 let g:go_fmt_command = "goimports"
