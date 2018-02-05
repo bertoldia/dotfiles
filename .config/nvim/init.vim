@@ -27,9 +27,11 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'rust-lang/rust.vim', {'for': 'rust'}
   Plug 'sebastianmarkow/deoplete-rust', {'for': 'rust'}
   Plug 'udalov/kotlin-vim', {'for': 'kotlin'}
-
+  "Javascript
   Plug 'benjie/neomake-local-eslint.vim', {'for': 'javascript'}
+  Plug 'mitermayer/vim-prettier', {'for': 'javascript'}
   Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+  "Plug 'marijnh/tern_for_vim', {'for': 'javascript'}
   " Colors
   Plug 'morhetz/gruvbox'
   Plug 'ajmwagar/vim-deus'
