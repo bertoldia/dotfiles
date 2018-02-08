@@ -2,23 +2,14 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-if [ -f /usr/share/git/completion/git-prompt.sh ]
-then
-  source /usr/share/git/completion/git-prompt.sh
-fi
-
-if [ -f /usr/share/git/completion/git-completion.bash ]
-then
-  source /usr/share/git/completion/git-completion.bash
-fi
-
 # If not running interactively AND a login shell don't do anything. We need
-# both conditions to be albe to work correctly with tmux (which is both
+# both conditions to be able to work correctly with tmux (which is both
 # interactive and login) and also spgear scripts (which are login but not
 # interactive).
-if [[ -z $PS1 ]] && shopt -q login_shell; then return
-fi
-#[ -z "$PS1" ] && return
+#[ -z $PS1 ] && shopt -q login_shell && return
+[[ $- != *i* ]] && return
+
+[[ $DISPLAY ]] && shopt -s checkwinsize
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -37,10 +28,6 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
 
 black='\[\e[1;30m\]'
 red='\[\e[1;31m\]'
@@ -55,10 +42,12 @@ PS1="$white\u$blue@$yellow\h $purple\$(__git_ps1 ' %s ')$green\W$default: "
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+   xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
+    PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
+
     ;;
-*)
+  screen*)
+    PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033_%s@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
     ;;
 esac
 
@@ -75,27 +64,27 @@ fi
 
 export INPUTRC=~/.inputrc
 export EDITOR=vim
+export PAGER=most
 
-if [ -f ~/.bash_aliases ]; then
-    source ~/.bash_aliases
-fi
+git_prompt=/usr/share/git/completion/git-prompt.sh
+[ -f $git_prompt ] && source $git_prompt
 
-# SMS build env
-if [ -f ~/.build_environment ]; then
-  source ~/.build_environment
-fi
+git_completion=/usr/share/git/completion/git-completion.bash
+[ -f $git_completion ] && source $git_completion
 
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    source /etc/bash_completion
-fi
+[ -f ~/.bash_aliases ] && source ~/.bash_aliases
+[ -f ~/.build_environment ] && source ~/.build_environment
+[ -f /etc/bash_completion ] && ! shopt -oq posix && source /etc/bash_completion
 
-POWERLINE_SH="/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
+POWERLINE_SH="/usr/lib/python3.6/site-packages/powerline/bindings/bash/powerline.sh"
 if [ -f $POWERLINE_SH ]; then
+  powerline-daemon -q
+  POWERLINE_BASH_CONTINUATION=1
+  POWERLINE_BASH_SELECT=1
   source $POWERLINE_SH
 fi
 
-OH_MY_GIT=".oh-my-git/prompt.sh"
-if [ -f ~/$OH_MY_GIT ]; then
-  source ~/.oh-my-git/base.sh
-  source ~/$OH_MY_GIT
-fi
+[ -f ~/.oh-my-git/base.sh ] && source ~/.oh-my-git/base.sh
+[ -f ~/.oh-my-git/prompt.sh ] && source ~/.oh-my-git/prompt.sh
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
