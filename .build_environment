@@ -16,9 +16,11 @@ export RUNNER_TMP="$VPLEX_ROOT/runner-tmp"
 
 export VATS_HOME="$VPLEX_ROOT/vats"
 
-export SMS_V2_JAVA_HOME="/usr/lib/jvm/java-8-openjdk"
-export SMS_V2_MAVEN_HOME="/opt/mvn"
-export SMS_V2_ANT_HOME="/usr/share/apache-ant"
+export DIST_PYTHON='/usr/bin/python2'
+
+export SMS_V2_JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
+export SMS_V2_MAVEN_HOME='/opt/maven'
+export SMS_V2_ANT_HOME='/usr/share/apache-ant'
 
 
 #dolphin

@@ -42,9 +42,9 @@ loadBuildEnvironment() {
 
   if [ -z $MAVEN_HOME ]; then
     if [ -f $SEARCH/$BUILD_ENVIRONMENT ]; then
-      . $SEARCH/$BUILD_ENVIRONMENT
+      source $SEARCH/$BUILD_ENVIRONMENT
     elif [ -f $SEARCH/../$BUILD_ENVIRONMENT ]; then
-      . $SEARCH/../$BUILD_ENVIRONMENT
+      source $SEARCH/../$BUILD_ENVIRONMENT
     else
       echo "Could not find $BUILD_ENVIRONMENT. Bailing!!!"
       exit 1
