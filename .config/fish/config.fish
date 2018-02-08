@@ -35,7 +35,8 @@ function qvim
 end
 
 function gnvim
-    #gonvim $argv > /dev/null ^&1 &
+  env NVIM_GTK_PREFER_DARK_THEME=1 \
+    env NVIM_GTK_NO_HEADERBAR=1 \
     nvim-gtk $argv > /dev/null ^&1 &
 end
 
@@ -48,7 +49,7 @@ if test -e /usr/bin/yaourt
   alias uninstall='yaourt -Rsc'
   alias orphaned='yaourt -Qdt'
   alias search_installed='yaourt -Qs'
-  alias info='yaourt -Qi'
+  alias pac-info='yaourt -Si'
 end
 
 # FZF
