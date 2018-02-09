@@ -31,12 +31,14 @@ call plug#begin('~/.config/nvim/bundle')
   "Javascript
   Plug 'benjie/neomake-local-eslint.vim', {'for': 'javascript'}
   Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-  Plug 'mxw/vim-jsx', {'for': 'typescript'}
-  Plug 'herringtondarkholme/yats.vim', {'for': 'typescript'}
-  Plug 'mhartington/nvim-typescript', {'for': 'typescript', 'do': ':UpdateRemotePlugins'}
+  Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
   Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+  \ 'for': ['javascript', 'javascript.jsx', 'typescript', 'typescript.jsx', 'css', 'json', 'markdown'] }
+  " Typescript
+  Plug 'peitalin/vim-jsx-typescript' , {'for': 'typescript.jsx'}
+  Plug 'herringtondarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
+  Plug 'mhartington/nvim-typescript', {'for': ['typescript', 'typescript.jsx'], 'do': ':UpdateRemotePlugins'}
 
   " Colors
   Plug 'morhetz/gruvbox'
@@ -209,11 +211,11 @@ nmap <silent> [l :lprev<CR>
 nmap <silent> ]l :lnext<CR>
 
 " FZF
-nnoremap <Leader>f :Files!<CR>
-nnoremap <Leader>b :Buffers!<CR>
-nnoremap <Leader>r :History!<CR>
-nnoremap <Leader>g :Ag! <C-R><C-W><CR>
-nnoremap <Leader>o :BTags!<CR>
+nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>r :History<CR>
+nnoremap <Leader>g :Ag<C-R><C-W><CR>
+nnoremap <Leader>o :BTags<CR>
 
 " IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
@@ -279,3 +281,7 @@ let g:deoplete#sources#rust#rust_source_path='/usr/src/rust/src'
 
 " golden-ratio
 let g:golden_ratio_exclude_nonmodifiable=1
+
+" prettier
+let g:prettier#exec_cmd_async=1
+let g:prettier#config#bracket_spacing='true'
