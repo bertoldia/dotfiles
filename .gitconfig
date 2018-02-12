@@ -1,6 +1,6 @@
 [user]
 	name = Axel von Bertoldi
-	email = bertoldia@gmail.com
+	email = abertoldi@atb.com
 [color]
   ui = auto
 [color "branch"]
@@ -31,6 +31,8 @@
   autosetuprebase = always
 [rebase]
   autosquash = true
+[credential]
+  helper = cache
 [diff]
   ;tool = meld
   indentHeuristic = true
