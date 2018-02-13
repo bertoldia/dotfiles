@@ -22,13 +22,14 @@ alias lal='exa --group-directories-first -lbga'
 
 alias q="cd ../"
 alias qq="cd ../../"
-alias fishrc="gvim $HOME/.config/fish/config.fish"
+alias fishrc="nvim $HOME/.config/fish/config.fish"
 alias j="jump"
 alias gg="git grep"
 alias vimrc='vim $HOME/.vimrc'
 alias nvimrc='nvim $HOME/.config/nvim/init.vim'
 alias ffind='find . -iname'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
+alias unplugged='sudo tlp start ;; xbacklight -set 10;  sudo powertop'
 
 function qvim
     nvim-qt $argv 2> /dev/null &

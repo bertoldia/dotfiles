@@ -285,3 +285,4 @@ let g:golden_ratio_exclude_nonmodifiable=1
 " prettier
 let g:prettier#exec_cmd_async=1
 let g:prettier#config#bracket_spacing='true'
+let g:prettier#config#single_quote='false'
