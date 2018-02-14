@@ -21,13 +21,17 @@ call plug#begin('~/.config/nvim/bundle')
   " Fuzzy finding
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
+
   " Languages
+  " Java
+  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
+  Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+  " Go
   Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
   Plug 'zchee/deoplete-go', {'do': 'make', 'for': 'go'}
+  " Rust
   Plug 'rust-lang/rust.vim', {'for': 'rust'}
   Plug 'sebastianmarkow/deoplete-rust', {'for': 'rust'}
-  Plug 'udalov/kotlin-vim', {'for': 'kotlin'}
-
   "Javascript
   Plug 'benjie/neomake-local-eslint.vim', {'for': 'javascript'}
   Plug 'pangloss/vim-javascript', {'for': 'javascript'}
@@ -64,8 +68,8 @@ set hidden                      " When I close a tab don't remove the buffer
 let g:clipbrdDefaultReg = '+'
 set grepprg=grep\ -nH\ $*
 set expandtab                   " make tabs spaces
-set shiftwidth=2                " for auto and manual indent
-set tabstop=2                   " pressing tab inserts 2 spaces
+set shiftwidth=4                " for auto and manual indent
+set tabstop=4                   " pressing tab inserts 2 spaces
 set nu                          " line number
 "Folding
 set foldmethod=syntax
@@ -286,3 +290,6 @@ let g:golden_ratio_exclude_nonmodifiable=1
 let g:prettier#exec_cmd_async=1
 let g:prettier#config#bracket_spacing='true'
 let g:prettier#config#single_quote='false'
+
+" airline
+let g:airline#extensions#tabline#enabled=1

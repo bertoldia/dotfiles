@@ -21,12 +21,19 @@ call plug#begin('~/.vim/bundle')
   " Static analysis
   Plug 'scrooloose/syntastic'
   " Fuzzy finding
+  Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
   " Languages
-  Plug 'latex-box-team/latex-box', {'for': 'tex'}
   Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
   Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
-  "Plug 'udalov/kotlin-vim', {'for': 'kotlin'}
+
+  "Javascript
+  Plug 'benjie/neomake-local-eslint.vim', {'for': 'javascript'}
+  Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+  Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
+  Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'javascript.jsx', 'typescript', 'typescript.jsx', 'css', 'json', 'markdown'] }
 
   " Colors
   Plug 'morhetz/gruvbox'
@@ -94,7 +101,7 @@ filetype plugin indent on
 " ---APPEARANCE---
 set background=dark
 if has("gui_running")
-  set guifont=Source\ Code\ Pro\ Semibold\ 10
+  set guifont=Source\ Code\ Pro\ Regular\ 10
   "set guifont=Source\ Code\ Pro\ Regular\ 11
   set guioptions-=T " hide toolbar
   set guioptions-=m " hide menubar
@@ -198,7 +205,7 @@ let g:notes_tagsindex = '~/notes/tags'
 "Syntastic
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_kotlin_checkers=['kotlinc']
-let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
+"let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
 let g:syntastic_python_checkers=['flake8', 'python', 'pep8']
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
@@ -223,11 +230,11 @@ let g:ycm_confirm_extra_conf = 0
 set completeopt-=preview
 
 " FZF
-nnoremap <Leader>f :Files!<CR>
-nnoremap <Leader>b :Buffers!<CR>
-nnoremap <Leader>r :History!<CR>
-nnoremap <Leader>g :Ag! <C-R><C-W><CR>
-nnoremap <Leader>o :BTags!<CR>
+nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>r :History<CR>
+nnoremap <Leader>g :Ag<C-R><C-W><CR>
+nnoremap <Leader>o :BTags<CR>
 
 " IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
