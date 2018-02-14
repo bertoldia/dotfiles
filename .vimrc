@@ -31,10 +31,8 @@ call plug#begin('~/.vim/bundle')
   Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
   " Go
   Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
-  Plug 'zchee/deoplete-go', {'do': 'make', 'for': 'go'}
   " Rust
   Plug 'rust-lang/rust.vim', {'for': 'rust'}
-  Plug 'sebastianmarkow/deoplete-rust', {'for': 'rust'}
   "Javascript
   Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
   Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
@@ -206,7 +204,21 @@ let g:notes_word_boundaries = 1
 let g:notes_conceal_url = 0
 let g:notes_tagsindex = '~/notes/tags'
 
+<<<<<<< HEAD
 
+=======
+"Syntastic
+let g:syntastic_java_checkers=['javac', 'checkstyle']
+let g:syntastic_kotlin_checkers=['kotlinc']
+"let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
+let g:syntastic_python_checkers=['flake8', 'python', 'pep8']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+let g:syntastic_warning_symbol='!!'
+let g:syntastic_error_symbol='✘✘'
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_always_populate_loc_list = 1
+>>>>>>> Miscs
 nmap <silent> [l :lprev<CR>
 nmap <silent> ]l :lnext<CR>
 
