@@ -13,7 +13,6 @@ alias archive='file-roller -d'
 alias extract='file-roller -h'
 alias bin='ll ~/.bin'
 alias gg='git grep'
-alias gitd='git-dag'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
 alias locate='locate -e'
 
@@ -23,10 +22,6 @@ alias docekr='docker'
 alias car='cat'
 
 [ -f /usr/bin/htop ] && alias top='htop -d 12'
-
-# Images manipulation
-alias momify='_momify'
-alias dropboxify='_dropboxify'
 
 alias maketex='rubber --force --inplace --pdf *.tex'
 alias cleantex='rm *.aux *.dvi *.out *.ps *.log *.pdf'
@@ -50,16 +45,6 @@ alias aliasedit='nvim ~/.bash_aliases'
 alias gitconfig='nvim ~/.gitconfig'
 alias sshconfig='nvim ~/.ssh/config'
 
-alias thesaurus='aiksaurus'
-
-# task
-alias ta='task add'
-alias tf='task done'
-alias td='task delete'
-alias ts='task start'
-alias tp='task stop'
-alias tm='task modify'
-
 # manjaro
 if [ -f /usr/bin/yaourt ]; then
   alias query='yaourt -Ss'
@@ -79,9 +64,6 @@ if [ -f /usr/bin/colordiff ]; then
 else
     alias diff='diff -cp'
 fi
-
-#CEC VM's
-alias win10='rdesktop -x -P 10.244.117.58 -u Administrator -p Password123! -g 1280x1024'
 
 function lcd() {
     builtin cd "$@";
