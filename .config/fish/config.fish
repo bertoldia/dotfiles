@@ -1,9 +1,13 @@
 # Theme
 set theme_color_scheme gruvbox
 set PATH $HOME/.bin $PATH
-set GOPATH "/home/axel/.go"
-set GOBIN "/home/axel/.go/bin"
+set -x GOPATH "/home/axel/.go"
+set -x GOBIN "/home/axel/.go/bin"
+set -x EDITOR nvim
 
+# Work stuff
+set -x CHALLENGER_ROOT "$HOME/workspace/challenger"
+set -x OMNICHANNEL_ROOT "$CHALLENGER_ROOT/ca-atb-omni"
 
 # Typos
 alias gti='git'
@@ -18,7 +22,7 @@ alias lal='exa --group-directories-first -lbga'
 
 alias q="cd ../"
 alias qq="cd ../../"
-alias fishrc="gvim $HOME/.config/fish/config.fish"
+alias fishrc="nvim $HOME/.config/fish/config.fish"
 alias j="jump"
 alias gg="git grep"
 alias vimrc='vim $HOME/.vimrc'
@@ -30,24 +34,9 @@ function qvim
     nvim-qt $argv 2> /dev/null &
 end
 
-function gnvim
-    #gonvim $argv > /dev/null ^&1 &
-    nvim-gtk $argv > /dev/null ^&1 &
-end
-
-# manjaro
-if test -e /usr/bin/yaourt
-  alias query='yaourt -Ss'
-  alias install='yaourt -S'
-  alias update='yaourt -Syyu'
-  alias updatea='yaourt -Syua --noconfirm'
-  alias uninstall='yaourt -Rsc'
-  alias orphaned='yaourt -Qdt'
-  alias not_installed='_search_not_installed'
-end
-
 # FZF
-set FZF_DEFAULT_OPTS "--no-height --no-reverse"
-set FZF_CTRL_T_OPTS "--preview 'highlight -O ansi -l {} 2> /dev/null; or cat {} 2> /dev/null; or exa -TL 2 {} 2> /dev/null | head -200'"
-set FZF_CTRL_R_OPTS "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-set FZF_ALT_C_OPTS "--preview 'exa -TL 2 {} | head -200'"
+set -x FZF_DEFAULT_OPTS "--no-height --no-reverse"
+set -x FZF_CTRL_T_OPTS "--preview 'highlight -O ansi -l {} 2> /dev/null; or cat {} 2> /dev/null; or tree -C {} 2> /dev/null | head -200'"
+set -x FZF_CTRL_R_OPTS "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+set -x FZF_ALT_C_OPTS "--preview 'tree -C {} | head -200'"
+

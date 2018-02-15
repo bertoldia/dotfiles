@@ -1,6 +1,6 @@
 [user]
 	name = Axel von Bertoldi
-	email = bertoldia@gmail.com
+	email = abertoldi@atb.com
 [color]
   ui = auto
 [color "branch"]
@@ -17,6 +17,33 @@
   added = yellow
   changed = green
   untracked = cyan
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[core]
+  editor = nvim
+  whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  pager = diff-so-fancy | less --tabs=4 -RFX
+[branch]
+  autosetupmerge = true
+  autosetuprebase = always
+[rebase]
+  autosquash = true
+[credential]
+  helper = cache
+[diff]
+  ;tool = meld
+  indentHeuristic = true
+[push]
+  default = tracking
+[pull]
+  rebase = true
+[fetch]
+  prune = true
+[log]
+  decorate = short
 [alias]
   ; shortcuts
   co = checkout
@@ -24,6 +51,7 @@
   br = branch
   rb = rebase
   st = status
+  ss = status -uno
   cp = cherry-pick
   ; log display
   graph = log --oneline --graph --topo-order
@@ -42,26 +70,9 @@
   upstream = !git rev-parse --abbrev-ref `git current-branch`@{upstream}
   changes = !git log --oneline `git upstream`..HEAD
   files = !git diff --name-only `git upstream`
-  my-branches = !git br -a | grep --color bertoa
+  my-branches = !git br -a | grep --color "[^-]z/bertoa"
   fixup = !sh -c 'git commit -a -m \"fixup! $@\" && git rebase -i $@~1' -
   squash = !sh -c 'git commit -a -m \"squash! $@\" && git rebase -i $@~1' -
   mb = !sh -c 'git merge-base `git upstream` `git current-branch`' -
   branch-guilt = !sh -c 'git guilt `git mb`' -
-[core]
-  editor = nvim
-  whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	pager = diff-so-fancy | less --tabs=4 -RFX
-[branch]
-  autosetupmerge = true
-  autosetuprebase = always
-[rebase]
-  autosquash = yes
-[diff]
-  tool = meld
-[push]
-  default = tracking
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+  dirty = !sh -c 'git status -s --untracked-files=no' -
