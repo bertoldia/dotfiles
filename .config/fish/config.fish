@@ -7,7 +7,6 @@ set -x EDITOR nvim
 
 # Work stuff
 set -x CHALLENGER_ROOT "$HOME/workspace/challenger"
-#set -x OMNICHANNEL_ROOT "$CHALLENGER_ROOT/ca-atb-omnichannel"
 set -x OMNICHANNEL_ROOT "$CHALLENGER_ROOT/ca-atb-omni"
 
 # Typos

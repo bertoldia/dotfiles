@@ -27,4 +27,4 @@ if [ "$files" == "" ]; then
   exit 1
 fi
 
-gvim $files
+nvim $files

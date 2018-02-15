@@ -39,10 +39,6 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'javascript.jsx', 'typescript', 'typescript.jsx', 'css', 'json', 'markdown'] }
-  " Typescript
-  Plug 'peitalin/vim-jsx-typescript' , {'for': 'typescript.jsx'}
-  Plug 'herringtondarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
-  Plug 'mhartington/nvim-typescript', {'for': ['typescript', 'typescript.jsx'], 'do': ':UpdateRemotePlugins'}
 
   " Colors
   Plug 'morhetz/gruvbox'
@@ -117,7 +113,7 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-  autocmd Filetype,BufReadPost,BufNewFile java setlocal shiftwidth=2 tabstop=2 colorcolumn=100 textwidth=100
+  autocmd Filetype,BufReadPost,BufNewFile java setlocal colorcolumn=100 textwidth=100
   autocmd Filetype go set nolist
 
   " When editing a file, always jump to the last known cursor position.
@@ -211,6 +207,7 @@ map <Leader>dg :diffget<CR>
 nmap <Leader>hs <Plug>GitGutterStageHunk
 nmap <Leader>hu <Plug>GitGutterUndoHunk
 nmap <Leader>hv <Plug>GitGutterPreviewHunk
+
 nmap <silent> [l :lprev<CR>
 nmap <silent> ]l :lnext<CR>
 
@@ -234,8 +231,10 @@ nmap <silent> <leader>tv :TestVisit<CR>
 let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
 let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
 
+" javacomplete2
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
 " neomake
-"autocmd! BufWritePost * Neomake
 call neomake#configure#automake('w')
 let g:neomake_java_checkstyle_maker = {
     \ 'args': ['-c', '/opt/checkstyle/sun_checks.xml'],
@@ -244,7 +243,7 @@ let g:neomake_java_checkstyle_maker = {
 "let g:neomake_java_enabled_makers = ['javac', 'checkstyle']
 let g:neomake_go_enabled_makers = ['go', 'govet']
 let g:neomake_python_enabled_makers = ['flake8', 'python', 'pep8']
-let g:neomake_javascript_enabled_makers = ['eslint']
+"let g:neomake_javascript_enabled_makers = ['eslint']
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -293,3 +292,4 @@ let g:prettier#config#single_quote='false'
 
 " airline
 let g:airline#extensions#tabline#enabled=1
+let g:airline_powerline_fonts = 1

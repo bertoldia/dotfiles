@@ -27,14 +27,6 @@ call plug#begin('~/.vim/bundle')
   Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
   Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
 
-  "Javascript
-  Plug 'benjie/neomake-local-eslint.vim', {'for': 'javascript'}
-  Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-  Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
-  Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'javascript.jsx', 'typescript', 'typescript.jsx', 'css', 'json', 'markdown'] }
-
   " Colors
   Plug 'morhetz/gruvbox'
   Plug 'ajmwagar/vim-deus'
@@ -102,7 +94,6 @@ filetype plugin indent on
 set background=dark
 if has("gui_running")
   set guifont=Source\ Code\ Pro\ Regular\ 10
-  "set guifont=Source\ Code\ Pro\ Regular\ 11
   set guioptions-=T " hide toolbar
   set guioptions-=m " hide menubar
   set guitablabel=%!expand(\"\%:t\")
@@ -115,7 +106,7 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-  autocmd Filetype,BufReadPost,BufNewFile java setlocal shiftwidth=2 tabstop=2 colorcolumn=100 textwidth=100
+  autocmd Filetype,BufReadPost,BufNewFile java setlocal colorcolumn=100 textwidth=100
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -205,7 +196,7 @@ let g:notes_tagsindex = '~/notes/tags'
 "Syntastic
 let g:syntastic_java_checkers=['javac', 'checkstyle']
 let g:syntastic_kotlin_checkers=['kotlinc']
-"let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
+let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
 let g:syntastic_python_checkers=['flake8', 'python', 'pep8']
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
