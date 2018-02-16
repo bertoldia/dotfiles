@@ -17,7 +17,8 @@ call plug#begin('~/.config/nvim/bundle')
   " Completion
   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
   " Static analysis
-  Plug 'benekastah/neomake'
+  Plug 'w0rp/ale'
+
   " Fuzzy finding
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
@@ -33,12 +34,11 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'rust-lang/rust.vim', {'for': 'rust'}
   Plug 'sebastianmarkow/deoplete-rust', {'for': 'rust'}
   "Javascript
-  Plug 'benjie/neomake-local-eslint.vim', {'for': 'javascript'}
-  Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+  Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
   Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
-  Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'javascript.jsx', 'typescript', 'typescript.jsx', 'css', 'json', 'markdown'] }
+  "Plug 'prettier/vim-prettier', {
+  "\ 'do': 'yarn install',
+  "\ 'for': ['javascript', 'javascript.jsx', 'css', 'json'] }
 
   " Colors
   Plug 'morhetz/gruvbox'
@@ -234,17 +234,6 @@ let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile 
 " javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
-" neomake
-call neomake#configure#automake('w')
-let g:neomake_java_checkstyle_maker = {
-    \ 'args': ['-c', '/opt/checkstyle/sun_checks.xml'],
-    \ 'errorformat': '%f:%l:\ %m,%f:%l:%v:\ %m,%-G%.%#',
-    \ }
-"let g:neomake_java_enabled_makers = ['javac', 'checkstyle']
-let g:neomake_go_enabled_makers = ['go', 'govet']
-let g:neomake_python_enabled_makers = ['flake8', 'python', 'pep8']
-"let g:neomake_javascript_enabled_makers = ['eslint']
-
 " deoplete
 let g:deoplete#enable_at_startup = 1
 inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
@@ -293,3 +282,19 @@ let g:prettier#config#single_quote='false'
 " airline
 let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts = 1
+
+" ale
+let g:ale_sign_error='✘✘'
+let g:ale_sign_warning='!!'
+let g:ale_linters = {
+\   'jsx': ['flow', 'eslint'],
+\   'javascript.jsx': ['flow', 'eslint'],
+\   'javascript': ['flow', 'eslint'],
+\}
+let g:ale_fixers = {
+\   'java': ['google_java_format'],
+\   'javascript': ['eslint', 'importjs', 'prettier'],
+\   'jsx': ['eslint', 'importjs', 'prettier'],
+\   'javascript.jsx': ['eslint', 'importjs', 'prettier']
+\}
+let g:ale_fix_on_save = 1
