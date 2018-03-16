@@ -32,7 +32,7 @@
 [rebase]
   autosquash = true
 [credential]
-  helper = cache
+	helper = /usr/share/git/credential/gnome-keyring/git-credential-gnome-keyring
 [diff]
   ;tool = meld
   indentHeuristic = true

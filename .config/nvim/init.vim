@@ -277,15 +277,15 @@ let g:airline_powerline_fonts=1
 " ale
 let g:ale_sign_error='✘✘'
 let g:ale_sign_warning='!!'
-let g:ale_linters = {
-\   'jsx': ['flow', 'eslint'],
-\   'javascript.jsx': ['flow', 'eslint'],
-\   'javascript': ['flow', 'eslint'],
+let g:ale_linters={
+\   'jsx': ['eslint', 'flow'],
+\   'javascript.jsx': ['eslint', 'flow'],
+\   'javascript': ['eslint', 'flow'],
 \}
-let g:ale_fixers = {
+let g:ale_fixers={
 \   'java': ['google_java_format'],
-\   'javascript': ['eslint', 'importjs', 'prettier'],
 \   'jsx': ['eslint', 'importjs', 'prettier'],
-\   'javascript.jsx': ['eslint', 'importjs', 'prettier']
+\   'javascript.jsx': ['eslint', 'importjs', 'prettier'],
+\   'javascript': ['eslint', 'importjs', 'prettier'],
 \}
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save=1

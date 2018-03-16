@@ -30,6 +30,7 @@ alias nvimrc='nvim $HOME/.config/nvim/init.vim'
 alias ffind='find . -iname'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
 alias unplugged='sudo tlp start ;; xbacklight -set 10;  sudo powertop'
+alias mount-mac='sudo mount -t hfsplus -o force,rw /dev/sda2  ~/mac'
 
 function qvim
     nvim-qt $argv 2> /dev/null &

@@ -33,6 +33,8 @@ call plug#begin('~/.vim/bundle')
   Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
   " Rust
   Plug 'rust-lang/rust.vim', {'for': 'rust'}
+  " Rust
+  Plug 'rust-lang/rust.vim', {'for': 'rust'}
   "Javascript
   Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
   Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
@@ -44,7 +46,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'rdavison/Libertine'
 
   " Misc
-  Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
+  "Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
 call plug#end()
 
 " ---OPTIONS---
@@ -259,8 +261,8 @@ let g:ale_linters={
 \}
 let g:ale_fixers={
 \   'java': ['google_java_format'],
-\   'javascript': ['importjs', 'prettier', 'eslint'],
 \   'jsx': ['importjs', 'prettier', 'eslint'],
 \   'javascript.jsx': ['importjs', 'prettier', 'eslint'],
+\   'javascript': ['importjs', 'prettier', 'eslint'],
 \}
 let g:ale_fix_on_save=1
