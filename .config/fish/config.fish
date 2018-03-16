@@ -27,6 +27,7 @@ alias j="jump"
 alias gg="git grep"
 alias vimrc='vim $HOME/.vimrc'
 alias nvimrc='nvim $HOME/.config/nvim/init.vim'
+alias gitconfig='nvim $HOME/.gitconfig'
 alias ffind='find . -iname'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
 alias unplugged='sudo tlp start ;; xbacklight -set 10;  sudo powertop'
