@@ -19,13 +19,25 @@ call plug#begin('~/.vim/bundle')
   " Completion
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   " Static analysis
-  Plug 'scrooloose/syntastic'
+  Plug 'w0rp/ale'
+
   " Fuzzy finding
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
+
   " Languages
+  " Java
   Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
   Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+  " Go
+  Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
+  Plug 'zchee/deoplete-go', {'do': 'make', 'for': 'go'}
+  " Rust
+  Plug 'rust-lang/rust.vim', {'for': 'rust'}
+  Plug 'sebastianmarkow/deoplete-rust', {'for': 'rust'}
+  "Javascript
+  Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
+  Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
 
   " Colors
   Plug 'morhetz/gruvbox'
@@ -47,7 +59,7 @@ set history=100                 " keep 50 lines of command line history
 set hlsearch
 "set autochdir                   " make cwd the current buffer's home
 set hidden                      " When I close a tab don't remove the buffer
-let g:clipbrdDefaultReg = '+'
+let g:clipbrdDefaultReg='+'
 set grepprg=grep\ -nH\ $*
 set expandtab                   " make tabs spaces
 set shiftwidth=4                " for auto and manual indent
@@ -76,7 +88,7 @@ set colorcolumn=80
 set showmode
 set textwidth=80
 set wrap linebreak
-let &listchars = "tab:\u00b7 ,trail:\u00b7"
+let &listchars="tab:\u00b7 ,trail:\u00b7"
 set list
 set title
 set completeopt=menuone,longest,preview
@@ -102,11 +114,12 @@ endif
 colorscheme deus
 
 " Make p in Visual mode replace the selected text with the "" register.
-vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+vnoremap p <Esc>:let current_reg=@"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
   autocmd Filetype,BufReadPost,BufNewFile java setlocal colorcolumn=100 textwidth=100
+  autocmd Filetype go set nolist
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -165,8 +178,8 @@ noremap <Leader>w :'<,'>StripWhitespace<CR>
 
 "Tagbar
 map <F8> :TagbarToggle<CR>
-let g:tagbar_left = 0
-let g:tagbar_sort = 0
+let g:tagbar_left=0
+let g:tagbar_sort=0
 
 "NERDTree
 noremap <S-F2> :NERDTreeToggle<CR>
@@ -181,7 +194,7 @@ map <Leader>gb :Gblame<CR>
 map <Leader>dp :diffput<CR>
 map <Leader>dg :diffget<CR>
 
-"GitGutter
+" gitgutter
 nmap <Leader>hs <Plug>GitGutterStageHunk
 nmap <Leader>hu <Plug>GitGutterUndoHunk
 nmap <Leader>hv <Plug>GitGutterPreviewHunk
@@ -193,17 +206,7 @@ let g:notes_word_boundaries = 1
 let g:notes_conceal_url = 0
 let g:notes_tagsindex = '~/notes/tags'
 
-"Syntastic
-let g:syntastic_java_checkers=['javac', 'checkstyle']
-let g:syntastic_kotlin_checkers=['kotlinc']
-let g:syntastic_javascript_checkers=['jshint', 'jslint', 'jsl']
-let g:syntastic_python_checkers=['flake8', 'python', 'pep8']
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-let g:syntastic_warning_symbol='!!'
-let g:syntastic_error_symbol='✘✘'
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 1
+
 nmap <silent> [l :lprev<CR>
 nmap <silent> ]l :lnext<CR>
 
@@ -236,12 +239,31 @@ nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
-let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
-"let g:test#java#maventest#file_pattern = '^.*\([Tt]est\|Suite\).*\.java$'
-let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
+let g:test#java#maventest#file_pattern='\v^.*[Tt]ests=(Suite)=\.java$'
+let test#java#maventest#executable='mvn compiler:compile compiler:testCompile surefire:test'
 
 " javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " golden-ratio
-let g:golden_ratio_exclude_nonmodifiable = 1
+let g:golden_ratio_exclude_nonmodifiable=1
+
+" airline
+let g:airline#extensions#tabline#enabled=1
+let g:airline_powerline_fonts=1
+
+" ale
+let g:ale_sign_error='✘✘'
+let g:ale_sign_warning='!!'
+let g:ale_linters={
+\   'jsx': ['eslint', 'flow'],
+\   'javascript.jsx': ['eslint', 'flow'],
+\   'javascript': ['eslint', 'flow'],
+\}
+let g:ale_fixers={
+\   'java': ['google_java_format'],
+\   'javascript': ['importjs', 'prettier', 'eslint'],
+\   'jsx': ['importjs', 'prettier', 'eslint'],
+\   'javascript.jsx': ['importjs', 'prettier', 'eslint'],
+\}
+let g:ale_fix_on_save=1
