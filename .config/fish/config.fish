@@ -29,6 +29,7 @@ alias vimrc='vim $HOME/.vimrc'
 alias nvimrc='nvim $HOME/.config/nvim/init.vim'
 alias ffind='find . -iname'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
+alias gitconfig='nvim $HOME/.gitconfig'
 alias unplugged='sudo tlp start ;; xbacklight -set 10;  sudo powertop'
 
 function qvim

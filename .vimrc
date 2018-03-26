@@ -31,10 +31,8 @@ call plug#begin('~/.vim/bundle')
   Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
   " Go
   Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
-  Plug 'zchee/deoplete-go', {'do': 'make', 'for': 'go'}
   " Rust
   Plug 'rust-lang/rust.vim', {'for': 'rust'}
-  Plug 'sebastianmarkow/deoplete-rust', {'for': 'rust'}
   "Javascript
   Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
   Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
