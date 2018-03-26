@@ -44,7 +44,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'rdavison/Libertine'
 
   " Misc
-  Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
+  "Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'
 call plug#end()
 
 " ---OPTIONS---
@@ -204,7 +204,6 @@ let g:notes_word_boundaries = 1
 let g:notes_conceal_url = 0
 let g:notes_tagsindex = '~/notes/tags'
 
-
 nmap <silent> [l :lprev<CR>
 nmap <silent> ]l :lnext<CR>
 
@@ -259,9 +258,9 @@ let g:ale_linters={
 \   'javascript': ['eslint', 'flow'],
 \}
 let g:ale_fixers={
-\   'java': ['google_java_format'],
-\   'javascript': ['importjs', 'prettier', 'eslint'],
 \   'jsx': ['importjs', 'prettier', 'eslint'],
 \   'javascript.jsx': ['importjs', 'prettier', 'eslint'],
+\   'javascript': ['importjs', 'prettier', 'eslint'],
 \}
 let g:ale_fix_on_save=1
+//\   'java': ['google_java_format'],

@@ -27,8 +27,7 @@
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   pager = diff-so-fancy | less --tabs=4 -RFX
 [branch]
-  autosetupmerge = true
-  autosetuprebase = always
+  autosetupmerge = always
 [rebase]
   autosquash = true
 [diff]

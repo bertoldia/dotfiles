@@ -7,7 +7,7 @@ set -x EDITOR nvim
 
 # Work stuff
 set -x CHALLENGER_ROOT "$HOME/workspace/challenger"
-set -x OMNICHANNEL_ROOT "$CHALLENGER_ROOT/ca-atb-omni"
+set -x OMNICHANNEL_ROOT "$CHALLENGER_ROOT/omni"
 
 # Typos
 alias gti='git'
@@ -27,14 +27,10 @@ alias j="jump"
 alias gg="git grep"
 alias vimrc='vim $HOME/.vimrc'
 alias nvimrc='nvim $HOME/.config/nvim/init.vim'
+alias gitconfig='nvim $HOME/.gitconfig'
 alias ffind='find . -iname'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
-alias gitconfig='nvim $HOME/.gitconfig'
 alias unplugged='sudo tlp start ;; xbacklight -set 10;  sudo powertop'
-
-function qvim
-    nvim-qt $argv 2> /dev/null &
-end
 
 function gnvim
   env NVIM_GTK_PREFER_DARK_THEME=1 \
