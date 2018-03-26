@@ -3,5 +3,5 @@ if exists('g:GtkGuiLoaded')
   "call rpcnotify(1, 'Gui', 'Font', 'Fira Code Medium 10')
   call rpcnotify(1, 'Gui', 'Option', 'Tabline', 0)
 else
-  Guifont Source Code Pro Semibold::h10
+  Guifont Source Code Pro Medium::h10
 endif

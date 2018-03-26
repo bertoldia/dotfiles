@@ -1,8 +1,8 @@
 # Theme
 set theme_color_scheme gruvbox
 set PATH $HOME/.bin $PATH
-set -x GOPATH "/home/axel/.go"
-set -x GOBIN "/home/axel/.go/bin"
+set -x GOPATH "/home/abertoldi/.go"
+set -x GOBIN "/home/abertoldi/.go/bin"
 set -x EDITOR nvim
 
 # Work stuff
@@ -32,10 +32,6 @@ alias ffind='find . -iname'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
 alias unplugged='sudo tlp start ;; xbacklight -set 10;  sudo powertop'
 alias mount-mac='sudo mount -t hfsplus -o force,rw /dev/sda2  ~/mac'
-
-function qvim
-    nvim-qt $argv 2> /dev/null &
-end
 
 function gnvim
   env NVIM_GTK_PREFER_DARK_THEME=1 \

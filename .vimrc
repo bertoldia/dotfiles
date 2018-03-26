@@ -33,8 +33,6 @@ call plug#begin('~/.vim/bundle')
   Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
   " Rust
   Plug 'rust-lang/rust.vim', {'for': 'rust'}
-  " Rust
-  Plug 'rust-lang/rust.vim', {'for': 'rust'}
   "Javascript
   Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
   Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
