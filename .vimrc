@@ -258,9 +258,9 @@ let g:ale_linters={
 \   'javascript': ['eslint', 'flow'],
 \}
 let g:ale_fixers={
-\   'java': ['google_java_format'],
 \   'jsx': ['importjs', 'prettier', 'eslint'],
 \   'javascript.jsx': ['importjs', 'prettier', 'eslint'],
 \   'javascript': ['importjs', 'prettier', 'eslint'],
 \}
 let g:ale_fix_on_save=1
+//\   'java': ['google_java_format'],

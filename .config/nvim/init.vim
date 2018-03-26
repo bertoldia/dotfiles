@@ -40,7 +40,6 @@ call plug#begin('~/.config/nvim/bundle')
   " Colors
   Plug 'morhetz/gruvbox'
   Plug 'ajmwagar/vim-deus'
-  Plug 'felipesousa/rupza'
   Plug 'rdavison/Libertine'
 
   " Misc
@@ -283,9 +282,9 @@ let g:ale_linters={
 \   'javascript': ['eslint', 'flow'],
 \}
 let g:ale_fixers={
-\   'java': ['google_java_format'],
-\   'jsx': ['eslint', 'importjs', 'prettier'],
-\   'javascript.jsx': ['eslint', 'importjs', 'prettier'],
-\   'javascript': ['eslint', 'importjs', 'prettier'],
+\   'javascript': ['importjs', 'prettier', 'eslint'],
+\   'jsx': ['importjs', 'prettier', 'eslint'],
+\   'javascript.jsx': ['importjs', 'prettier', 'eslint'],
 \}
+"\   'java': ['google_java_format'],
 let g:ale_fix_on_save=1
