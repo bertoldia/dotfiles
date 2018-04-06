@@ -41,6 +41,8 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'morhetz/gruvbox'
   Plug 'ajmwagar/vim-deus'
   Plug 'rdavison/Libertine'
+  Plug 'zanglg/nova.vim'
+  Plug 'skielbasa/vim-material-monokai'
 
   " Misc
   "Plug 'c0r73x/neotags.nvim'
@@ -102,7 +104,7 @@ filetype plugin indent on
 
 " ---APPEARANCE---
 set background=dark
-colorscheme libertine
+colorscheme gruvbox
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg=@"<CR>gvs<C-R>=current_reg<CR><Esc>
@@ -210,8 +212,9 @@ nmap <silent> ]l :lnext<CR>
 nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>r :History<CR>
-nnoremap <Leader>g :Ag<C-R><C-W><CR>
+nnoremap <Leader>g :Ag <C-R><C-W><CR>
 nnoremap <Leader>o :BTags<CR>
+nnoremap <Leader>m :call fzf#run({'sink': 'e', 'options': '--multi'})
 
 " IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
@@ -282,9 +285,10 @@ let g:ale_linters={
 \   'javascript': ['eslint', 'flow'],
 \}
 let g:ale_fixers={
+\   'java': ['google_java_format'],
 \   'javascript': ['importjs', 'prettier', 'eslint'],
 \   'jsx': ['importjs', 'prettier', 'eslint'],
 \   'javascript.jsx': ['importjs', 'prettier', 'eslint'],
 \}
-"\   'java': ['google_java_format'],
 let g:ale_fix_on_save=1
+let g:ale_java_google_java_format_options='--aosp'
