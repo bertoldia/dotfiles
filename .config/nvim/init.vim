@@ -60,6 +60,7 @@ set hlsearch
 "set autochdir                   " make cwd the current buffer's home
 set hidden                      " When I close a tab don't remove the buffer
 let g:clipbrdDefaultReg='+'
+set clipboard+=unnamedplus
 set grepprg=grep\ -nH\ $*
 set expandtab                   " make tabs spaces
 set shiftwidth=4                " for auto and manual indent
@@ -155,6 +156,7 @@ nmap <silent> <C-S-t> :tab sball<CR>
 "map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-W> :bp\| bd #<CR>
+map <C-S-W> :bp\| bd! #<CR>
 
 " misspellings
 :iabbrev teh the
@@ -214,7 +216,7 @@ nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>r :History<CR>
 nnoremap <Leader>g :Ag <C-R><C-W><CR>
 nnoremap <Leader>o :BTags<CR>
-nnoremap <Leader>m :call fzf#run({'sink': 'e', 'options': '--multi'})
+nnoremap <Leader>m :call fzf#run({'sink': 'e', 'options': '--multi'})<CR>
 
 " IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>

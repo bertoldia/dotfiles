@@ -34,9 +34,10 @@ alias unplugged='sudo tlp start ;; xbacklight -set 10;  sudo powertop'
 alias mount-mac='sudo mount -t hfsplus -o force,rw /dev/sda2  ~/mac'
 
 function gnvim
-  env NVIM_GTK_PREFER_DARK_THEME=1 \
-    env NVIM_GTK_NO_HEADERBAR=1 \
-    nvim-gtk $argv > /dev/null ^&1 &
+   env NVIM_GTK_PREFER_DARK_THEME=1 \
+   env NVIM_GTK_NO_HEADERBAR=1 \
+   env NVIM_GTK_DOUBLE_BUFFER=1 \
+   nvim-gtk $argv > /dev/null ^&1 &
 end
 
 # manjaro
