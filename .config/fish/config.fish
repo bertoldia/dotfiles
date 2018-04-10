@@ -33,9 +33,10 @@ alias dof='git --git-dir=$HOME/.dotfiles.git'
 alias unplugged='sudo tlp start ;; xbacklight -set 10;  sudo powertop'
 
 function gnvim
-  env NVIM_GTK_PREFER_DARK_THEME=1 \
-    env NVIM_GTK_NO_HEADERBAR=1 \
-    nvim-gtk $argv > /dev/null ^&1 &
+   env NVIM_GTK_PREFER_DARK_THEME=1 \
+   env NVIM_GTK_NO_HEADERBAR=1 \
+   env NVIM_GTK_DOUBLE_BUFFER=1 \
+   nvim-gtk $argv > /dev/null ^&1 &
 end
 
 # manjaro
