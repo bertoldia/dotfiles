@@ -64,6 +64,7 @@
   rebase-branch = !git rebase --interactive HEAD~`git changes | wc -l`
   rebase-branch-to-upstream = !git rebase --interactive `git upstream`
   change-upstream = !sh -c 'git branch --set-upstream-to \"$@\"' -
+  master-diff = diff --name-only origin/master
   ; goodies
   current-branch = rev-parse --abbrev-ref HEAD
   upstream = !git rev-parse --abbrev-ref `git current-branch`@{upstream}
