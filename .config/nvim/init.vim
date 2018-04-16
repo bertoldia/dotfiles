@@ -95,8 +95,7 @@ set title
 set completeopt=longest,menuone,preview
 
 "Change cursor shape and colour in insert mode
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkwait10
+set guicursor=n-v-c-sm:block-blinkon1,i-ci-ve:ver30-blinkon1,r-cr-o:hor20
 
 set showbreak=↪
 
