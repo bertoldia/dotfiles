@@ -92,8 +92,7 @@ set title
 set completeopt=menuone,longest,preview
 
 "Change cursor shape and colour in insert mode
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkwait10
+set guicursor=n-v-c-sm:block-blinkon1,i-ci-ve:ver30-blinkon1,r-cr-o:hor20
 
 set showbreak=↪
 
@@ -160,6 +159,7 @@ nmap <silent> <C-S-t> :tab sball<CR>
 "map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-W> :bp\| bd #<CR>
+map <C-S-W> :bp\| bd! #<CR>
 
 " misspellings
 :iabbrev teh the
@@ -226,6 +226,7 @@ nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>r :History<CR>
 nnoremap <Leader>g :Ag<C-R><C-W><CR>
 nnoremap <Leader>o :BTags<CR>
+nnoremap <Leader>m :call fzf#run({'sink': 'e', 'options': '--multi'})<CR>
 
 " IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
@@ -258,9 +259,10 @@ let g:ale_linters={
 \   'javascript': ['eslint', 'flow'],
 \}
 let g:ale_fixers={
-\   'jsx': ['importjs', 'prettier', 'eslint'],
-\   'javascript.jsx': ['importjs', 'prettier', 'eslint'],
-\   'javascript': ['importjs', 'prettier', 'eslint'],
+\   'java': ['google_java_format'],
+\   'javascript': ['importjs', 'eslint'],
+\   'jsx': ['importjs', 'eslint'],
+\   'javascript.jsx': ['importjs', 'eslint'],
 \}
 let g:ale_fix_on_save=1
-//\   'java': ['google_java_format'],
+let g:ale_java_google_java_format_options='--aosp'
