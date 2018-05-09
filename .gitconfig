@@ -74,3 +74,4 @@
   mb = !sh -c 'git merge-base `git upstream` `git current-branch`' -
   branch-guilt = !sh -c 'git guilt `git mb`' -
   dirty = !sh -c 'git status -s --untracked-files=no' -
+  ls-tracked = !sh -c 'git ls-tree -r `git current-branch` --name-only' -
