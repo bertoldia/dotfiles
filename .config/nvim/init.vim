@@ -274,6 +274,7 @@ let g:ale_fixers={
 \   'javascript': ['importjs', 'eslint'],
 \   'jsx': ['importjs', 'eslint'],
 \   'javascript.jsx': ['importjs', 'eslint'],
+\   'json': ['prettier'],
 \}
 let g:ale_fix_on_save=1
 let g:ale_java_google_java_format_options='--aosp'
