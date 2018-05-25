@@ -58,6 +58,7 @@
   new-branch = !sh -c 'git co -b abertoldi/$1 origin/master' -
   push-branch = !git push origin `git current-branch`:`git current-branch` -f
   push-branch-and-reupstream = !git push origin `git current-branch` && git br --set-upstream `git current-branch` origin/`git current-branch`
+  diff-master = diff --name-only origin/master
   delete-branch = !sh -c 'git push origin :$1' -
   rebase-branch = !git rebase --interactive HEAD~`git changes | wc -l`
   rebase-branch-to-upstream = !git rebase --interactive `git upstream`
