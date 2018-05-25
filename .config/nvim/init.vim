@@ -45,7 +45,7 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'skielbasa/vim-material-monokai'
 
   " Misc
-  "Plug 'c0r73x/neotags.nvim'
+  Plug 'ludovicchabant/vim-gutentags'
   Plug 'equalsraf/neovim-gui-shim'
 call plug#end()
 
@@ -228,7 +228,7 @@ nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
 let g:test#java#maventest#file_pattern='\v^.*[Tt]ests=(Suite)=\.java$'
-let test#java#maventest#executable='mvn compiler:compile compiler:testCompile surefire:test'
+let test#java#maventest#executable='mvn -T2C compiler:compile compiler:testCompile surefire:test'
 
 " javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
@@ -248,22 +248,6 @@ let g:go_highlight_methods=1
 let g:go_term_enabled=1
 nmap <silent> <leader>gc :GoCoverage<CR>
 nmap <silent> <leader>gt :GoTest<CR>
-
-"neotags
-let g:neotags_enabled=1
-let g:neotags_highlight=1
-let g:neotags_appendpath=0
-let g:neotags_recursive=0
-let g:neotags_ctags_bin='ag -g "" '. getcwd() .' | ctags'
-let g:neotags_ctags_args=[
-            \ '-L -',
-            \ '--fields=+l',
-            \ '--c-kinds=+p',
-            \ '--c++-kinds=+p',
-            \ '--sort=no',
-            \ '--extra=+q'
-            \ ]
-set regexpengine=1
 
 " rust
 let g:rustfmt_autosave=1
