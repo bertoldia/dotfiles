@@ -1,6 +1,6 @@
 # Theme
 set theme_color_scheme gruvbox
-set PATH $HOME/.bin $PATH
+set PATH $HOME/.bin $HOME/.local/bin $PATH
 set -x GOPATH "/home/axel/.go"
 set -x GOBIN "/home/axel/.go/bin"
 set -x EDITOR nvim
@@ -37,6 +37,10 @@ function gnvim
    env NVIM_GTK_NO_HEADERBAR=1 \
    env NVIM_GTK_DOUBLE_BUFFER=1 \
    nvim-gtk $argv > /dev/null ^&1 &
+end
+
+function qnvim
+   nvim-qt $argv > /dev/null ^&1 &
 end
 
 # manjaro
