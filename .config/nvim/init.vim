@@ -36,6 +36,9 @@ call plug#begin('~/.config/nvim/bundle')
   "Javascript
   Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
   Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
+  Plug 'carlitux/deoplete-ternjs', {'for': 'javascript.jsx'}
+  " Python
+  Plug 'zchee/deoplete-jedi', {'for': 'python'}
 
   " Colors
   Plug 'morhetz/gruvbox'
@@ -216,6 +219,7 @@ nnoremap <Leader>r :History<CR>
 nnoremap <Leader>g :Ag <C-R><C-W><CR>
 nnoremap <Leader>o :BTags<CR>
 nnoremap <Leader>m :call fzf#run({'sink': 'e', 'options': '--multi'})<CR>
+nnoremap <Leader>gf :call fzf#run({'source': 'git files', 'sink': 'e', 'options': '--multi'})<CR>
 
 " IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
@@ -232,9 +236,12 @@ let test#java#maventest#executable='mvn -T2C compiler:compile compiler:testCompi
 
 " javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+nmap <F5> <Plug>(JavaComplete-Imports-Add)
+nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
 
 " deoplete
 let g:deoplete#enable_at_startup=1
+let g:deoplete#enable_smart_case=1
 inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
