@@ -76,3 +76,4 @@
   branch-guilt = !sh -c 'git guilt `git mb`' -
   dirty = !sh -c 'git status -s --untracked-files=no' -
   ls-tracked = !sh -c 'git ls-tree -r `git current-branch` --name-only' -
+  google = commit -m "NF: Apply google_java_format"
