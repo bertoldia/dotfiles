@@ -282,6 +282,7 @@ let g:ale_fixers={
 \   'jsx': ['importjs', 'eslint'],
 \   'javascript.jsx': ['importjs', 'eslint'],
 \   'json': ['prettier'],
+\   'python': ['autopep8', 'isort'],
 \}
 let g:ale_fix_on_save=1
 let g:ale_java_google_java_format_options='--aosp'
