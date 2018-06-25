@@ -47,7 +47,7 @@ git gc $git_gc_opt
 git fsck
 
 if [[ $do_clean == true ]]; then
-  git clean -fxd -e .metadata -e tags -e .project -e .classpath
+  git clean -fxd -e .idea -e tags -e .project -e .classpath
 fi
 
 if [[ $regen_ctags == true ]]; then
