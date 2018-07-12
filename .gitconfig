@@ -27,8 +27,7 @@
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   pager = diff-so-fancy | less --tabs=4 -RFX
 [branch]
-  autosetupmerge = true
-  autosetuprebase = always
+  autosetupmerge = always
 [rebase]
   autosquash = true
 [credential]
@@ -58,9 +57,10 @@
   lg = log --color --graph --topo-order --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   all-my-commits = log --oneline --author='Axel von Bertoldi'
   ; branch manipulation
-  new-branch = !sh -c 'git co -b z/bertoa/$2-$1 origin/a/$2' -
-  push-branch = !git push origin `git current-branch` -f
+  new-branch = !sh -c 'git co -b abertoldi/$1 origin/master' -
+  push-branch = !git push origin `git current-branch`:`git current-branch` -f
   push-branch-and-reupstream = !git push origin `git current-branch` && git br --set-upstream `git current-branch` origin/`git current-branch`
+  diff-master = diff --name-only origin/master
   delete-branch = !sh -c 'git push origin :$1' -
   rebase-branch = !git rebase --interactive HEAD~`git changes | wc -l`
   rebase-branch-to-upstream = !git rebase --interactive `git upstream`
@@ -70,9 +70,11 @@
   upstream = !git rev-parse --abbrev-ref `git current-branch`@{upstream}
   changes = !git log --oneline `git upstream`..HEAD
   files = !git diff --name-only `git upstream`
-  my-branches = !git br -a | grep --color "[^-]z/bertoa"
+  my-branches = !git br -a | grep --color "bertoldi"
   fixup = !sh -c 'git commit -a -m \"fixup! $@\" && git rebase -i $@~1' -
   squash = !sh -c 'git commit -a -m \"squash! $@\" && git rebase -i $@~1' -
   mb = !sh -c 'git merge-base `git upstream` `git current-branch`' -
   branch-guilt = !sh -c 'git guilt `git mb`' -
   dirty = !sh -c 'git status -s --untracked-files=no' -
+  ls-tracked = !sh -c 'git ls-tree -r `git current-branch` --name-only' -
+  google = commit -m "NF: Apply google_java_format"

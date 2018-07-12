@@ -17,7 +17,8 @@ call plug#begin('~/.config/nvim/bundle')
   " Completion
   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
   " Static analysis
-  Plug 'benekastah/neomake'
+  Plug 'w0rp/ale'
+
   " Fuzzy finding
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
@@ -33,21 +34,21 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'rust-lang/rust.vim', {'for': 'rust'}
   Plug 'sebastianmarkow/deoplete-rust', {'for': 'rust'}
   "Javascript
-  Plug 'benjie/neomake-local-eslint.vim', {'for': 'javascript'}
-  Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+  Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
   Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
-  Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'javascript.jsx', 'typescript', 'typescript.jsx', 'css', 'json', 'markdown'] }
+  Plug 'carlitux/deoplete-ternjs', {'for': 'javascript.jsx'}
+  " Python
+  Plug 'zchee/deoplete-jedi', {'for': 'python'}
 
   " Colors
   Plug 'morhetz/gruvbox'
   Plug 'ajmwagar/vim-deus'
-  Plug 'felipesousa/rupza'
   Plug 'rdavison/Libertine'
+  Plug 'zanglg/nova.vim'
+  Plug 'skielbasa/vim-material-monokai'
 
   " Misc
-  "Plug 'c0r73x/neotags.nvim'
+  Plug 'ludovicchabant/vim-gutentags'
   Plug 'equalsraf/neovim-gui-shim'
 call plug#end()
 
@@ -61,7 +62,8 @@ set history=100                 " keep 50 lines of command line history
 set hlsearch
 "set autochdir                   " make cwd the current buffer's home
 set hidden                      " When I close a tab don't remove the buffer
-let g:clipbrdDefaultReg = '+'
+let g:clipbrdDefaultReg='+'
+set clipboard+=unnamedplus
 set grepprg=grep\ -nH\ $*
 set expandtab                   " make tabs spaces
 set shiftwidth=4                " for auto and manual indent
@@ -90,14 +92,13 @@ set colorcolumn=80
 set showmode
 set textwidth=80
 set wrap linebreak
-let &listchars = "tab:\u00b7 ,trail:\u00b7"
+let &listchars="tab:\u00b7 ,trail:\u00b7"
 set list
 set title
 set completeopt=longest,menuone,preview
 
 "Change cursor shape and colour in insert mode
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkwait10
+set guicursor=n-v-c-sm:block-blinkon1,i-ci-ve:ver30-blinkon1,r-cr-o:hor20
 
 set showbreak=↪
 
@@ -106,10 +107,10 @@ filetype plugin indent on
 
 " ---APPEARANCE---
 set background=dark
-colorscheme libertine
+colorscheme gruvbox
 
 " Make p in Visual mode replace the selected text with the "" register.
-vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+vnoremap p <Esc>:let current_reg=@"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -157,6 +158,7 @@ nmap <silent> <C-S-t> :tab sball<CR>
 "map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-W> :bp\| bd #<CR>
+map <C-S-W> :bp\| bd! #<CR>
 
 " misspellings
 :iabbrev teh the
@@ -173,9 +175,9 @@ noremap <Leader>w :'<,'>StripWhitespace<CR>
 
 "Tagbar
 map <F8> :TagbarToggle<CR>
-let g:tagbar_left = 0
-let g:tagbar_sort = 0
-let g:tagbar_type_rust = {
+let g:tagbar_left=0
+let g:tagbar_sort=0
+let g:tagbar_type_rust={
     \ 'ctagstype' : 'rust',
     \ 'kinds' : [
         \'T:types,type definitions',
@@ -203,7 +205,6 @@ map <Leader>dp :diffput<CR>
 map <Leader>dg :diffget<CR>
 
 " gitgutter
-"let g:gitgutter_highlight_lines = 1
 nmap <Leader>hs <Plug>GitGutterStageHunk
 nmap <Leader>hu <Plug>GitGutterUndoHunk
 nmap <Leader>hv <Plug>GitGutterPreviewHunk
@@ -215,80 +216,73 @@ nmap <silent> ]l :lnext<CR>
 nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>r :History<CR>
-nnoremap <Leader>g :Ag<C-R><C-W><CR>
+nnoremap <Leader>g :Ag <C-R><C-W><CR>
 nnoremap <Leader>o :BTags<CR>
+nnoremap <Leader>m :call fzf#run({'sink': 'e', 'options': '--multi'})<CR>
+nnoremap <Leader>gf :call fzf#run({'source': 'git files', 'sink': 'e', 'options': '--multi'})<CR>
 
 " IndentLines
 noremap <Leader>il :IndentLinesToggle<CR>
 
 " vim-test
-let test#strategy = "neovim"
+let test#strategy="neovim"
 nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
-let g:test#java#maventest#file_pattern = '\v^.*[Tt]ests=(Suite)=\.java$'
-let test#java#maventest#executable = 'mvn compiler:compile compiler:testCompile surefire:test'
+let g:test#java#maventest#file_pattern='\v^.*[Tt]ests=(Suite)=\.java$'
+let test#java#maventest#executable='mvn -T2C compiler:compile compiler:testCompile surefire:test'
 
 " javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-" neomake
-call neomake#configure#automake('w')
-let g:neomake_java_checkstyle_maker = {
-    \ 'args': ['-c', '/opt/checkstyle/sun_checks.xml'],
-    \ 'errorformat': '%f:%l:\ %m,%f:%l:%v:\ %m,%-G%.%#',
-    \ }
-"let g:neomake_java_enabled_makers = ['javac', 'checkstyle']
-let g:neomake_go_enabled_makers = ['go', 'govet']
-let g:neomake_python_enabled_makers = ['flake8', 'python', 'pep8']
-"let g:neomake_javascript_enabled_makers = ['eslint']
+nmap <F5> <Plug>(JavaComplete-Imports-Add)
+nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
 
 " deoplete
-let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup=1
+let g:deoplete#enable_smart_case=1
 inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
 " vim-go
-let g:deoplete#sources#go#gocode_binary = '$HOME/.go/bin/gocode'
+let g:deoplete#sources#go#gocode_binary='$HOME/.go/bin/gocode'
 " open test/implementation file in a vsplit instead of the same window
-let g:go_alternate_mode = "vsplit"
-let g:go_fmt_command = "goimports"
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_term_enabled = 1
+let g:go_alternate_mode="vsplit"
+let g:go_fmt_command="goimports"
+let g:go_highlight_functions=1
+let g:go_highlight_methods=1
+let g:go_term_enabled=1
 nmap <silent> <leader>gc :GoCoverage<CR>
 nmap <silent> <leader>gt :GoTest<CR>
 
-"neotags
-let g:neotags_enabled = 1
-let g:neotags_highlight = 1
-let g:neotags_appendpath = 0
-let g:neotags_recursive = 0
-let g:neotags_ctags_bin = 'ag -g "" '. getcwd() .' | ctags'
-let g:neotags_ctags_args = [
-            \ '-L -',
-            \ '--fields=+l',
-            \ '--c-kinds=+p',
-            \ '--c++-kinds=+p',
-            \ '--sort=no',
-            \ '--extra=+q'
-            \ ]
-set regexpengine=1
-
 " rust
-let g:rustfmt_autosave = 1
+let g:rustfmt_autosave=1
 let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
 let g:deoplete#sources#rust#rust_source_path='/usr/src/rust/src'
 
 " golden-ratio
 let g:golden_ratio_exclude_nonmodifiable=1
 
-" prettier
-let g:prettier#exec_cmd_async=1
-let g:prettier#config#bracket_spacing='true'
-let g:prettier#config#single_quote='false'
-
 " airline
 let g:airline#extensions#tabline#enabled=1
+let g:airline_powerline_fonts=1
+
+" ale
+let g:ale_sign_error='✘✘'
+let g:ale_sign_warning='!!'
+let g:ale_linters={
+\   'jsx': ['eslint', 'flow'],
+\   'javascript.jsx': ['eslint', 'flow'],
+\   'javascript': ['eslint', 'flow'],
+\}
+let g:ale_fixers={
+\   'java': ['google_java_format'],
+\   'javascript': ['importjs', 'eslint'],
+\   'jsx': ['importjs', 'eslint'],
+\   'javascript.jsx': ['importjs', 'eslint'],
+\   'json': ['prettier'],
+\   'python': ['autopep8', 'isort'],
+\}
+let g:ale_fix_on_save=1
+let g:ale_java_google_java_format_options='--aosp'
