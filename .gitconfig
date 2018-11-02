@@ -60,9 +60,10 @@
   new-branch = !sh -c 'git co -b abertoldi/$1 origin/master' -
   push-branch = !git push origin `git current-branch`:`git current-branch` -f
   push-branch-and-reupstream = !git push origin `git current-branch` && git br --set-upstream `git current-branch` origin/`git current-branch`
+  commits-in-branch = !git rev-list --count HEAD ^`git upstream`
   diff-master = diff --name-only origin/master
   delete-branch = !sh -c 'git push origin :$1' -
-  rebase-branch = !git rebase --interactive HEAD~`git changes | wc -l`
+  rebase-branch = !git rebase --interactive HEAD~`git commits-in-branch`
   rebase-branch-to-upstream = !git rebase --interactive `git upstream`
   change-upstream = !sh -c 'git branch --set-upstream-to \"$@\"' -
   ; goodies
@@ -77,4 +78,4 @@
   branch-guilt = !sh -c 'git guilt `git mb`' -
   dirty = !sh -c 'git status -s --untracked-files=no' -
   ls-tracked = !sh -c 'git ls-tree -r `git current-branch` --name-only' -
-  google = commit -m "NF: Apply google_java_format"
+  google = commit -m "\"NF: Apply google_java_format\""

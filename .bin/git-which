@@ -10,15 +10,15 @@ if [ $# == 0 ]; then
     usage
 fi
 
-AUTHOR=$1
+AUTHOR="$1"
 
-FILTER=`echo "."`
+FILTER=$(echo ".")
 PREFIX=""
-PWD=$(readlink -m $(pwd))
-ROOT=$(readlink -m $(git rev-parse --show-toplevel))
+PWD=$(pwd)
+ROOT=$(git rev-parse --show-toplevel)
 
 if [ $ROOT != $PWD ]; then
-  PREFIX=`echo '.'`
+  PREFIX=$(echo '.')
   FILTER=${PWD#"$ROOT/"}
 fi
 

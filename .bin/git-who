@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import subprocess
 import sys
@@ -8,19 +8,21 @@ from collections import defaultdict
 # limit number of commits
 # sort by net changes instead of chronological
 
-CMD = ['git',
-       'log',
-       '--no-merges',
-       '--numstat',
-       '--pretty=format:"%an$%ae"',
-       '--']
+CMD = [
+    'git', 'log', '--no-merges', '--numstat', '--pretty=format:"%an$%ae"', '--'
+]
+
 
 def make_cmd(args):
-    for a in args: CMD.append(a)
+    for a in args:
+        CMD.append(a)
     return CMD
 
+
 def exec(cmd):
-    return subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=False, universal_newlines=True)
+    return subprocess.Popen(
+        cmd, stdout=subprocess.PIPE, shell=False, universal_newlines=True)
+
 
 def resolve_name(name, email, authors):
     name = name.strip('"')
@@ -30,13 +32,14 @@ def resolve_name(name, email, authors):
             return (_name, _email)
     return (name, email)
 
+
 def process(p):
-    additions = defaultdict(lambda:0)
-    removals = defaultdict(lambda:0)
+    additions = defaultdict(lambda: 0)
+    removals = defaultdict(lambda: 0)
     authors = OrderedDict()
 
     retcode = p.poll()
-    while(retcode == None):
+    while (retcode == None):
         line = p.stdout.readline().strip()
         chunks = line.split('$')
         name, email = resolve_name(chunks[0], chunks[1], authors)
@@ -47,11 +50,12 @@ def process(p):
         retcode = p.poll()
     return (authors, additions, removals)
 
+
 def process_changes(p):
     additions = 0
     removals = 0
     retcode = p.poll()
-    while(retcode == None):
+    while (retcode == None):
         line = p.stdout.readline().strip()
         if len(line) == 0: return (additions, removals)
         chunks = line.split('\t')
@@ -59,23 +63,30 @@ def process_changes(p):
         removals += int(chunks[1])
         retcode = p.poll()
 
+
 AUTH_FORMAT = '{0} <{1}>'
 LINE_FORMAT = '{0:{align}} (+{1}/-{2})'
+
 
 def render(authors, additions, removals):
     total_additions = 0
     total_removals = 0
-    longest = max(map(lambda name: len(name[0]) + len(name[1]), authors.items())) + 3
+    longest = max(
+        map(lambda name: len(name[0]) + len(name[1]), authors.items())) + 3
     for name, email in authors.items():
         total_additions += additions[name]
         total_removals += removals[name]
         auth = AUTH_FORMAT.format(name, email)
-        print(LINE_FORMAT.format(auth, additions[name], removals[name], align=longest))
-    print("\nTotal: +%d/-%d, net +%d" %(total_additions, total_removals, total_additions - total_removals))
+        print(
+            LINE_FORMAT.format(
+                auth, additions[name], removals[name], align=longest))
+    print("\nTotal: +%d/-%d, net +%d" % (total_additions, total_removals,
+                                         total_additions - total_removals))
+
 
 def main(argv):
     render(*process(exec(make_cmd(argv[1:]))))
 
+
 if __name__ == '__main__':
     main(sys.argv)
-

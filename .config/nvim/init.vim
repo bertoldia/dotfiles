@@ -26,7 +26,7 @@ call plug#begin('~/.config/nvim/bundle')
   " Languages
   " Java
   Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
-  Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+  "Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
   " Go
   Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
   Plug 'zchee/deoplete-go', {'do': 'make', 'for': 'go'}
@@ -271,6 +271,8 @@ let g:airline_powerline_fonts=1
 " ale
 let g:ale_sign_error='✘✘'
 let g:ale_sign_warning='!!'
+let g:ale_java_google_java_format_options='--aosp'
+let g:ale_fix_on_save=1
 let g:ale_linters={
 \   'jsx': ['eslint', 'flow'],
 \   'javascript.jsx': ['eslint', 'flow'],
@@ -282,7 +284,5 @@ let g:ale_fixers={
 \   'jsx': ['importjs', 'eslint'],
 \   'javascript.jsx': ['importjs', 'eslint'],
 \   'json': ['prettier'],
-\   'python': ['autopep8', 'isort'],
+\   'python': ['yapf', 'isort'],
 \}
-let g:ale_fix_on_save=1
-let g:ale_java_google_java_format_options='--aosp'

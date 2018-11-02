@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BIN_PATH=$(dirname $(readlink -fn $0))
+BIN_PATH=$(dirname $0)
 source $BIN_PATH/utils
 
 regen_ctags=false

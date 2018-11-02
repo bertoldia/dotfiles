@@ -100,6 +100,8 @@ editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
 ignore_ftp_chattr_errors=true
 
+safe_overwrite=false
+
 [Layout]
 message_visible=1
 keybar_visible=1
@@ -114,7 +116,7 @@ free_space=1
 
 horizontal_split=0
 vertical_equal=1
-left_panel_size=59
+left_panel_size=117
 horizontal_equal=1
 top_panel_size=139
 
