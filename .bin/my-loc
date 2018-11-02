@@ -1,0 +1,28 @@
+#!/usr/bin/env sh 
+
+which parallel &> /dev/null
+
+if [[ $? -ne 0 ]]; then
+    echo "Missing dependency \"parallel\""
+    exit
+fi
+
+# assuming git, find and awk are available
+
+root_path=$1 || root_path=`pwd`
+
+author=`git config --get user.name | awk '{print $1}'`
+echo "Using author \"$author\""
+
+action="cd {}/../; git log --all --author=\"$author\" --pretty=tformat: --numstat"
+
+repos=$(find $root_path -type d -name .git 2> /dev/null)
+
+repos_as_array=( $repos )
+echo "${#repos_as_array[@]} repos found:"
+
+for repo in $repos; do
+    echo $repo
+done
+
+parallel $action ::: $repos 2> /dev/null | awk '{a+=$1} {r+=$2} END {print "Lines added: " a "\nLines removed: " r}'

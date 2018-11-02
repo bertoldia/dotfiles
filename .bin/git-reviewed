@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+function print_contributions() {
+    #authors=`git log --format='%aN' | awk '{ print $1 }' | sort -u`
+    #authors=`git log --format='%aN' | sort -u`
+    authors=`git log --format='%aE' | awk '{print tolower($0)}' | sort -u`
+
+    for a in $authors; do
+        r=`git log --merges | grep Approved-by | grep -i "$a" | wc -l`
+        echo "$r $a"
+    done
+}
+
+print_contributions | sort -nr
