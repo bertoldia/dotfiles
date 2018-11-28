@@ -8,7 +8,6 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'bling/vim-airline'
   Plug 'Lokaltog/vim-easymotion'
   Plug 'MattesGroeger/vim-bookmarks'
-  Plug 'roman/golden-ratio'
   Plug 'Raimondi/delimitMate'
   Plug 'airblade/vim-gitgutter'
   Plug 'ntpeters/vim-better-whitespace'
@@ -24,19 +23,9 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'junegunn/fzf.vim'
 
   " Languages
-  " Java
-  Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting', {'for': 'java'}
-  "Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
   " Go
   Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries' }
   Plug 'zchee/deoplete-go', {'do': 'make', 'for': 'go'}
-  " Rust
-  Plug 'rust-lang/rust.vim', {'for': 'rust'}
-  Plug 'sebastianmarkow/deoplete-rust', {'for': 'rust'}
-  "Javascript
-  Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
-  Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
-  Plug 'carlitux/deoplete-ternjs', {'for': 'javascript.jsx'}
   " Python
   Plug 'zchee/deoplete-jedi', {'for': 'python'}
 
@@ -234,11 +223,6 @@ nmap <silent> <leader>tv :TestVisit<CR>
 let g:test#java#maventest#file_pattern='\v^.*[Tt]ests=(Suite)=\.java$'
 let test#java#maventest#executable='mvn -T2C compiler:compile compiler:testCompile surefire:test'
 
-" javacomplete2
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-nmap <F5> <Plug>(JavaComplete-Imports-Add)
-nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-
 " deoplete
 let g:deoplete#enable_at_startup=1
 let g:deoplete#enable_smart_case=1
@@ -250,16 +234,23 @@ let g:deoplete#sources#go#gocode_binary='$HOME/.go/bin/gocode'
 " open test/implementation file in a vsplit instead of the same window
 let g:go_alternate_mode="vsplit"
 let g:go_fmt_command="goimports"
+let g:go_term_enabled=1
+let g:go_fmt_fail_silently=1
+let g:go_auto_type_info = 1
+let g:go_auto_sameids=1
+let g:go_highlight_build_constraints=1
+let g:go_highlight_extra_types=1
+let g:go_highlight_fields=1
 let g:go_highlight_functions=1
 let g:go_highlight_methods=1
-let g:go_term_enabled=1
+let g:go_highlight_operators=1
+let g:go_highlight_structs=1
+let g:go_highlight_types=1
+
 nmap <silent> <leader>gc :GoCoverage<CR>
 nmap <silent> <leader>gt :GoTest<CR>
-
-" rust
-let g:rustfmt_autosave=1
-let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
-let g:deoplete#sources#rust#rust_source_path='/usr/src/rust/src'
+nmap <silent> <leader>god :GoDef<CR>
+nmap <silent> <leader>gop :GoDefPop<CR>
 
 " golden-ratio
 let g:golden_ratio_exclude_nonmodifiable=1
@@ -269,20 +260,12 @@ let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
 
 " ale
-let g:ale_sign_error='✘✘'
-let g:ale_sign_warning='!!'
-let g:ale_java_google_java_format_options='--aosp'
+let g:ale_sign_error='✘'
+let g:ale_sign_warning='!'
 let g:ale_fix_on_save=1
+let g:airline#extensions#ale#enabled=1
 let g:ale_linters={
-\   'jsx': ['eslint', 'flow'],
-\   'javascript.jsx': ['eslint', 'flow'],
-\   'javascript': ['eslint', 'flow'],
 \}
 let g:ale_fixers={
-\   'java': ['google_java_format'],
-\   'javascript': ['importjs', 'eslint'],
-\   'jsx': ['importjs', 'eslint'],
-\   'javascript.jsx': ['importjs', 'eslint'],
-\   'json': ['prettier'],
 \   'python': ['yapf', 'isort'],
 \}

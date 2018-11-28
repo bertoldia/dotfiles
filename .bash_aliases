@@ -1,8 +1,10 @@
 alias reload='source ~/.bashrc'
 
 # Core
-alias ll='ls -hlF'
-alias lall='ls -hlaF'
+alias ll='exa --group-directories-first -lbg'
+alias la='exa --group-directories-first -bga'
+alias lal='exa --group-directories-first -lbga'
+
 alias q='lcd ../'
 alias cd='lcd'
 alias mkdir='mkdir -p'

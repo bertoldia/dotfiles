@@ -1,6 +1,6 @@
 [user]
 	name = Axel von Bertoldi
-	email = abertoldi@atb.com
+	email = axel.von.bertoldi@kirasystems.com
 [color]
   ui = auto
 [color "branch"]
@@ -25,7 +25,7 @@
 [core]
   editor = nvim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-  pager = diff-so-fancy | less --tabs=4 -RFX
+  ;pager = diff-so-fancy | less --tabs=4 -RFX
 [branch]
   autosetupmerge = always
 [rebase]
@@ -79,3 +79,8 @@
   dirty = !sh -c 'git status -s --untracked-files=no' -
   ls-tracked = !sh -c 'git ls-tree -r `git current-branch` --name-only' -
   google = commit -m "\"NF: Apply google_java_format\""
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f

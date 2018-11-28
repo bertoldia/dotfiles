@@ -66,11 +66,13 @@ export INPUTRC=~/.inputrc
 export EDITOR=vim
 export PAGER=most
 
-git_prompt=/usr/share/git/completion/git-prompt.sh
-[ -f $git_prompt ] && source $git_prompt
-
 git_completion=/usr/share/git/completion/git-completion.bash
 [ -f $git_completion ] && source $git_completion
+
+if [ -f "/usr/local/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+    __GIT_PROMPT_DIR="/usr/local/opt/bash-git-prompt/share"
+    source "/usr/local/opt/bash-git-prompt/share/gitprompt.sh"
+fi
 
 [ -f ~/.bash_aliases ] && source ~/.bash_aliases
 [ -f ~/.build_environment ] && source ~/.build_environment

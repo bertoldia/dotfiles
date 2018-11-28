@@ -1,9 +1,10 @@
 # Theme
 set theme_color_scheme gruvbox
-set PATH $HOME/.bin $HOME/Library/Python/3.7/bin $PATH
 set -x GOPATH $HOME/.go
 set -x GOBIN $HOME/.go/bin
 set -x EDITOR nvim
+
+set PATH $HOME/.bin $PATH $GOBIN
 
 # Work stuff
 set -x CHALLENGER_ROOT "$HOME/workspace/challenger"
@@ -31,10 +32,6 @@ alias nvimrc='nvim $HOME/.config/nvim/init.vim'
 alias gitconfig='nvim $HOME/.gitconfig'
 alias ffind='find . -iname'
 alias dof='git --git-dir=$HOME/.dotfiles.git'
-
-#ATB
-alias qa-omni-db-tunnel='ssh qa-omni-nat -L 1433:10.1.4.167:1433'
-alias qa-omni-db-connect='mssql-cli -S "tcp:localhost,1433" -U omnichannel -P 0mn!atbQ4t -d OMNIQA'
 
 # FZF
 set -x FZF_DEFAULT_OPTS "--no-height --no-reverse"
